@@ -582,14 +582,19 @@ void update_universe (void)
 	for (i = 0; i < MAX_UNIV_OBJECTS; i++)
 	{
 		type = universe[i].type;
-		
+
+                /* Warning: type can be less than zero */
 		if (type != 0)
 		{
-			if (universe[i].flags & FLG_REMOVE)
+                        /* Check for less than zero since type used as array index */
+			if (type > 0 && (universe[i].flags & FLG_REMOVE))
 			{
 				if (type == SHIP_VIPER)
+                                {
 					cmdr.legal_status |= 64;
+                                }
 			
+                                /* type can be negative */
 				bounty = ship_list[type]->bounty;
 				
 				if ((bounty != 0) && (!witchspace))
@@ -629,7 +634,7 @@ void update_universe (void)
 			{
 				if ((ship_count[SHIP_CORIOLIS] == 0) &&
 					(ship_count[SHIP_DODEC] == 0) &&
-					(universe[i].distance < 65792)) // was 49152
+					(universe[i].distance < 65792)) /* was 49152 */
 				{
 					make_station_appear();
 				}				
