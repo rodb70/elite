@@ -619,7 +619,7 @@ void update_universe (void)
 			{
 				tactics (i);
 			} 
-		
+
 			move_univ_object (&universe[i]);
 
 			flip = universe[i];

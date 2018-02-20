@@ -1,4 +1,4 @@
-gcc -O -Wall -c alg_gfx.c
+gcc -O -Wall -g -c alg_gfx.c
 alg_gfx.c: In function ‘gfx_display_text’:
 alg_gfx.c:487:2: warning: ‘text_mode’ is deprecated [-Wdeprecated-declarations]
   text_mode (-1);
@@ -95,11 +95,11 @@ In file included from /usr/include/allegro/base.h:41:0,
 /usr/include/allegro/alcompat.h:141:1: note: declared here
  AL_INLINE_DEPRECATED(int, file_select, (AL_CONST char *message, char *path, AL_CONST char *ext),
  ^
-gcc -O -Wall -c alg_main.c
-gcc -O -Wall -c docked.c
-gcc -O -Wall -c elite.c
-gcc -O -Wall -c intro.c
-gcc -O -Wall -c planet.c
+gcc -O -Wall -g -c alg_main.c
+gcc -O -Wall -g -c docked.c
+gcc -O -Wall -g -c elite.c
+gcc -O -Wall -g -c intro.c
+gcc -O -Wall -g -c planet.c
 planet.c: In function ‘expand_description’:
 planet.c:413:6: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
       for (ptr = str; *ptr != '\0';)
@@ -107,9 +107,9 @@ planet.c:413:6: warning: this ‘for’ clause does not guard... [-Wmisleading-i
 planet.c:415:7: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
        desc_ptr--;
        ^~~~~~~~
-gcc -O -Wall -c shipdata.c
-gcc -O -Wall -c shipface.c
-gcc -O -Wall -c sound.c
+gcc -O -Wall -g -c shipdata.c
+gcc -O -Wall -g -c shipface.c
+gcc -O -Wall -g -c sound.c
 sound.c: In function ‘snd_stop_midi’:
 sound.c:143:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
   if (sound_on);
@@ -117,16 +117,16 @@ sound.c:143:2: warning: this ‘if’ clause does not guard... [-Wmisleading-ind
 sound.c:144:3: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
    play_midi (NULL, TRUE);
    ^~~~~~~~~
-gcc -O -Wall -c space.c
-gcc -O -Wall -c swat.c
-gcc -O -Wall -c threed.c
-gcc -O -Wall -c vector.c
-gcc -O -Wall -c random.c
-gcc -O -Wall -c trade.c
-gcc -O -Wall -c options.c
-gcc -O -Wall -c stars.c
-gcc -O -Wall -c missions.c
-gcc -O -Wall -c pilot.c
-gcc -O -Wall -c file.c
-gcc -O -Wall -c keyboard.c
+gcc -O -Wall -g -c space.c
+gcc -O -Wall -g -c swat.c
+gcc -O -Wall -g -c threed.c
+gcc -O -Wall -g -c vector.c
+gcc -O -Wall -g -c random.c
+gcc -O -Wall -g -c trade.c
+gcc -O -Wall -g -c options.c
+gcc -O -Wall -g -c stars.c
+gcc -O -Wall -g -c missions.c
+gcc -O -Wall -g -c pilot.c
+gcc -O -Wall -g -c file.c
+gcc -O -Wall -g -c keyboard.c
 gcc -o newkind alg_gfx.o alg_main.o docked.o elite.o intro.o planet.o shipdata.o shipface.o sound.o space.o swat.o threed.o vector.o random.o trade.o options.o stars.o missions.o pilot.o file.o keyboard.o -lalleg -lm

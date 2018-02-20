@@ -1,32 +1,1185 @@
-==31392== Memcheck, a memory error detector
-==31392== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==31392== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==31392== Command: ./newkind
-==31392== 
-==31392== Invalid read of size 4
-==31392==    at 0x1140DB: update_universe (in /home/cptnapalm/src/github/newkind/newkind)
-==31392==    by 0x10FB94: main (in /home/cptnapalm/src/github/newkind/newkind)
-==31392==  Address 0x45 is not stack'd, malloc'd or (recently) free'd
-==31392== 
+==32274== Memcheck, a memory error detector
+==32274== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==32274== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==32274== Command: ./newkind
+==32274== 
+==32274== Invalid read of size 4
+==32274==    at 0x1140DB: update_universe (in /home/cptnapalm/src/github/newkind/newkind)
+==32274==    by 0x10FB94: main (in /home/cptnapalm/src/github/newkind/newkind)
+==32274==  Address 0x45 is not stack'd, malloc'd or (recently) free'd
+==32274== 
 Shutting down Allegro due to signal #11
-==31392== 
-==31392== Process terminating with default action of signal 11 (SIGSEGV): dumping core
-==31392==    at 0x54E383E: raise (in /usr/lib/libc-2.26.so)
-==31392==    by 0x54E38DF: ??? (in /usr/lib/libc-2.26.so)
-==31392==    by 0x1140DA: update_universe (in /home/cptnapalm/src/github/newkind/newkind)
-==31392==    by 0x10FB94: main (in /home/cptnapalm/src/github/newkind/newkind)
-==31392== 
-==31392== HEAP SUMMARY:
-==31392==     in use at exit: 2,352,745 bytes in 2,836 blocks
-==31392==   total heap usage: 34,351 allocs, 31,515 frees, 6,878,056 bytes allocated
-==31392== 
-==31392== LEAK SUMMARY:
-==31392==    definitely lost: 48 bytes in 3 blocks
-==31392==    indirectly lost: 192 bytes in 5 blocks
-==31392==      possibly lost: 43,335 bytes in 1,321 blocks
-==31392==    still reachable: 2,309,170 bytes in 1,507 blocks
-==31392==         suppressed: 0 bytes in 0 blocks
-==31392== Rerun with --leak-check=full to see details of leaked memory
-==31392== 
-==31392== For counts of detected and suppressed errors, rerun with: -v
-==31392== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==32274== 
+==32274== Process terminating with default action of signal 11 (SIGSEGV): dumping core
+==32274==    at 0x54E383E: raise (in /usr/lib/libc-2.26.so)
+==32274==    by 0x54E38DF: ??? (in /usr/lib/libc-2.26.so)
+==32274==    by 0x1140DA: update_universe (in /home/cptnapalm/src/github/newkind/newkind)
+==32274==    by 0x10FB94: main (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== HEAP SUMMARY:
+==32274==     in use at exit: 2,353,417 bytes in 2,842 blocks
+==32274==   total heap usage: 33,501 allocs, 30,659 frees, 6,895,184 bytes allocated
+==32274== 
+==32274== 3 bytes in 1 blocks are possibly lost in loss record 1 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DB5D: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 3 bytes in 1 blocks are possibly lost in loss record 2 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DA75: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 4 bytes in 2 blocks are possibly lost in loss record 13 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x5534B9A: strdup (in /usr/lib/libc-2.26.so)
+==32274==    by 0x7E8B430: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274==    by 0x10F9FB: main (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 4 bytes in 2 blocks are possibly lost in loss record 14 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x5534B9A: strdup (in /usr/lib/libc-2.26.so)
+==32274==    by 0x7E8B430: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274== 
+==32274== 8 bytes in 1 blocks are definitely lost in loss record 18 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7C5771F: ???
+==32274==    by 0x4EC0BA0: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274==    by 0x10F9FB: main (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 12 bytes in 2 blocks are possibly lost in loss record 20 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B6E8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DB5D: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274== 
+==32274== 12 bytes in 2 blocks are possibly lost in loss record 21 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DB5D: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 12 bytes in 2 blocks are possibly lost in loss record 22 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DA75: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 12 bytes in 6 blocks are possibly lost in loss record 23 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x5534B9A: strdup (in /usr/lib/libc-2.26.so)
+==32274==    by 0x7E8B430: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 14 bytes in 2 blocks are possibly lost in loss record 24 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 14 bytes in 2 blocks are possibly lost in loss record 25 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8955E: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89C4C: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274== 
+==32274== 15 bytes in 3 blocks are possibly lost in loss record 26 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B6E8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DB5D: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 16 bytes in 2 blocks are possibly lost in loss record 36 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B6E8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DA75: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274== 
+==32274== 16 bytes in 8 blocks are possibly lost in loss record 37 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x5534B9A: strdup (in /usr/lib/libc-2.26.so)
+==32274==    by 0x7E8B430: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274== 
+==32274== 17 bytes in 2 blocks are possibly lost in loss record 40 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B6E8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DB5D: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 17 bytes in 2 blocks are possibly lost in loss record 41 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B6E8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DA75: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 18 bytes in 3 blocks are possibly lost in loss record 42 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B6E8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 20 bytes in 1 blocks are possibly lost in loss record 43 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x5534B9A: strdup (in /usr/lib/libc-2.26.so)
+==32274==    by 0x7E92E57: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA497C: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA4EBC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA698D: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274==    by 0x10F9FB: main (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 20 bytes in 1 blocks are possibly lost in loss record 44 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x5534B9A: strdup (in /usr/lib/libc-2.26.so)
+==32274==    by 0x7E92E57: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E974B3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E98362: snd_ctl_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E966F1: snd_hctl_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E9E5E2: snd_mixer_attach (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C573B2: ???
+==32274==    by 0x4EC0BA0: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274==    by 0x10F9FB: main (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 22 bytes in 2 blocks are possibly lost in loss record 45 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8955E: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89C4C: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DA75: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 24 bytes in 1 blocks are possibly lost in loss record 54 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8955E: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89C4C: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DB5D: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 28 bytes in 4 blocks are possibly lost in loss record 60 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B6E8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 28 bytes in 14 blocks are possibly lost in loss record 61 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x5534B9A: strdup (in /usr/lib/libc-2.26.so)
+==32274==    by 0x7E8B430: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274== 
+==32274== 29 bytes in 5 blocks are possibly lost in loss record 63 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B6E8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274== 
+==32274== 30 bytes in 3 blocks are possibly lost in loss record 65 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274== 
+==32274== 31 bytes in 3 blocks are possibly lost in loss record 66 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 33 bytes in 5 blocks are possibly lost in loss record 79 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B6E8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DA75: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 34 bytes in 3 blocks are possibly lost in loss record 81 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8955E: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89C4C: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B487: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 40 (24 direct, 16 indirect) bytes in 1 blocks are definitely lost in loss record 104 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E9246A: snd_output_stdio_attach (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C571E2: ???
+==32274==    by 0x4EC0BA0: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274==    by 0x10F9FB: main (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 48 bytes in 1 blocks are possibly lost in loss record 110 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x5534B9A: strdup (in /usr/lib/libc-2.26.so)
+==32274==    by 0x7E92E48: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA497C: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA4EBC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA698D: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274==    by 0x10F9FB: main (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 48 bytes in 1 blocks are possibly lost in loss record 111 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x5534B9A: strdup (in /usr/lib/libc-2.26.so)
+==32274==    by 0x7E92E48: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E974B3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E98362: snd_ctl_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E966F1: snd_hctl_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E9E5E2: snd_mixer_attach (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C573B2: ???
+==32274==    by 0x4EC0BA0: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274==    by 0x10F9FB: main (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 56 bytes in 1 blocks are possibly lost in loss record 112 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8955E: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89C4C: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DA75: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 56 bytes in 1 blocks are possibly lost in loss record 113 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E92E27: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA497C: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA4EBC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA698D: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274==    by 0x10F9FB: main (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 56 bytes in 1 blocks are possibly lost in loss record 114 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E92E27: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E974B3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E98362: snd_ctl_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E966F1: snd_hctl_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E9E5E2: snd_mixer_attach (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C573B2: ???
+==32274==    by 0x4EC0BA0: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274==    by 0x10F9FB: main (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 56 bytes in 28 blocks are possibly lost in loss record 115 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x5534B9A: strdup (in /usr/lib/libc-2.26.so)
+==32274==    by 0x7E8B430: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 72 bytes in 1 blocks are possibly lost in loss record 170 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BBA5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DB5D: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 72 bytes in 1 blocks are possibly lost in loss record 171 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BBA5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DA75: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 99 bytes in 18 blocks are possibly lost in loss record 199 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B6E8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 116 bytes in 8 blocks are possibly lost in loss record 202 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B487: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 144 bytes in 2 blocks are possibly lost in loss record 207 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B4F8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 144 bytes in 2 blocks are possibly lost in loss record 208 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BBA5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274== 
+==32274== 144 bytes in 2 blocks are possibly lost in loss record 209 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B4F8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274== 
+==32274== 144 bytes in 2 blocks are possibly lost in loss record 210 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89EC4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 144 bytes in 2 blocks are possibly lost in loss record 211 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BBA5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 144 bytes in 2 blocks are possibly lost in loss record 212 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89F44: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274== 
+==32274== 144 bytes in 2 blocks are possibly lost in loss record 213 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BBA5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DB5D: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274== 
+==32274== 144 bytes in 2 blocks are possibly lost in loss record 214 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89EC4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DB5D: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 144 bytes in 2 blocks are possibly lost in loss record 215 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89EC4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DB5D: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 144 bytes in 2 blocks are possibly lost in loss record 216 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BBA5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DA75: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274== 
+==32274== 144 bytes in 2 blocks are possibly lost in loss record 217 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89EC4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DA75: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 149 bytes in 6 blocks are possibly lost in loss record 218 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8955E: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89C4C: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274== 
+==32274== 155 bytes in 28 blocks are possibly lost in loss record 227 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B487: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274== 
+==32274== 192 (16 direct, 176 indirect) bytes in 1 blocks are definitely lost in loss record 238 of 322
+==32274==    at 0x4C2F0FF: realloc (vg_replace_malloc.c:785)
+==32274==    by 0x5CE0B5C: ??? (in /usr/lib/libX11.so.6.3.0)
+==32274==    by 0x5CE10C1: ??? (in /usr/lib/libX11.so.6.3.0)
+==32274==    by 0x5CE29CE: ??? (in /usr/lib/libX11.so.6.3.0)
+==32274==    by 0x5CE31E7: _XlcCreateLC (in /usr/lib/libX11.so.6.3.0)
+==32274==    by 0x5CFFE8F: _XlcDefaultLoader (in /usr/lib/libX11.so.6.3.0)
+==32274==    by 0x5CEA77D: _XOpenLC (in /usr/lib/libX11.so.6.3.0)
+==32274==    by 0x5CEA9AA: _XrmInitParseInfo (in /usr/lib/libX11.so.6.3.0)
+==32274==    by 0x5CD287F: ??? (in /usr/lib/libX11.so.6.3.0)
+==32274==    by 0x5CD5E5D: XrmGetStringDatabase (in /usr/lib/libX11.so.6.3.0)
+==32274==    by 0x5CB2933: ??? (in /usr/lib/libX11.so.6.3.0)
+==32274==    by 0x5CB2BDD: XGetDefault (in /usr/lib/libX11.so.6.3.0)
+==32274== 
+==32274== 196 bytes in 14 blocks are possibly lost in loss record 239 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B487: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 216 bytes in 3 blocks are possibly lost in loss record 240 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89EC4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274== 
+==32274== 216 bytes in 3 blocks are possibly lost in loss record 241 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B4F8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 216 bytes in 3 blocks are possibly lost in loss record 242 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89EC4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 216 bytes in 3 blocks are possibly lost in loss record 243 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89EC4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B487: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B5DC: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 236 bytes in 18 blocks are possibly lost in loss record 244 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 241 bytes in 6 blocks are possibly lost in loss record 245 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8955E: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89C4C: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 249 bytes in 47 blocks are possibly lost in loss record 246 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274== 
+==32274== 288 bytes in 4 blocks are possibly lost in loss record 249 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89EC4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E87CEE: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8DA75: snd_config_hook_load (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8E6D5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8ECFB: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 358 bytes in 61 blocks are possibly lost in loss record 250 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B6E8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274== 
+==32274== 487 bytes in 54 blocks are possibly lost in loss record 254 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274== 
+==32274== 559 bytes in 43 blocks are possibly lost in loss record 257 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 576 bytes in 8 blocks are possibly lost in loss record 258 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89EC4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B487: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 607 bytes in 93 blocks are possibly lost in loss record 259 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B6E8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274== 
+==32274== 720 bytes in 10 blocks are possibly lost in loss record 261 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B7CB: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 734 bytes in 122 blocks are possibly lost in loss record 262 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B6E8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 882 bytes in 52 blocks are possibly lost in loss record 269 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89D9B: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 883 bytes in 126 blocks are possibly lost in loss record 270 of 322
+==32274==    at 0x4C2CEDF: malloc (vg_replace_malloc.c:299)
+==32274==    by 0x7E89225: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89BD5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B6E8: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274==    by 0x10F9FB: main (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 1,008 bytes in 14 blocks are possibly lost in loss record 271 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89EC4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B487: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 1,296 bytes in 18 blocks are possibly lost in loss record 277 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BBA5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274== 
+==32274== 1,296 bytes in 18 blocks are possibly lost in loss record 278 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89EC4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 1,512 bytes in 21 blocks are possibly lost in loss record 282 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89F44: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 1,584 bytes in 22 blocks are possibly lost in loss record 284 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BBA5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274==    by 0x10F9FB: main (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 2,016 bytes in 28 blocks are possibly lost in loss record 285 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89EC4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B487: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BA11: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274== 
+==32274== 2,088 bytes in 29 blocks are possibly lost in loss record 287 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B7CB: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274==    by 0x10F9FB: main (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 2,232 bytes in 31 blocks are possibly lost in loss record 289 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BBA5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274== 
+==32274== 3,096 bytes in 43 blocks are possibly lost in loss record 294 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89EC4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274== 
+==32274== 3,816 bytes in 53 blocks are possibly lost in loss record 297 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89EC4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274== 
+==32274== 3,888 bytes in 54 blocks are possibly lost in loss record 298 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89EC4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 4,248 bytes in 59 blocks are possibly lost in loss record 309 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BBA5: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274==    by 0x4EC0CA7: install_sound (in /usr/lib/liballeg.so.4.4.2)
+==32274==    by 0x1132EF: snd_sound_startup (in /home/cptnapalm/src/github/newkind/newkind)
+==32274== 
+==32274== 4,320 bytes in 60 blocks are possibly lost in loss record 310 of 322
+==32274==    at 0x4C2EEF5: calloc (vg_replace_malloc.c:711)
+==32274==    by 0x7E8911F: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E891C3: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E89EC4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8B8D4: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BAED: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8BC5A: ??? (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8EC41: snd_config_update_r (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7E8F23C: snd_config_update_ref (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7EA6970: snd_pcm_open (in /usr/lib/libasound.so.2.0.0)
+==32274==    by 0x7C57E17: ???
+==32274== 
+==32274== LEAK SUMMARY:
+==32274==    definitely lost: 48 bytes in 3 blocks
+==32274==    indirectly lost: 192 bytes in 5 blocks
+==32274==      possibly lost: 43,335 bytes in 1,321 blocks
+==32274==    still reachable: 2,309,842 bytes in 1,513 blocks
+==32274==         suppressed: 0 bytes in 0 blocks
+==32274== Reachable blocks (those to which a pointer was found) are not shown.
+==32274== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==32274== 
+==32274== For counts of detected and suppressed errors, rerun with: -v
+==32274== ERROR SUMMARY: 85 errors from 85 contexts (suppressed: 0 from 0)
