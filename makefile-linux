@@ -19,7 +19,8 @@
 #
 
 CC = gcc
-LIBS = `allegro-config --libs` -lm
+#LIBS = `allegro-config --libs` -lm
+LIBS = $(shell pkg-config --libs allegro) -lm
 CFLAGS = -O -Wall
 OBJS = alg_gfx.o alg_main.o docked.o elite.o \
 intro.o planet.o shipdata.o shipface.o sound.o space.o \
