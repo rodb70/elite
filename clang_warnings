@@ -1,0 +1,132 @@
+gcc -O -Wall -c alg_gfx.c
+alg_gfx.c: In function ‘gfx_display_text’:
+alg_gfx.c:487:2: warning: ‘text_mode’ is deprecated [-Wdeprecated-declarations]
+  text_mode (-1);
+  ^~~~~~~~~
+In file included from /usr/include/allegro/base.h:41:0,
+                 from /usr/include/allegro.h:25,
+                 from alg_gfx.c:21:
+/usr/include/allegro/alcompat.h:155:1: note: declared here
+ AL_FUNC_DEPRECATED(int, text_mode, (int mode));
+ ^
+alg_gfx.c:488:2: warning: ‘textout’ is deprecated [-Wdeprecated-declarations]
+  textout (gfx_screen, datafile[ELITE_1].dat, txt, (x / (2 / GFX_SCALE)) + GFX_X_OFFSET, (y / (2 / GFX_SCALE)) + GFX_Y_OFFSET, GFX_COL_WHITE);
+  ^~~~~~~
+In file included from /usr/include/allegro/base.h:41:0,
+                 from /usr/include/allegro.h:25,
+                 from alg_gfx.c:21:
+/usr/include/allegro/alcompat.h:157:1: note: declared here
+ AL_INLINE_DEPRECATED(void, textout, (struct BITMAP *bmp, AL_CONST FONT *f, AL_CONST char *str, int x, int y, int color),
+ ^
+alg_gfx.c: In function ‘gfx_display_colour_text’:
+alg_gfx.c:494:2: warning: ‘text_mode’ is deprecated [-Wdeprecated-declarations]
+  text_mode (-1);
+  ^~~~~~~~~
+In file included from /usr/include/allegro/base.h:41:0,
+                 from /usr/include/allegro.h:25,
+                 from alg_gfx.c:21:
+/usr/include/allegro/alcompat.h:155:1: note: declared here
+ AL_FUNC_DEPRECATED(int, text_mode, (int mode));
+ ^
+alg_gfx.c:495:2: warning: ‘textout’ is deprecated [-Wdeprecated-declarations]
+  textout (gfx_screen, datafile[ELITE_1].dat, txt, (x / (2 / GFX_SCALE)) + GFX_X_OFFSET, (y / (2 / GFX_SCALE)) + GFX_Y_OFFSET, col);
+  ^~~~~~~
+In file included from /usr/include/allegro/base.h:41:0,
+                 from /usr/include/allegro.h:25,
+                 from alg_gfx.c:21:
+/usr/include/allegro/alcompat.h:157:1: note: declared here
+ AL_INLINE_DEPRECATED(void, textout, (struct BITMAP *bmp, AL_CONST FONT *f, AL_CONST char *str, int x, int y, int color),
+ ^
+alg_gfx.c: In function ‘gfx_display_centre_text’:
+alg_gfx.c:516:2: warning: ‘text_mode’ is deprecated [-Wdeprecated-declarations]
+  text_mode (-1);
+  ^~~~~~~~~
+In file included from /usr/include/allegro/base.h:41:0,
+                 from /usr/include/allegro.h:25,
+                 from alg_gfx.c:21:
+/usr/include/allegro/alcompat.h:155:1: note: declared here
+ AL_FUNC_DEPRECATED(int, text_mode, (int mode));
+ ^
+alg_gfx.c:517:2: warning: ‘textout_centre’ is deprecated [-Wdeprecated-declarations]
+  textout_centre (gfx_screen,  datafile[txt_size].dat, str, (128 * GFX_SCALE) + GFX_X_OFFSET, (y / (2 / GFX_SCALE)) + GFX_Y_OFFSET, txt_colour);
+  ^~~~~~~~~~~~~~
+In file included from /usr/include/allegro/base.h:41:0,
+                 from /usr/include/allegro.h:25,
+                 from alg_gfx.c:21:
+/usr/include/allegro/alcompat.h:162:1: note: declared here
+ AL_INLINE_DEPRECATED(void, textout_centre, (struct BITMAP *bmp, AL_CONST FONT *f, AL_CONST char *str, int x, int y, int color),
+ ^
+alg_gfx.c: In function ‘gfx_display_pretty_text’:
+alg_gfx.c:578:3: warning: ‘text_mode’ is deprecated [-Wdeprecated-declarations]
+   text_mode (-1);
+   ^~~~~~~~~
+In file included from /usr/include/allegro/base.h:41:0,
+                 from /usr/include/allegro.h:25,
+                 from alg_gfx.c:21:
+/usr/include/allegro/alcompat.h:155:1: note: declared here
+ AL_FUNC_DEPRECATED(int, text_mode, (int mode));
+ ^
+alg_gfx.c:579:3: warning: ‘textout’ is deprecated [-Wdeprecated-declarations]
+   textout (gfx_screen, datafile[ELITE_1].dat, strbuf, tx + GFX_X_OFFSET, ty + GFX_Y_OFFSET, GFX_COL_WHITE);
+   ^~~~~~~
+In file included from /usr/include/allegro/base.h:41:0,
+                 from /usr/include/allegro.h:25,
+                 from alg_gfx.c:21:
+/usr/include/allegro/alcompat.h:157:1: note: declared here
+ AL_INLINE_DEPRECATED(void, textout, (struct BITMAP *bmp, AL_CONST FONT *f, AL_CONST char *str, int x, int y, int color),
+ ^
+alg_gfx.c: In function ‘gfx_set_clip_region’:
+alg_gfx.c:592:2: warning: ‘set_clip’ is deprecated [-Wdeprecated-declarations]
+  set_clip (gfx_screen, tx + GFX_X_OFFSET, ty + GFX_Y_OFFSET, bx + GFX_X_OFFSET, by + GFX_Y_OFFSET);
+  ^~~~~~~~
+In file included from /usr/include/allegro/base.h:41:0,
+                 from /usr/include/allegro.h:25,
+                 from alg_gfx.c:21:
+/usr/include/allegro/alcompat.h:207:1: note: declared here
+ AL_FUNC_DEPRECATED(void, set_clip, (BITMAP *bitmap, int x1, int y_1, int x2, int y2));
+ ^
+alg_gfx.c: In function ‘gfx_request_file’:
+alg_gfx.c:766:2: warning: ‘file_select’ is deprecated [-Wdeprecated-declarations]
+  okay = file_select (title, path, ext);
+  ^~~~
+In file included from /usr/include/allegro/base.h:41:0,
+                 from /usr/include/allegro.h:25,
+                 from alg_gfx.c:21:
+/usr/include/allegro/alcompat.h:141:1: note: declared here
+ AL_INLINE_DEPRECATED(int, file_select, (AL_CONST char *message, char *path, AL_CONST char *ext),
+ ^
+gcc -O -Wall -c alg_main.c
+gcc -O -Wall -c docked.c
+gcc -O -Wall -c elite.c
+gcc -O -Wall -c intro.c
+gcc -O -Wall -c planet.c
+planet.c: In function ‘expand_description’:
+planet.c:413:6: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+      for (ptr = str; *ptr != '\0';)
+      ^~~
+planet.c:415:7: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+       desc_ptr--;
+       ^~~~~~~~
+gcc -O -Wall -c shipdata.c
+gcc -O -Wall -c shipface.c
+gcc -O -Wall -c sound.c
+sound.c: In function ‘snd_stop_midi’:
+sound.c:143:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  if (sound_on);
+  ^~
+sound.c:144:3: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   play_midi (NULL, TRUE);
+   ^~~~~~~~~
+gcc -O -Wall -c space.c
+gcc -O -Wall -c swat.c
+gcc -O -Wall -c threed.c
+gcc -O -Wall -c vector.c
+gcc -O -Wall -c random.c
+gcc -O -Wall -c trade.c
+gcc -O -Wall -c options.c
+gcc -O -Wall -c stars.c
+gcc -O -Wall -c missions.c
+gcc -O -Wall -c pilot.c
+gcc -O -Wall -c file.c
+gcc -O -Wall -c keyboard.c
+gcc -o newkind alg_gfx.o alg_main.o docked.o elite.o intro.o planet.o shipdata.o shipface.o sound.o space.o swat.o threed.o vector.o random.o trade.o options.o stars.o missions.o pilot.o file.o keyboard.o -lalleg -lm
