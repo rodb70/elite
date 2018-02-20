@@ -849,6 +849,7 @@ void draw_explosion (struct univ_object *univ)
 	mult_vector (&camera_vec, trans_mat);
 	camera_vec = unit_vector (&camera_vec);
 	
+        /* Valgrind crashed here hitting F3 */
 	ship_norm = ship->normals;
 	
 	for (i = 0; i < ship->num_faces; i++)
