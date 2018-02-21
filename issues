@@ -1,2 +1,5 @@
-Crashes on jump to Hyperspace
-    Address boundry error
+Crashes in draw_explosion at ship_norm = ship->normal
+    Invalid read of size 8
+    Problem is when the local sun enteres camera view and
+    the game wants to set it to explode (?).
+    Solution: check for planet or sun when checking explosion flag

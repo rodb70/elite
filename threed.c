@@ -804,7 +804,8 @@ void draw_sun (struct univ_object *planet)
 }
 
 
-
+/* No test to prevent exploding suns and planets */
+/* Crashing on trying to draw explosion? */
 void draw_explosion (struct univ_object *univ)
 {
 	int i;
@@ -847,9 +848,13 @@ void draw_explosion (struct univ_object *univ)
 		
 	camera_vec = univ->location;
 	mult_vector (&camera_vec, trans_mat);
+
+        /* TODO: figure out why it crashes here */
+        /* Valgrind shows crash below: exploding sun */
+        /* It does look odd: assigning when also sending pointer to itself */
 	camera_vec = unit_vector (&camera_vec);
-	
-        /* Valgrind crashed here hitting F3 */
+        /* Valgrind crashed above */
+
 	ship_norm = ship->normals;
 	
 	for (i = 0; i < ship->num_faces; i++)
@@ -981,7 +986,9 @@ void draw_ship (struct univ_object *ship)
 		ship->exp_delta = 18; 
 	}
 
-	if (ship->flags & FLG_EXPLOSION)
+//	if (ship->flags & FLG_EXPLOSION)
+        /* SHIP_SUN and SHIP_PLANET are less than 0 */
+	if ((ship->flags & FLG_EXPLOSION) && ship->type != SHIP_SUN && ship->type != SHIP_PLANET )
 	{
 		draw_explosion (ship);
 		return;
