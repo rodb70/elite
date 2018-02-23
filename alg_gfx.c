@@ -118,8 +118,12 @@ int gfx_graphics_startup (void)
 	/* Create the screen buffer bitmap */
 	gfx_screen = create_bitmap (SCREEN_W, SCREEN_H);
 
+        /* Allegro 5 */
+        // al_clear_to_color (al_map_rgb (0,0,0));
 	clear (gfx_screen);
 
+        /* Allegro 5 */
+        // al_draw_bitmap (scanner_image, GFX_X_OFFSET, 385+GFX_Y_OFFSET, 0)
 	blit (scanner_image, gfx_screen, 0, 0, GFX_X_OFFSET, 385+GFX_Y_OFFSET, scanner_image->w, scanner_image->h);
 	gfx_draw_line (0, 0, 0, 384);
 	gfx_draw_line (0, 0, 511, 0);
@@ -155,6 +159,8 @@ void gfx_update_screen (void)
 	frame_count = 0;
 	
 	acquire_screen();
+        /* Allegro 5 */
+        // al_draw_bitmap_region (gfx_screen, GFX_X_OFFSET, GFX_Y_OFFSET, 512, 512, GFX_X_OFFSET, GFX_Y_OFFSET, 0);
  	blit (gfx_screen, screen, GFX_X_OFFSET, GFX_Y_OFFSET, GFX_X_OFFSET, GFX_Y_OFFSET, 512, 512);
 	release_screen();
 }
@@ -180,12 +186,16 @@ void gfx_fast_plot_pixel (int x, int y, int col)
 
 void gfx_plot_pixel (int x, int y, int col)
 {
+        /* Allegro 5 */
+        // al_put_pixel (x + GFX_X_OFFSET, y + GFX_Y_OFFSET, col);
 	putpixel (gfx_screen, x + GFX_X_OFFSET, y + GFX_Y_OFFSET, col);
 }
 
 
 void gfx_draw_filled_circle (int cx, int cy, int radius, int circle_colour)
 {
+        /* Allegro 5 */
+	// al_draw_filled_circle ((cx + GFX_X_OFFSET) + 0.5f, (cy + GFX_Y_OFFSET) + 0.5f, radius, circle_colour);
 	circlefill (gfx_screen, cx + GFX_X_OFFSET, cy + GFX_Y_OFFSET, radius, circle_colour);
 }
 
@@ -198,6 +208,8 @@ void gfx_draw_filled_circle (int cx, int cy, int radius, int circle_colour)
 #define frac(x) ((x) & 65535)
 #define invfrac(x) (65535-frac(x))
 #define plot(x,y,c) putpixel(gfx_screen, (x), (y), (c)+AA_BASE)
+// Allegro 5
+// #define plot(x,y,c) al_put_pixel((x), (y), (c)+AA_BASE)
 
 /*
  * Draw anti-aliased wireframe circle.
@@ -428,6 +440,8 @@ void gfx_draw_circle (int cx, int cy, int radius, int circle_colour)
 	if (anti_alias_gfx && (circle_colour == GFX_COL_WHITE))
 		gfx_draw_aa_circle (cx, cy, itofix(radius));
 	else	
+                /* Allegro 5 */
+		// al_draw_cirlce ((cx + GFX_X_OFFSET) + 0.5f, (cy + GFX_Y_OFFSET) + 0.5f, radius, circle_colour, 1.f);
 		circle (gfx_screen, cx + GFX_X_OFFSET, cy + GFX_Y_OFFSET, radius, circle_colour);
 }
 
@@ -450,6 +464,8 @@ void gfx_draw_line (int x1, int y1, int x2, int y2)
 	if (anti_alias_gfx)
 		gfx_draw_aa_line (itofix(x1), itofix(y1), itofix(x2), itofix(y2));
 	else
+                /* Allegro 5 */
+		// al_draw_line ((x1 + GFX_X_OFFSET) + 0.5f, (y1 + GFX_Y_OFFSET) + 0.5f, (x2 + GFX_X_OFFSET) + 0.5f, (y2 + GFX_Y_OFFSET) + 0.5f, GFX_COL_WHITE, 1.f);
 		line (gfx_screen, x1 + GFX_X_OFFSET, y1 + GFX_Y_OFFSET, x2 + GFX_X_OFFSET, y2 + GFX_Y_OFFSET, GFX_COL_WHITE);
 }
 
@@ -472,6 +488,8 @@ void gfx_draw_colour_line (int x1, int y1, int x2, int y2, int line_colour)
 	if (anti_alias_gfx && (line_colour == GFX_COL_WHITE))
 		gfx_draw_aa_line (itofix(x1), itofix(y1), itofix(x2), itofix(y2));
 	else
+                /* Allegro 5 */
+		// line ((x1 + GFX_X_OFFSET) + 0.5f, (y1 + GFX_Y_OFFSET) + 0.5f, (x2 + GFX_X_OFFSET) + 0.5f, (y2 + GFX_Y_OFFSET) + 0.5f, line_colour, 1.f);
 		line (gfx_screen, x1 + GFX_X_OFFSET, y1 + GFX_Y_OFFSET, x2 + GFX_X_OFFSET, y2 + GFX_Y_OFFSET, line_colour);
 }
 
@@ -487,6 +505,8 @@ void gfx_draw_triangle (int x1, int y1, int x2, int y2, int x3, int y3, int col)
 
 void gfx_display_text (int x, int y, char *txt)
 {
+        /* Allegro 5 */
+        // al_draw_text (datafile[ELITE_1].dat, GFX_COL_WHITE, (x / (2 / GFX_SCALE)) + GFX_X_OFFSET, (y / (2 / GFX_SCALE)) + GFX_Y_OFFSET, 0, txt);
 	textout_ex (    gfx_screen,
                         datafile[ELITE_1].dat,
                         txt,
@@ -500,6 +520,8 @@ void gfx_display_text (int x, int y, char *txt)
 
 void gfx_display_colour_text (int x, int y, char *txt, int col)
 {
+        /* Allegro 5 */
+        // al_draw_text (datafile[ELITE_1].dat, col, (x / (2 / GFX_SCALE)) + GFX_X_OFFSET, (y / (2 / GFX_SCALE)) + GFX_Y_OFFSET, 0, txt);
 	textout_ex (    gfx_screen,
                         datafile[ELITE_1].dat,
                         txt,
@@ -528,6 +550,8 @@ void gfx_display_centre_text (int y, char *str, int psize, int col)
 		txt_colour = col;
 	}
 
+        /* Allegro 5 */
+        // al_draw_text (datafile[ELITE_1].dat, col, (x / (2 / GFX_SCALE)) + GFX_X_OFFSET, (y / (2 / GFX_SCALE)) + GFX_Y_OFFSET, ALLEGRO_ALIGN_CENTER, txt);
 	textout_centre_ex ( gfx_screen,
                             datafile[txt_size].dat,
                             str,
@@ -596,6 +620,8 @@ void gfx_display_pretty_text (int tx, int ty, int bx, int by, char *txt)
 
 		*bptr = '\0';
 
+                /* Allegro 5 */
+                // al_draw_text (datafile[ELITE_1].dat, GFX_COL_WHITE, tx + GFX_X_OFFSET, ty + GFX_Y_OFFSET, 0, strbuf);
 		textout_ex (    gfx_screen,
                                 datafile[ELITE_1].dat,
                                 strbuf, tx + GFX_X_OFFSET,
@@ -610,6 +636,8 @@ void gfx_display_pretty_text (int tx, int ty, int bx, int by, char *txt)
 
 void gfx_draw_scanner (void)
 {
+        /* Allegro 5 */
+        // al_draw_bitmap (scanner_image, GFX_X_OFFSET, 385+GFX_Y_OFFSET, 0);
 	blit (scanner_image, gfx_screen, 0, 0, GFX_X_OFFSET, 385+GFX_Y_OFFSET, scanner_image->w, scanner_image->h);
 }
 
