@@ -1,5 +1,4 @@
 Sound Does not work
-Deprecated Allegro functions
 Crashes in draw_explosion at ship_norm = ship->normal
     Invalid read of size 8
     Problem is when the local sun enteres camera view and
