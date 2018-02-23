@@ -484,6 +484,7 @@ void gfx_draw_triangle (int x1, int y1, int x2, int y2, int x3, int y3, int col)
 
 void gfx_display_text (int x, int y, char *txt)
 {
+/* Deprecated */
 	text_mode (-1);
 	textout (gfx_screen, datafile[ELITE_1].dat, txt, (x / (2 / GFX_SCALE)) + GFX_X_OFFSET, (y / (2 / GFX_SCALE)) + GFX_Y_OFFSET, GFX_COL_WHITE);
 }
@@ -491,6 +492,7 @@ void gfx_display_text (int x, int y, char *txt)
 
 void gfx_display_colour_text (int x, int y, char *txt, int col)
 {
+/* Deprecated */
 	text_mode (-1);
 	textout (gfx_screen, datafile[ELITE_1].dat, txt, (x / (2 / GFX_SCALE)) + GFX_X_OFFSET, (y / (2 / GFX_SCALE)) + GFX_Y_OFFSET, col);
 }
@@ -513,6 +515,7 @@ void gfx_display_centre_text (int y, char *str, int psize, int col)
 		txt_colour = col;
 	}
 
+/* Deprecated */
 	text_mode (-1);
 	textout_centre (gfx_screen,  datafile[txt_size].dat, str, (128 * GFX_SCALE) + GFX_X_OFFSET, (y / (2 / GFX_SCALE)) + GFX_Y_OFFSET, txt_colour);
 }
@@ -575,6 +578,7 @@ void gfx_display_pretty_text (int tx, int ty, int bx, int by, char *txt)
 
 		*bptr = '\0';
 
+/* Deprecated */
 		text_mode (-1);
 		textout (gfx_screen, datafile[ELITE_1].dat, strbuf, tx + GFX_X_OFFSET, ty + GFX_Y_OFFSET, GFX_COL_WHITE);
 		ty += (8 * GFX_SCALE);
@@ -589,6 +593,7 @@ void gfx_draw_scanner (void)
 
 void gfx_set_clip_region (int tx, int ty, int bx, int by)
 {
+/* Deprecated */
 	set_clip (gfx_screen, tx + GFX_X_OFFSET, ty + GFX_Y_OFFSET, bx + GFX_X_OFFSET, by + GFX_Y_OFFSET);
 }
 
@@ -763,6 +768,7 @@ int gfx_request_file (char *title, char *path, char *ext)
 	int okay;
 
 	show_mouse (screen);
+/* Deprecated */
 	okay = file_select (title, path, ext);
 	show_mouse (NULL);
 
