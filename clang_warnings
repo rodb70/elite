@@ -4,13 +4,6 @@ gcc -O -Wall -g -c docked.c
 gcc -O -Wall -g -c elite.c
 gcc -O -Wall -g -c intro.c
 gcc -O -Wall -g -c planet.c
-planet.c: In function ‘expand_description’:
-planet.c:416:6: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
-      for (ptr = str; *ptr != '\0';)
-      ^~~
-planet.c:418:7: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
-       desc_ptr--;
-       ^~~~~~~~
 gcc -O -Wall -g -c shipdata.c
 gcc -O -Wall -g -c shipface.c
 gcc -O -Wall -g -c sound.c

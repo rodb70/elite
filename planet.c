@@ -410,12 +410,15 @@ void expand_description (char *source)
 				case 'I':
 					name_planet (str, hyperspace_planet);
 					capitalise_name (str);
-                                        /* Clang warning */
-                                        /* for is not guarded */
-                                        /* Indentation looks like it should be */
-					for (ptr = str; *ptr != '\0';)
+
+					for (ptr = str; *ptr != '\0';) {
 						*desc_ptr++ = *ptr++;
-						desc_ptr--;
+                                        }
+
+                                        /* Backs up before null
+                                           then adding "ian" to the string */
+					desc_ptr--;
+
 					strcpy (desc_ptr, "ian");
 					desc_ptr += 3;
 					break;
