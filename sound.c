@@ -140,8 +140,10 @@ void snd_play_midi (int midi_no, int repeat)
 
 void snd_stop_midi (void)
 {
+        /* Testing removal of semi-colon after if */
+        /* No sound on my system but it doesn't crash */
         /* if does nothing */
         /* semi-colon terminates */
-	if (sound_on);
+	if (sound_on)
 		play_midi (NULL, TRUE);
 }
