@@ -804,8 +804,6 @@ void draw_sun (struct univ_object *planet)
 }
 
 
-/* No test to prevent exploding suns and planets */
-/* Crashing on trying to draw explosion? */
 void draw_explosion (struct univ_object *univ)
 {
 	int i;
@@ -851,9 +849,8 @@ void draw_explosion (struct univ_object *univ)
 
         /* TODO: figure out why it crashes here */
         /* Valgrind shows crash below: exploding sun */
-        /* It does look odd: assigning when also sending pointer to itself */
+        /* If type < 0, it will crash */
 	camera_vec = unit_vector (&camera_vec);
-        /* Valgrind crashed above */
 
 	ship_norm = ship->normals;
 	
@@ -886,6 +883,7 @@ void draw_explosion (struct univ_object *univ)
 	
 	for (i = 0; i < ship->num_points; i++)
 	{
+                /* Valgrind: Conditional jump or move depends on unintialised values */
 		if (visible[sp[i].face1] || visible[sp[i].face2] ||
 			visible[sp[i].face3] || visible[sp[i].face4])
 		{
