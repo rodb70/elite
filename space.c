@@ -595,6 +595,7 @@ void update_universe (void)
                                 }
 			
                                 /* type can be negative */
+                                /* Currently, it can't.  See above */
 				bounty = ship_list[type]->bounty;
 				
 				if ((bounty != 0) && (!witchspace))
@@ -629,12 +630,13 @@ void update_universe (void)
 
 			flip = universe[i];
 			switch_to_view (&flip);
+#define DOCK_VIS_DIST 65792
 			
 			if (type == SHIP_PLANET)
 			{
 				if ((ship_count[SHIP_CORIOLIS] == 0) &&
 					(ship_count[SHIP_DODEC] == 0) &&
-					(universe[i].distance < 65792)) /* was 49152 */
+					(universe[i].distance < DOCK_VIS_DIST)) /* was 49152 */
 				{
 					make_station_appear();
 				}				
@@ -650,7 +652,8 @@ void update_universe (void)
 			}
 			
 			
-			if (universe[i].distance < 170)
+#define CHECK_DOCKING 170
+			if (universe[i].distance < CHECK_DOCKING)
 			{
 				if ((type == SHIP_CORIOLIS) || (type == SHIP_DODEC))
 					check_docking (i);
@@ -659,8 +662,9 @@ void update_universe (void)
 				
 				continue;
 			}
+#define MAX_VIS_DIST 57344
 
-			if (universe[i].distance > 57344)
+			if (universe[i].distance > MAX_VIS_DIST)
 			{
 				remove_ship (i);
 				continue;
