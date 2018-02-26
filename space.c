@@ -56,7 +56,9 @@ int hyper_distance;
 int hyper_galactic;
 
 #define STOCK_SHIP_SPEED 12
-
+#define MAX_FRONT_SHIELD 255
+#define MAX_AFT_SHIELD 255
+#define MAX_ENERGY 255
 
 
 
@@ -212,9 +214,9 @@ void dock_player (void)
 	flight_speed = 0;
 	flight_roll = 0;
 	flight_climb = 0;
-	front_shield = 255;
-	aft_shield = 255;
-	energy = 255;
+	front_shield = MAX_FRONT_SHIELD;
+	aft_shield = MAX_AFT_SHIELD;
+	energy = MAX_ENERGY;
 	myship.altitude = 255;
 	myship.cabtemp = 30;
 	reset_weapons();
@@ -372,13 +374,13 @@ void regenerate_shields (void)
 {
 	if (energy > 127)
 	{
-		if (front_shield < 255)
+		if (front_shield < MAX_FRONT_SHIELD)
 		{
 			front_shield++;
 			energy--;
 		}
 	
-		if (aft_shield < 255)
+		if (aft_shield < MAX_AFT_SHIELD)
 		{
 			aft_shield++;
 			energy--;
@@ -387,8 +389,8 @@ void regenerate_shields (void)
 		
 	energy++;
 	energy += cmdr.energy_unit;
-	if (energy > 255)
-		energy = 255;
+	if (energy > MAX_ENERGY)
+		energy = MAX_ENERGY;
 }
 
 

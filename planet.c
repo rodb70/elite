@@ -163,12 +163,12 @@ int gen_msx_rnd_number (void)
 
 void waggle_galaxy (struct galaxy_seed *glx_ptr)
 {
-    unsigned int x;
+        unsigned int x;
 	unsigned int y;
 	extern int carry_flag;
 
 	x = glx_ptr->a + glx_ptr->c;
-    y = glx_ptr->b + glx_ptr->d;
+        y = glx_ptr->b + glx_ptr->d;
 
 
 	if (x > 0xFF)
@@ -182,7 +182,7 @@ void waggle_galaxy (struct galaxy_seed *glx_ptr)
 	glx_ptr->c = glx_ptr->e;
 	glx_ptr->d = glx_ptr->f;
 
-    x += glx_ptr->c;
+        x += glx_ptr->c;
 	y += glx_ptr->d;
 
 
@@ -194,7 +194,7 @@ void waggle_galaxy (struct galaxy_seed *glx_ptr)
 	else
 		carry_flag = 0;
 
-    x &= 0xFF;
+        x &= 0xFF;
 	y &= 0xFF;
 
 	glx_ptr->e = x;

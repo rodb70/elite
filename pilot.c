@@ -51,19 +51,20 @@ void fly_to_vector (struct univ_object *ship, Vector vec)
 	double rat2;
 	double cnt2;
 
-	rat = 3;
-	rat2 = 0.1666;
-	cnt2 = 0.8055;
+        /* What are these? */
+	rat = 3;/* Magic Number */
+	rat2 = 0.1666;/* Magic Number */
+	cnt2 = 0.8055;/* Magic Number */
 
 	nvec = unit_vector(&vec);
 	direction = vector_dot_product (&nvec, &ship->rotmat[2]); 
 	
-	if (direction < -0.6666)
+	if (direction < -0.6666)/* Magic Number */
 		rat2 = 0;
 
 	dir = vector_dot_product (&nvec, &ship->rotmat[1]);
 
-	if (direction < -0.861)
+	if (direction < -0.861)/* Magic Number */
 	{
 		ship->rotx = (dir < 0) ? 7 : -7;
 		ship->rotz = 0;
@@ -92,7 +93,7 @@ void fly_to_vector (struct univ_object *ship, Vector vec)
 		}		
 	}
 
-	if (direction <= -0.167)
+	if (direction <= -0.167)/* Magic Number */
 	{
 		ship->acceleration = -1;
 		return;
@@ -137,7 +138,7 @@ void fly_to_station_front (struct univ_object *ship)
 	vec.y = universe[1].location.y - ship->location.y;
 	vec.z = universe[1].location.z - ship->location.z;
 
-	vec.x += universe[1].rotmat[2].x * 768;
+	vec.x += universe[1].rotmat[2].x * 768;/* Magic Number */
 	vec.y += universe[1].rotmat[2].y * 768;
 	vec.z += universe[1].rotmat[2].z * 768;
 
@@ -189,17 +190,17 @@ void fly_to_docking_bay (struct univ_object *ship)
 			ship->rotz = -ship->rotz;
 		}
 
-		if (fabs(vec.x) >= 0.0625)
+		if (fabs(vec.x) >= 0.0625)/* Magic Number */
 		{
 			ship->acceleration = 0;
 			ship->velocity = 1;
 			return;
 		}
 
-		if (fabs(vec.y) > 0.002436)
+		if (fabs(vec.y) > 0.002436)/* Magic Number */
 			ship->rotx = (vec.y < 0) ? -1 : 1;
 
-		if (fabs(vec.y) >= 0.0625)
+		if (fabs(vec.y) >= 0.0625)/* Magic Number */
 		{
 			 ship->acceleration = 0;
 			 ship->velocity = 1;
@@ -211,7 +212,7 @@ void fly_to_docking_bay (struct univ_object *ship)
 
 	dir = vector_dot_product (&ship->rotmat[0], &universe[1].rotmat[1]);
 
-	if (fabs(dir) >= 0.9166)
+	if (fabs(dir) >= 0.9166)/* Magic Number */
 	{
 		ship->acceleration++;
 		ship->rotz = 127;
@@ -247,7 +248,7 @@ void auto_pilot_ship (struct univ_object *ship)
 
 	dist = sqrt (diff.x * diff.x + diff.y * diff.y + diff.z * diff.z);
 
-	if (dist < 160)
+	if (dist < 160)/* Magic Number */
 	{
 		ship->flags |= FLG_REMOVE;		// Ship has docked.
 		return;
@@ -256,7 +257,7 @@ void auto_pilot_ship (struct univ_object *ship)
 	vec = unit_vector (&diff);	
 	dir = vector_dot_product (&universe[1].rotmat[2], &vec);
 
-	if (dir < 0.9722)
+	if (dir < 0.9722)   /* Magic Number */
 	{
 		fly_to_station_front (ship);
 		return;
@@ -264,7 +265,7 @@ void auto_pilot_ship (struct univ_object *ship)
 
 	dir = vector_dot_product (&ship->rotmat[2], &vec);
 
-	if (dir < -0.9444)
+	if (dir < -0.9444)/* Magic Number */
 	{
 		fly_to_docking_bay (ship);
 		return;

@@ -18,6 +18,7 @@
 
 struct galaxy_seed
 {
+                                /* What do these names and numbers mean? */
 	unsigned char a;	/* 6c */
 	unsigned char b;	/* 6d */
 	unsigned char c;	/* 6e */
