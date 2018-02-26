@@ -6,14 +6,9 @@
 #
 # Copy this file to the source directory.
 #
-# Enter "make -f makefile-linux".
+# Enter "make".
 #
-# Unzip the Windows distribution from the E:TNK website.
-#
-# Copy the file "newkind" from the source directory into the same directory as
-# the Windows newkind.exe file that you just unzipped.
-#
-# "cd" to that directory and enter "./newkind &".
+# Enter "./newkind &".
 #
 # Select wisely in battle, and be strong. =)
 #
