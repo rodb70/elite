@@ -55,7 +55,7 @@ char hyper_name[16];
 int hyper_distance;
 int hyper_galactic;
 
-
+#define STOCK_SHIP_SPEED 12
 
 
 
@@ -1126,7 +1126,7 @@ void enter_witchspace (void)
 	docked_planet.b ^= 31;
 	in_battle = 1;  
 
-	flight_speed = 12;
+	flight_speed = STOCK_SHIP_SPEED;
 	flight_roll = 0;
 	flight_climb = 0;
 	create_new_stars();
@@ -1174,7 +1174,7 @@ void complete_hyperspace (void)
 	generate_planet_data (&current_planet_data, docked_planet);
 	generate_stock_market ();
 	
-	flight_speed = 12;
+	flight_speed = STOCK_SHIP_SPEED;
 	flight_roll = 0;
 	flight_climb = 0;
 	create_new_stars();
@@ -1275,7 +1275,7 @@ void launch_player (void)
 	Matrix rotmat;
 
 	docked = 0;
-	flight_speed = 12;
+	flight_speed = STOCK_SHIP_SPEED;
 	flight_roll = -15;
 	flight_climb = 0;
 	cmdr.legal_status |= carrying_contraband();
