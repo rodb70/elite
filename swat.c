@@ -52,40 +52,40 @@ int ship_count[NO_OF_SHIPS + 1];  /* many */
 
 int initial_flags[NO_OF_SHIPS + 1] =
 {
-	0,											// NULL,
-	0,											// missile 
-	0,											// coriolis
-	FLG_SLOW | FLG_FLY_TO_PLANET,				// escape
-	FLG_INACTIVE,								// alloy
-	FLG_INACTIVE,								// cargo
-	FLG_INACTIVE,								// boulder
-	FLG_INACTIVE,								// asteroid
-	FLG_INACTIVE,								// rock
-	FLG_FLY_TO_PLANET | FLG_SLOW,				// shuttle
-	FLG_FLY_TO_PLANET | FLG_SLOW,				// transporter
-	0,											// cobra3
-	0,											// python
-	0,											// boa
-	FLG_SLOW,									// anaconda
-	FLG_SLOW,									// hermit
-	FLG_BOLD | FLG_POLICE,						// viper
-	FLG_BOLD | FLG_ANGRY,						// sidewinder
-	FLG_BOLD | FLG_ANGRY,						// mamba
-	FLG_BOLD | FLG_ANGRY,						// krait
-	FLG_BOLD | FLG_ANGRY,						// adder
-	FLG_BOLD | FLG_ANGRY,						// gecko
-	FLG_BOLD | FLG_ANGRY,						// cobra1
-	FLG_SLOW | FLG_ANGRY,						// worm
-	FLG_BOLD | FLG_ANGRY,						// cobra3
-	FLG_BOLD | FLG_ANGRY,						// asp2
-	FLG_BOLD | FLG_ANGRY,						// python
-	FLG_POLICE,									// fer_de_lance
-	FLG_BOLD | FLG_ANGRY,						// moray
-	FLG_BOLD | FLG_ANGRY,						// thargoid
-	FLG_ANGRY,									// thargon
-	FLG_ANGRY,									// constrictor
-	FLG_POLICE | FLG_CLOAKED,					// cougar
-	0											// dodec
+	0,					// NULL,
+	0,					// missile 
+	0,					// coriolis
+	FLG_SLOW | FLG_FLY_TO_PLANET,		// escape
+	FLG_INACTIVE,				// alloy
+	FLG_INACTIVE,				// cargo
+	FLG_INACTIVE,				// boulder
+	FLG_INACTIVE,				// asteroid
+	FLG_INACTIVE,				// rock
+	FLG_FLY_TO_PLANET | FLG_SLOW,		// shuttle
+	FLG_FLY_TO_PLANET | FLG_SLOW,		// transporter
+	0,					// cobra3
+	0,					// python
+	0,					// boa
+	FLG_SLOW,				// anaconda
+	FLG_SLOW,				// hermit
+	FLG_BOLD | FLG_POLICE,			// viper
+	FLG_BOLD | FLG_ANGRY,			// sidewinder
+	FLG_BOLD | FLG_ANGRY,			// mamba
+	FLG_BOLD | FLG_ANGRY,			// krait
+	FLG_BOLD | FLG_ANGRY,			// adder
+	FLG_BOLD | FLG_ANGRY,			// gecko
+	FLG_BOLD | FLG_ANGRY,			// cobra1
+	FLG_SLOW | FLG_ANGRY,			// worm
+	FLG_BOLD | FLG_ANGRY,			// cobra3
+	FLG_BOLD | FLG_ANGRY,			// asp2
+	FLG_BOLD | FLG_ANGRY,			// python
+	FLG_POLICE,				// fer_de_lance
+	FLG_BOLD | FLG_ANGRY,			// moray
+	FLG_BOLD | FLG_ANGRY,			// thargoid
+	FLG_ANGRY,				// thargon
+	FLG_ANGRY,				// constrictor
+	FLG_POLICE | FLG_CLOAKED,		// cougar
+	0					// dodec
 };
 
 
