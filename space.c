@@ -586,16 +586,15 @@ void update_universe (void)
                 /* Warning: type can be less than zero */
 		if (type != 0)
 		{
-                        /* Check for less than zero since type used as array index */
-			if (type > 0 && (universe[i].flags & FLG_REMOVE))
+                        /* Check for less than zero types; type used as array index */
+                        if (type != SHIP_PLANET && type != SHIP_SUN &&
+			    (universe[i].flags & FLG_REMOVE))
 			{
 				if (type == SHIP_VIPER)
                                 {
 					cmdr.legal_status |= 64;
                                 }
 			
-                                /* type can be negative */
-                                /* Currently, it can't.  See above */
 				bounty = ship_list[type]->bounty;
 				
 				if ((bounty != 0) && (!witchspace))
@@ -662,8 +661,8 @@ void update_universe (void)
 				
 				continue;
 			}
-#define MAX_VIS_DIST 57344
 
+#define MAX_VIS_DIST 57344
 			if (universe[i].distance > MAX_VIS_DIST)
 			{
 				remove_ship (i);
@@ -718,6 +717,7 @@ void update_scanner (void)
 		y1 = -z / 4;
 		y2 = y1 - y / 2;
 
+                /* No idea what this means */
 		if ((y2 < -28) || (y2 > 28) ||
 			(x1 < -50) || (x1 > 50))
 			continue;
@@ -1228,6 +1228,7 @@ void jump_warp (void)
 	int i;
 	int type;
 	int jump;
+        const int min_jump = 75000;
 	
 	for (i = 0; i < MAX_UNIV_OBJECTS; i++)
 	{
@@ -1242,7 +1243,7 @@ void jump_warp (void)
 		}
 	}
 
-	if ((universe[0].distance < 75001) || (universe[1].distance < 75001))
+	if ((universe[0].distance <= min_jump) || (universe[1].distance <= min_jump))
 	{
 		info_message ("Mass Locked");
 		return;
@@ -1250,9 +1251,9 @@ void jump_warp (void)
 
 
 	if (universe[0].distance < universe[1].distance)
-		jump = universe[0].distance - 75000;
+		jump = universe[0].distance - min_jump;
 	else
-		jump = universe[1].distance - 75000;	
+		jump = universe[1].distance - min_jump;	
 
 	if (jump > 1024)
 		jump = 1024;
