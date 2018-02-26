@@ -17,7 +17,7 @@
 
 #include "vector.h"
 
-#define NO_OF_SHIPS		33
+//#define NO_OF_SHIPS		33
 
 
 
@@ -75,42 +75,44 @@ struct ship_data
 	struct ship_face_normal *normals;
 };
 
-
-#define SHIP_SUN				-2
-#define SHIP_PLANET				-1
-#define SHIP_MISSILE			1
-#define SHIP_CORIOLIS			2
-#define SHIP_ESCAPE_CAPSULE		3
-#define SHIP_ALLOY				4
-#define SHIP_CARGO				5
-#define SHIP_BOULDER			6
-#define SHIP_ASTEROID			7
-#define SHIP_ROCK				8
-#define SHIP_SHUTTLE			9
-#define SHIP_TRANSPORTER		10
-#define SHIP_COBRA3				11
-#define SHIP_PYTHON				12
-#define SHIP_BOA				13
-#define SHIP_ANACONDA			14
-#define SHIP_HERMIT				15
-#define SHIP_VIPER				16
-#define SHIP_SIDEWINDER			17
-#define SHIP_MAMBA				18
-#define SHIP_KRAIT				19
-#define SHIP_ADDER				20
-#define SHIP_GECKO				21
-#define SHIP_COBRA1				22
-#define SHIP_WORM				23
-#define SHIP_COBRA3_LONE		24
-#define SHIP_ASP2				25
-#define SHIP_PYTHON_LONE		26
-#define SHIP_FER_DE_LANCE		27
-#define SHIP_MORAY				28
-#define SHIP_THARGOID			29
-#define SHIP_THARGLET			30
-#define SHIP_CONSTRICTOR		31
-#define SHIP_COUGAR				32
-#define SHIP_DODEC				33
+enum {
+    SHIP_SUN            =   -2,
+    SHIP_PLANET         =   -1,	
+    SHIP_MISSILE        =   1,
+    SHIP_CORIOLIS,
+    SHIP_ESCAPE_CAPSULE,
+    SHIP_ALLOY,
+    SHIP_CARGO,
+    SHIP_BOULDER,
+    SHIP_ASTEROID,
+    SHIP_ROCK,
+    SHIP_SHUTTLE,
+    SHIP_TRANSPORTER,
+    SHIP_COBRA3,	
+    SHIP_PYTHON,	
+    SHIP_BOA,
+    SHIP_ANACONDA,
+    SHIP_HERMIT,	
+    SHIP_VIPER,
+    SHIP_SIDEWINDER,
+    SHIP_MAMBA,
+    SHIP_KRAIT,
+    SHIP_ADDER,
+    SHIP_GECKO,
+    SHIP_COBRA1,
+    SHIP_WORM,
+    SHIP_COBRA3_LONE,
+    SHIP_ASP2,
+    SHIP_PYTHON_LONE,
+    SHIP_FER_DE_LANCE,
+    SHIP_MORAY,
+    SHIP_THARGOID,
+    SHIP_THARGLET,
+    SHIP_CONSTRICTOR,
+    SHIP_COUGAR,
+    SHIP_DODEC,
+    NO_OF_SHIPS = SHIP_DODEC
+};
 
 extern struct ship_data missile_data;
 extern struct ship_data coriolis_data;
