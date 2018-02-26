@@ -92,16 +92,16 @@ int gfx_graphics_startup (void)
 	if (rv != 0)
 	{
 		set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
-      	allegro_message("Unable to set graphics mode.");
-      	return 1;
+          	allegro_message("Unable to set graphics mode.");
+        	return 1;
 	}
 	
 	datafile = load_datafile("elite.dat");
 	if (!datafile)
 	{
 		set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
-      	allegro_message("Error loading %s!\n", "elite.dat");
-      	return 1;
+        	allegro_message("Error loading %s!\n", "elite.dat");
+           	return 1;
 	}
 
 	scanner_image = load_bitmap(scanner_filename, the_palette);
@@ -156,6 +156,7 @@ void gfx_update_screen (void)
 {
 	while (frame_count < 1)
 		rest (10);
+
 	frame_count = 0;
 	
 	acquire_screen();
