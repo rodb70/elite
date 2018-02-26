@@ -45,7 +45,7 @@ struct univ_object
 	int bravery;
 	int exp_delta;
 	int exp_seed;
-	int distance;
+	int distance;       /* Distance to what? */
 };
 
 #define MAX_UNIV_OBJECTS	20
