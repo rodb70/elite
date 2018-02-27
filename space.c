@@ -48,6 +48,9 @@ extern int flight_climb;
 extern int flight_roll;
 extern int flight_speed;
 
+const struct rotation rot_127 = {-127, -127};
+const struct rotation rot_0 = {0, 0};
+
 struct galaxy_seed destination_planet;
 int hyper_ready;
 int hyper_countdown;
@@ -107,19 +110,19 @@ void rotate_vec (struct vector *vec, double alpha, double beta)
 
 void move_univ_object (struct univ_object *obj)
 {
-	double x,y,z;
+        struct vector vec;
 	double k2;
 	double alpha;
 	double beta;
-	int rotx,rotz;
+        struct rotation rot;
 	double speed;
 	
 	alpha = flight_roll / 256.0;
 	beta = flight_climb / 256.0;
 	
-	x = obj->location.x;
-	y = obj->location.y;
-	z = obj->location.z;
+	vec.x = obj->location.x;
+	vec.y = obj->location.y;
+	vec.z = obj->location.z;
 
 	if (!(obj->flags & FLG_DEAD))
 	{ 
@@ -127,9 +130,9 @@ void move_univ_object (struct univ_object *obj)
 		{
 			speed = obj->velocity;
 			speed *= 1.5; 	
-			x += obj->rotmat[2].x * speed; 
-			y += obj->rotmat[2].y * speed; 
-			z += obj->rotmat[2].z * speed; 
+			vec.x += obj->rotmat[2].x * speed; 
+			vec.y += obj->rotmat[2].y * speed; 
+			vec.z += obj->rotmat[2].z * speed; 
 		}
 
 		if (obj->acceleration != 0)
@@ -144,18 +147,19 @@ void move_univ_object (struct univ_object *obj)
 		}
 	}
 	
-	k2 = y - alpha * x;
-	z = z + beta * k2;
-	y = k2 - z * beta;
-	x = x + alpha * y;
+	k2 = vec.y - alpha * vec.x;
+	vec.z = vec.z + beta * k2;
+	vec.y = k2 - vec.z * beta;
+	vec.x = vec.x + alpha * vec.y;
 
-	z = z - flight_speed;
+	vec.z = vec.z - flight_speed;
 
-	obj->location.x = x;
-	obj->location.y = y;
-	obj->location.z = z;	
+	obj->location.x = vec.x;
+	obj->location.y = vec.y;
+	obj->location.z = vec.z;	
 
-	obj->distance = sqrt (x*x + y*y + z*z);
+//	obj->distance = sqrt (x*x + y*y + z*z);
+        obj->distance = get_distance(vec);
 	
 	if (obj->type == SHIP_PLANET)
 		beta = 0.0;
@@ -168,32 +172,32 @@ void move_univ_object (struct univ_object *obj)
 		return;
 
 
-	rotx = obj->rotx;
-	rotz = obj->rotz;
+	rot.x = obj->rot.x;
+	rot.z = obj->rot.z;
 	
 	/* If necessary rotate the object around the X axis... */
 
-	if (rotx != 0)
+	if (rot.x != 0)
 	{
-		rotate_x_first (&obj->rotmat[2].x, &obj->rotmat[1].x, rotx);
-		rotate_x_first (&obj->rotmat[2].y, &obj->rotmat[1].y, rotx);	
-		rotate_x_first (&obj->rotmat[2].z, &obj->rotmat[1].z, rotx);
+		rotate_x_first (&obj->rotmat[2].x, &obj->rotmat[1].x, rot.x);
+		rotate_x_first (&obj->rotmat[2].y, &obj->rotmat[1].y, rot.x);	
+		rotate_x_first (&obj->rotmat[2].z, &obj->rotmat[1].z, rot.x);
 
-		if ((rotx != 127) && (rotx != -127))
-			obj->rotx -= (rotx < 0) ? -1 : 1;
+		if ((rot.x != 127) && (rot.x != -127))
+			obj->rot.x -= (rot.x < 0) ? -1 : 1;
 	}	
 
 	
 	/* If necessary rotate the object around the Z axis... */
 
-	if (rotz != 0)
+	if (rot.z != 0)
 	{	
-		rotate_x_first (&obj->rotmat[0].x, &obj->rotmat[1].x, rotz);
-		rotate_x_first (&obj->rotmat[0].y, &obj->rotmat[1].y, rotz);	
-		rotate_x_first (&obj->rotmat[0].z, &obj->rotmat[1].z, rotz);	
+		rotate_x_first (&obj->rotmat[0].x, &obj->rotmat[1].x, rot.z);
+		rotate_x_first (&obj->rotmat[0].y, &obj->rotmat[1].y, rot.z);	
+		rotate_x_first (&obj->rotmat[0].z, &obj->rotmat[1].z, rot.z);	
 
-		if ((rotz != 127) && (rotz != -127))
-			obj->rotz -= (rotz < 0) ? -1 : 1;
+		if ((rot.z != 127) && (rot.z != -127))
+			obj->rot.z -= (rot.z < 0) ? -1 : 1;
 	}
 
 
@@ -436,7 +440,7 @@ void make_station_appear (void)
 {
 	double px,py,pz;
 	double sx,sy,sz;
-	Vector vec;
+	struct vector vec;
 	Matrix rotmat;
 	
 	px = universe[0].location.x;
@@ -1147,7 +1151,8 @@ void enter_witchspace (void)
 void complete_hyperspace (void)
 {
 	Matrix rotmat;
-	int px,py,pz;
+        struct point p_vec;
+//        struct rotation rot = {0, 0};
 	
 	hyper_ready = 0;
 	witchspace = 0;
@@ -1185,27 +1190,27 @@ void complete_hyperspace (void)
 	generate_landscape(docked_planet.a * 251 + docked_planet.b);
 	set_init_matrix (rotmat);
 
-	pz = (((docked_planet.b) & 7) + 7) / 2;
-	px = pz / 2;
-	py = px;
+	p_vec.z = (((docked_planet.b) & 7) + 7) / 2;
+	p_vec.x = p_vec.z / 2;
+	p_vec.y = p_vec.x;
 
-	px <<= 16;
-	py <<= 16;
-	pz <<= 16;
+	p_vec.x <<= 16;
+	p_vec.y <<= 16;
+	p_vec.z <<= 16;
 	
 	if ((docked_planet.b & 1) == 0)
 	{
-		px = -px;
-		py = -py;
+		p_vec.x = -p_vec.x;
+		p_vec.y = -p_vec.y;
 	}
 
-	add_new_ship (SHIP_PLANET, px, py, pz, rotmat, 0, 0);
+	add_new_ship (SHIP_PLANET, p_vec, rotmat, rot_0);
 
 
-	pz = -(((docked_planet.d & 7) | 1) << 16);
-	px = ((docked_planet.f & 3) << 16) | ((docked_planet.f & 3) << 8);
+	p_vec.z = -(((docked_planet.d & 7) | 1) << 16);
+	p_vec.x = ((docked_planet.f & 3) << 16) | ((docked_planet.f & 3) << 8);
 
-	add_new_ship (SHIP_SUN, px, py, pz, rotmat, 0, 0);
+	add_new_ship (SHIP_SUN, p_vec, rotmat, rot_0);
 
 	current_screen = SCR_BREAK_PATTERN;
 	snd_play_sample (SND_HYPERSPACE);
@@ -1285,7 +1290,9 @@ void launch_player (void)
 	clear_universe();
 	generate_landscape(docked_planet.a * 251 + docked_planet.b);
 	set_init_matrix (rotmat);
-	add_new_ship (SHIP_PLANET, 0, 0, 65536, rotmat, 0, 0);
+        struct point planet_vec = {0, 0, 65536};
+//        struct rotation rot = { 0, 0};
+	add_new_ship (SHIP_PLANET, planet_vec, rotmat, rot_0);
 
 	rotmat[2].x = -rotmat[2].x;
 	rotmat[2].y = -rotmat[2].y;
@@ -1313,3 +1320,7 @@ void engage_docking_computer (void)
 	}
 }
 
+int get_distance( struct vector vec )
+{
+    return sqrt(pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2));
+}

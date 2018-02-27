@@ -105,9 +105,13 @@ void clear_universe (void)
 }
 
 
-int add_new_ship (int ship_type, int x, int y, int z, struct vector *rotmat, int rotx, int rotz)
+int add_new_ship (int ship_type, struct point pt, struct vector *rotmat, struct rotation rot)
 {
 	int i;
+
+        int x = pt.x;
+        int y = pt.y;
+        int z = pt.z;
 
 	for (i = 0; i < MAX_UNIV_OBJECTS; i++)
 	{
@@ -118,14 +122,15 @@ int add_new_ship (int ship_type, int x, int y, int z, struct vector *rotmat, int
 			universe[i].location.y = y;
 			universe[i].location.z = z;
 			
+                        /* Distance from Origin: 3D Pythagorean Theorem */
 			universe[i].distance = sqrt(x*x + y*y + z*z);
 
 			universe[i].rotmat[0] = rotmat[0];
 			universe[i].rotmat[1] = rotmat[1];
 			universe[i].rotmat[2] = rotmat[2];
 
-			universe[i].rotx = rotx;
-			universe[i].rotz = rotz;
+			universe[i].rot.x = rot.x;
+			universe[i].rot.z = rot.z;
 			
 			universe[i].velocity = 0;
 			universe[i].acceleration = 0;
@@ -173,7 +178,8 @@ void remove_ship (int un)
 {
 	int type;
 	Matrix rotmat;
-	int px,py,pz;
+        struct point p_vec;
+//        struct rotation rot = {0, 0};
 	
 	type = universe[un].type;
 	
@@ -190,14 +196,14 @@ void remove_ship (int un)
 	if ((type == SHIP_CORIOLIS) || (type == SHIP_DODEC))
 	{
 		set_init_matrix (rotmat);
-		px = universe[un].location.x;
-		py = universe[un].location.y;
-		pz = universe[un].location.z;
+		p_vec.x = universe[un].location.x;
+		p_vec.y = universe[un].location.y;
+		p_vec.z = universe[un].location.z;
 		
-		py &= 0xFFFF;
-		py |= 0x60000;
+		p_vec.y &= 0xFFFF;  /* Magic Number */
+		p_vec.y |= 0x60000; /* Magic Number */
 		
-		add_new_ship (SHIP_SUN, px, py, pz, rotmat, 0, 0);
+		add_new_ship (SHIP_SUN, p_vec, rotmat, rot_0);
 	}
 }
 
@@ -205,10 +211,11 @@ void remove_ship (int un)
 void add_new_station (double sx, double sy, double sz, Matrix rotmat)
 {
 	int station;
+        struct rotation rot = {0, -127};
 	
 	station = (current_planet_data.techlevel >= 10) ? SHIP_DODEC : SHIP_CORIOLIS;
 	universe[1].type = 0;
-	add_new_ship (station, sx, sy, sz, rotmat, 0, -127);					
+	add_new_ship (station, (struct point){sx, sy, sz}, rotmat, rot);					
 }
 	
 
@@ -229,9 +236,9 @@ void launch_enemy (int un, int type, int flags, int bravery)
 	int newship;
 	struct univ_object *ns;
 	
-	newship = add_new_ship (type, universe[un].location.x, universe[un].location.y,
-							universe[un].location.z, universe[un].rotmat,
-							universe[un].rotx, universe[un].rotz);
+        struct point un_vec = {universe[un].location.x, universe[un].location.y, universe[un].location.z};
+	newship = add_new_ship (type, un_vec, universe[un].rotmat,
+		(struct rotation){universe[un].rot.x, universe[un].rot.z});
 
 	if (newship == -1)
 	{
@@ -249,14 +256,14 @@ void launch_enemy (int un, int type, int flags, int bravery)
 	}
 
 	ns->flags |= flags;
-	ns->rotz /= 2;
-	ns->rotz *= 2;
+	ns->rot.z /= 2;
+	ns->rot.z *= 2;
 	ns->bravery = bravery;
 
 	if ((type == SHIP_CARGO) || (type == SHIP_ALLOY) || (type == SHIP_ROCK))
 	{
-		ns->rotz = ((rand255() * 2) & 255) - 128;
-		ns->rotx = ((rand255() * 2) & 255) - 128;
+		ns->rot.z = ((rand255() * 2) & 255) - 128;
+		ns->rot.x = ((rand255() * 2) & 255) - 128;
 		ns->velocity = rand255() & 15;
 	}
 }
@@ -322,7 +329,7 @@ void make_angry (int un)
 	
 	if (type > SHIP_ROCK)
 	{
-		universe[un].rotx = 4;
+		universe[un].rot.x = 4;
 		universe[un].acceleration = 2;
 		universe[un].flags |= FLG_ANGRY;
 	}
@@ -439,6 +446,7 @@ void fire_missile (void)
 {
 	int newship;
 	struct univ_object *ns;
+//        struct rotation rot = {0, 0};
 	Matrix rotmat;
 
 	if (missile_target < 0)
@@ -448,7 +456,8 @@ void fire_missile (void)
 	rotmat[2].z = 1.0;
 	rotmat[0].x = -1.0;
 	
-	newship = add_new_ship (SHIP_MISSILE, 0, -28, 14, rotmat, 0, 0);
+        struct point pt = {0, -28, 14};
+	newship = add_new_ship (SHIP_MISSILE, pt, rotmat, rot_0);
 
 	if (newship == -1)
 	{
@@ -473,7 +482,7 @@ void fire_missile (void)
 
 
 
-void track_object (struct univ_object *ship, double direction, Vector nvec)
+void track_object (struct univ_object *ship, double direction, struct vector nvec)
 {	
 	double dir;
 	int rat;
@@ -486,30 +495,30 @@ void track_object (struct univ_object *ship, double direction, Vector nvec)
 
 	if (direction < -0.861)
 	{
-		ship->rotx = (dir < 0) ? 7 : -7;
-		ship->rotz = 0;
+		ship->rot.x = (dir < 0) ? 7 : -7;
+		ship->rot.z = 0;
 		return; 
 	}
 	
-	ship->rotx = 0;
+	ship->rot.x = 0;
 	
 	if ((fabs(dir) * 2) >= rat2)
 	{
-		ship->rotx = (dir < 0) ? rat : -rat;
+		ship->rot.x = (dir < 0) ? rat : -rat;
 	}
 		
-	if (abs(ship->rotz) < 16)
+	if (abs(ship->rot.z) < 16)
 	{
 		dir = vector_dot_product (&nvec, &ship->rotmat[0]);
 
-		ship->rotz = 0;
+		ship->rot.z = 0;
 
 		if ((fabs(dir) * 2) > rat2)
 		{
-			ship->rotz = (dir < 0) ? rat : -rat;
+			ship->rot.z = (dir < 0) ? rat : -rat;
 
-			if (ship->rotx < 0)
-				ship->rotz = -ship->rotz;
+			if (ship->rot.x < 0)
+				ship->rot.z = -ship->rot.z;
 		}		
 	}
 }
@@ -520,8 +529,8 @@ void missile_tactics (int un)
 {
 	struct univ_object *missile;
 	struct univ_object *target;
-	Vector vec;
-	Vector nvec;
+	struct vector vec;
+	struct vector nvec;
 	double direction;
 	double cnt2 = 0.223;
 	
@@ -627,7 +636,7 @@ void tactics (int un)
 	int maxeng;
 	int flags;
 	struct univ_object *ship;
-	Vector nvec;
+	struct vector nvec;
 	double cnt2 = 0.223;
 	double direction;
 	int attacking;
@@ -743,9 +752,9 @@ void tactics (int un)
 	
 	if (rand255() >= 250)
 	{
-		ship->rotz = rand255() | 0x68;
-		if (ship->rotz > 127)
-			ship->rotz = -(ship->rotz & 127);
+		ship->rot.z = rand255() | 0x68;
+		if (ship->rot.z > 127)
+			ship->rot.z = -(ship->rot.z & 127);
 	}
 	
 	maxeng = ship_list[type]->energy;
@@ -807,9 +816,9 @@ void tactics (int un)
 //		if ((fabs(ship->location.z) < 768) && (ship->bravery <= ((rand255() & 127) | 64)))
 		if (fabs(ship->location.z) < 768)
 		{
-			ship->rotx = rand255() & 0x87;
-			if (ship->rotx > 127)
-				ship->rotx = -(ship->rotx & 127);
+			ship->rot.x = rand255() & 0x87;
+			if (ship->rot.x > 127)
+				ship->rot.x = -(ship->rot.x & 127);
 
 			ship->acceleration = 3;
 			return;
@@ -959,21 +968,22 @@ void cool_laser (void)
 int create_other_ship (int type)
 {
 	Matrix rotmat;
-	int x,y,z;
+        struct point pt;
+//        struct rotation rot = {0, 0};
 	int newship;
 	
 	set_init_matrix (rotmat);
 
-	z = 12000;
-	x = 1000 + (randint() & 8191);
-	y = 1000 + (randint() & 8191);
+	pt.z = 12000;
+	pt.x = 1000 + (randint() & 8191);
+	pt.y = 1000 + (randint() & 8191);
 
 	if (rand255() > 127)
-		x = -x;
+		pt.x = -pt.x;
 	if (rand255() > 127)
-		y = -y;
+		pt.y = -pt.y;
 
-	newship = add_new_ship (type, x, y, z, rotmat, 0, 0);
+	newship = add_new_ship (type, pt, rotmat, rot_0);
 
 	return newship;
 }
@@ -1027,7 +1037,7 @@ void create_trader (void)
 	if (newship != -1)
 	{
 		universe[newship].rotmat[2].z = -1.0;
-		universe[newship].rotz = rand255() & 7;
+		universe[newship].rot.z = rand255() & 7;
 		
 		rnd = rand255();
 		universe[newship].velocity = (rnd & 31) | 16;
@@ -1096,8 +1106,8 @@ void check_for_asteroids (void)
 	{
 //		universe[newship].velocity = (rand255() & 31) | 16; 
 		universe[newship].velocity = 8;
-		universe[newship].rotz = rand255() > 127 ? -127 : 127; 
-		universe[newship].rotx = 16; 
+		universe[newship].rot.z = rand255() > 127 ? -127 : 127; 
+		universe[newship].rot.x = 16; 
 	}
 }
 
@@ -1132,7 +1142,8 @@ void check_for_cops (void)
 
 void check_for_others (void)
 {
-	int x,y,z;
+        struct point pt;
+//        struct rotation rot = {0, 0};
 	int newship;
 	Matrix rotmat;
 	int gov;
@@ -1156,21 +1167,21 @@ void check_for_others (void)
 	
 	set_init_matrix (rotmat);
 
-	z = 12000;
-	x = 1000 + (randint() & 8191);
-	y = 1000 + (randint() & 8191);
+	pt.z = 12000;
+	pt.x = 1000 + (randint() & 8191);
+	pt.y = 1000 + (randint() & 8191);
 
 	if (rand255() > 127)
-		x = -x;
+		pt.x = -pt.x;
 	if (rand255() > 127)
-		y = -y;
+		pt.y = -pt.y;
 
 	rnd = rand255() & 3;
 	
 	for (i = 0; i <= rnd; i++)
 	{
 		type = SHIP_SIDEWINDER + (rand255() & rand255() & 7);
-		newship = add_new_ship (type, x, y, z, rotmat, 0, 0);
+		newship = add_new_ship (type, pt, rotmat, rot_0);
 		if (newship != -1)
 		{
 			universe[newship].flags = FLG_ANGRY;

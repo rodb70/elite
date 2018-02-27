@@ -42,7 +42,7 @@ alg_gfx.o: alg_gfx.c alg_data.h config.h elite.h planet.h gfx.h
 alg_main.o: alg_main.c alg_data.h config.h elite.h planet.h gfx.h docked.h\
 	intro.h shipdata.h shipface.h space.h main.h pilot.h file.h keyboard.h
 
-docked.o: docked.c config.h elite.h planet.h gfx.h
+docked.o: docked.c config.h elite.h planet.h gfx.h space.h
 
 elite.o: elite.c config.h elite.h planet.h vector.h shipdata.h
 
@@ -66,11 +66,11 @@ space.o: space.c space.h vector.h alg_data.h config.h elite.h planet.h\
 	gfx.h docked.h intro.h shipdata.h shipface.h main.h random.h
 
 swat.o: swat.c swat.h elite.h config.h main.h gfx.h alg_data.h shipdata.h\
-	random.h pilot.h
+	random.h pilot.h space.h
 
 random.o: random.c random.h
 
-trade.o: trade.c trade.h elite.h config.h
+trade.o: trade.c trade.h elite.h config.h space.h
 
 options.o: options.c options.h elite.h config.h gfx.h file.h
 

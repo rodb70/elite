@@ -42,9 +42,9 @@
  * Fly to a given point in space.
  */
 
-void fly_to_vector (struct univ_object *ship, Vector vec)
+void fly_to_vector (struct univ_object *ship, struct vector vec)
 {
-	Vector nvec;
+	struct vector nvec;
 	double direction;
 	double dir;
 	int rat;
@@ -66,30 +66,30 @@ void fly_to_vector (struct univ_object *ship, Vector vec)
 
 	if (direction < -0.861)/* Magic Number */
 	{
-		ship->rotx = (dir < 0) ? 7 : -7;
-		ship->rotz = 0;
+		ship->rot.x = (dir < 0) ? 7 : -7;
+		ship->rot.z = 0;
 		return; 
 	}
 
-	ship->rotx = 0;
+	ship->rot.x = 0;
 	
 	if ((fabs(dir) * 2) >= rat2)
 	{
-		ship->rotx = (dir < 0) ? rat : -rat;
+		ship->rot.x = (dir < 0) ? rat : -rat;
 	}
 		
-	if (abs(ship->rotz) < 16)
+	if (abs(ship->rot.z) < 16)
 	{
 		dir = vector_dot_product (&nvec, &ship->rotmat[0]);
 
-		ship->rotz = 0;
+		ship->rot.z = 0;
 
 		if ((fabs(dir) * 2) >= rat2)
 		{
-			ship->rotz = (dir < 0) ? rat : -rat;
+			ship->rot.z = (dir < 0) ? rat : -rat;
 
-			if (ship->rotx < 0)
-				ship->rotz = -ship->rotz;
+			if (ship->rot.x < 0)
+				ship->rot.z = -ship->rot.z;
 		}		
 	}
 
@@ -114,7 +114,7 @@ void fly_to_vector (struct univ_object *ship, Vector vec)
 
 void fly_to_planet (struct univ_object *ship)
 {
-	Vector vec;
+	struct vector vec;
 
 	vec.x = universe[0].location.x - ship->location.x;
 	vec.y = universe[0].location.y - ship->location.y;
@@ -132,7 +132,7 @@ void fly_to_planet (struct univ_object *ship)
 
 void fly_to_station_front (struct univ_object *ship)
 {
-	Vector vec;
+	struct vector vec;
 
 	vec.x = universe[1].location.x - ship->location.x;
 	vec.y = universe[1].location.y - ship->location.y;
@@ -152,7 +152,7 @@ void fly_to_station_front (struct univ_object *ship)
 
 void fly_to_station (struct univ_object *ship)
 {
-	Vector vec;
+	struct vector vec;
 
 	vec.x = universe[1].location.x - ship->location.x;
 	vec.y = universe[1].location.y - ship->location.y;
@@ -169,8 +169,8 @@ void fly_to_station (struct univ_object *ship)
  
 void fly_to_docking_bay (struct univ_object *ship)
 {
-	Vector diff;
-	Vector vec;
+	struct vector diff;
+	struct vector vec;
 	double dir;
 
 	diff.x = ship->location.x - universe[1].location.x;
@@ -179,15 +179,15 @@ void fly_to_docking_bay (struct univ_object *ship)
 
 	vec = unit_vector (&diff);	
 
-	ship->rotx = 0;
+	ship->rot.x = 0;
 
 	if (ship->type < 0)
 	{
-		ship->rotz = 1;
+		ship->rot.z = 1;
 		if (((vec.x >= 0) && (vec.y >= 0)) ||
 			 ((vec.x < 0) && (vec.y < 0)))
 		{
-			ship->rotz = -ship->rotz;
+			ship->rot.z = -ship->rot.z;
 		}
 
 		if (fabs(vec.x) >= 0.0625)/* Magic Number */
@@ -198,7 +198,7 @@ void fly_to_docking_bay (struct univ_object *ship)
 		}
 
 		if (fabs(vec.y) > 0.002436)/* Magic Number */
-			ship->rotx = (vec.y < 0) ? -1 : 1;
+			ship->rot.x = (vec.y < 0) ? -1 : 1;
 
 		if (fabs(vec.y) >= 0.0625)/* Magic Number */
 		{
@@ -208,19 +208,19 @@ void fly_to_docking_bay (struct univ_object *ship)
 		}
 	}
 
-	ship->rotz = 0;
+	ship->rot.z = 0;
 
 	dir = vector_dot_product (&ship->rotmat[0], &universe[1].rotmat[1]);
 
 	if (fabs(dir) >= 0.9166)/* Magic Number */
 	{
 		ship->acceleration++;
-		ship->rotz = 127;
+		ship->rot.z = 127;
 		return;
 	}
 
 	ship->acceleration = 0;
-	ship->rotz = 0;
+	ship->rot.z = 0;
 }
 
 
@@ -230,8 +230,8 @@ void fly_to_docking_bay (struct univ_object *ship)
 
 void auto_pilot_ship (struct univ_object *ship)
 {
-	Vector diff;
-	Vector vec;
+	struct vector diff;
+	struct vector vec;
 	double dist;
 	double dir;
 	
@@ -246,7 +246,8 @@ void auto_pilot_ship (struct univ_object *ship)
 	diff.y = ship->location.y - universe[1].location.y;	
 	diff.z = ship->location.z - universe[1].location.z;	
 
-	dist = sqrt (diff.x * diff.x + diff.y * diff.y + diff.z * diff.z);
+//	dist = sqrt (diff.x * diff.x + diff.y * diff.y + diff.z * diff.z);
+        dist = get_distance( diff );
 
 	if (dist < 160)/* Magic Number */
 	{

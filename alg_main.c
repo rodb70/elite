@@ -67,7 +67,8 @@ int have_joystick;
 int find_input;
 char find_name[20];
 
-
+//extern struct rotation rot_0;
+//extern struct rotation rot_127;
 
 /*
  * Initialise the game parameters.
@@ -542,8 +543,8 @@ void auto_dock (void)
 	ship.velocity = flight_speed;
 	ship.acceleration = 0;
 	ship.bravery = 0;
-	ship.rotz = 0;
-	ship.rotx = 0;
+	ship.rot.z = 0;
+	ship.rot.x = 0;
 
 	auto_pilot_ship (&ship);
 
@@ -566,45 +567,45 @@ void auto_dock (void)
 			flight_speed = 1;
 	}	
 
-	if (ship.rotx == 0)
+	if (ship.rot.x == 0)
 		flight_climb = 0;
 	
-	if (ship.rotx < 0)
+	if (ship.rot.x < 0)
 	{
 		increase_flight_climb();
 
-		if (ship.rotx < -1)
+		if (ship.rot.x < -1)
 			increase_flight_climb();
 	}
 	
-	if (ship.rotx > 0)
+	if (ship.rot.x > 0)
 	{
 		decrease_flight_climb();
 
-		if (ship.rotx > 1)
+		if (ship.rot.x > 1)
 			decrease_flight_climb();
 	}
 	
-	if (ship.rotz == 127)
+	if (ship.rot.z == 127)
 		flight_roll = -14;
 	else
 	{
-		if (ship.rotz == 0)
+		if (ship.rot.z == 0)
 			flight_roll = 0;
 
-		if (ship.rotz > 0)
+		if (ship.rot.z > 0)
 		{
 			increase_flight_roll();
 
-			if (ship.rotz > 1)
+			if (ship.rot.z > 1)
 				increase_flight_roll();
 		}
 		
-		if (ship.rotz < 0)
+		if (ship.rot.z < 0)
 		{
 			decrease_flight_roll();
 
-			if (ship.rotz < -1)
+			if (ship.rot.z < -1)
 				decrease_flight_roll();
 		}
 	}
@@ -615,6 +616,8 @@ void run_escape_sequence (void)
 {
 	int i;
 	int newship;
+        struct point pt = {0, 0, 200};
+//        struct rotation rot = rot_127;
 	Matrix rotmat;
 	
 	current_screen = SCR_ESCAPE_POD;
@@ -626,7 +629,7 @@ void run_escape_sequence (void)
 	set_init_matrix (rotmat);
 	rotmat[2].z = 1.0;
 	
-	newship = add_new_ship (SHIP_COBRA3, 0, 0, 200, rotmat, -127, -127);
+	newship = add_new_ship (SHIP_COBRA3, pt, rotmat, rot_127);
 	universe[newship].velocity = 7;
 	snd_play_sample (SND_LAUNCH);
 
@@ -1151,6 +1154,8 @@ void run_game_over_screen()
 {
 	int i;
 	int newship;
+        struct point pt = {0, 0, -400};
+//        struct rotation rot = rot_0;
 	Matrix rotmat;
 	int type;
 	
@@ -1164,16 +1169,20 @@ void run_game_over_screen()
 
 	set_init_matrix (rotmat);
 
-	newship = add_new_ship (SHIP_COBRA3, 0, 0, -400, rotmat, 0, 0);
+	newship = add_new_ship (SHIP_COBRA3, pt, rotmat, rot_0);
 	universe[newship].flags |= FLG_DEAD;
 
 	for (i = 0; i < 5; i++)
 	{
 		type = (rand255() & 1) ? SHIP_CARGO : SHIP_ALLOY;
-		newship = add_new_ship (type, (rand255() & 63) - 32,
-								(rand255() & 63) - 32, -400, rotmat, 0, 0);
-		universe[newship].rotz = ((rand255() * 2) & 255) - 128;
-		universe[newship].rotx = ((rand255() * 2) & 255) - 128;
+
+                pt.x = (rand255() & 63) - 32;
+                pt.y = (rand255() & 63) - 32;
+                pt.z = -400;
+		newship = add_new_ship (type, pt, rotmat, rot_0);
+
+		universe[newship].rot.z = ((rand255() * 2) & 255) - 128;
+		universe[newship].rot.x = ((rand255() * 2) & 255) - 128;
 		universe[newship].velocity = rand255() & 15;
 	}
 	

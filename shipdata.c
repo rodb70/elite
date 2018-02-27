@@ -855,7 +855,6 @@ struct ship_data cobra3a_data =
 };
 
 
-c
 struct ship_point pythona_point[11] =
 {
 	{   0,    0,  224, 31,  1,  0,  3,  2},

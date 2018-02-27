@@ -54,8 +54,8 @@ void draw_wireframe_ship (struct univ_object *univ)
 	int sx,sy,ex,ey;
 	double rx,ry,rz;
 	int visible[32];
-	Vector vec;
-	Vector camera_vec;
+	struct vector vec;
+	struct vector camera_vec;
 	double cos_angle;
 	double tmp;
 	struct ship_face_normal *ship_norm;

@@ -39,6 +39,7 @@ static int show_time;
 static int direction;
 
 
+
 static int min_dist[NO_OF_SHIPS+1] = {0, 200, 800, 200,   200, 200, 300, 384,   200,
 								  200, 200, 420, 900, 500, 800, 384, 384,
 							      384, 384, 384, 200, 384, 384, 384,   0,
@@ -53,7 +54,9 @@ void initialise_intro1 (void)
 {
 	clear_universe();
 	set_init_matrix (intro_ship_matrix);
-	add_new_ship (SHIP_COBRA3, 0, 0, 4500, intro_ship_matrix, -127, -127);
+        struct point pt = {0, 0, 4500};
+//        struct rotation rot = {-127, -127};
+	add_new_ship (SHIP_COBRA3, pt, intro_ship_matrix, rot_127);
 }
 
 
@@ -66,7 +69,9 @@ void initialise_intro2 (void)
 	clear_universe();
 	create_new_stars();
 	set_init_matrix (intro_ship_matrix);
-	add_new_ship (1, 0, 0, 5000, intro_ship_matrix, -127, -127);
+        struct point pt = {0, 0, 5000};
+        struct rotation rot = {-127, -127}; 
+	add_new_ship (1, pt, intro_ship_matrix, rot);
 }
 
 
@@ -105,6 +110,8 @@ void update_intro2 (void)
 
 	if (universe[0].location.z > 4500)
 	{
+            struct point pt = {0, 0, 4500};
+            struct rotation rot = {-127, -127};
 		do
 		{
 			ship_no++;
@@ -118,7 +125,7 @@ void update_intro2 (void)
 		ship_count[universe[0].type] = 0;
 		universe[0].type = 0;		
 
-		add_new_ship (ship_no, 0, 0, 4500, intro_ship_matrix, -127, -127);
+		add_new_ship (ship_no, pt, intro_ship_matrix, rot);
 	}
 
 
