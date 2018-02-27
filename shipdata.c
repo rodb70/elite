@@ -1,6 +1,6 @@
 #include "shipdata.h" 
 
-
+/* I think this is the visual data for the ships */
 
 struct ship_point missile_point[17] =
 {
@@ -855,7 +855,7 @@ struct ship_data cobra3a_data =
 };
 
 
-
+c
 struct ship_point pythona_point[11] =
 {
 	{   0,    0,  224, 31,  1,  0,  3,  2},
