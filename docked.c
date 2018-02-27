@@ -31,22 +31,22 @@
 
 
 char *economy_type[] = {"Rich Industrial",
-						"Average Industrial",
-						"Poor Industrial",
-						"Mainly Industrial",
-						"Mainly Agricultural",
-						"Rich Agricultural",
-						"Average Agricultural",
-						"Poor Agricultural"};
+			"Average Industrial",
+			"Poor Industrial",
+			"Mainly Industrial",
+			"Mainly Agricultural",
+			"Rich Agricultural",
+			"Average Agricultural",
+			"Poor Agricultural"};
 
 char *government_type[] = {	"Anarchy",
-							"Feudal",
-							"Multi-Government",
-							"Dictatorship",
-							"Communist",
-							"Confederacy",
-							"Democracy",
-							"Corporate State"};
+				"Feudal",
+				"Multi-Government",
+				"Dictatorship",
+				"Communist",
+				"Confederacy",
+				"Democracy",
+				"Corporate State"};
 
 
 
@@ -486,9 +486,9 @@ char *laser_type (int strength)
 
 #define EQUIP_START_Y	202
 #define EQUIP_START_X	50
-#define EQUIP_MAX_Y		290
-#define EQUIP_WIDTH		200
-#define Y_INC			16
+#define EQUIP_MAX_Y	290
+#define EQUIP_WIDTH	200
+#define Y_INC		16
 
 
 static char *condition_txt[] =
