@@ -1,5 +1,7 @@
 As of February 2018, this requires Allegro 4 installed; makefile-linux now uses
 pkg-config to get the right arguments.
+
+Only for UNIX now.
 ================
 Elite - The New Kind   Release 1.0
 --------------------   -----------
