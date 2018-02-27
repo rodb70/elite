@@ -64,9 +64,9 @@ int auto_pilot;
 
 struct commander saved_cmdr =
 {
-	"JAMESON",									/* Name 			*/
+	"JAMESON",				/* Name 		*/
 	0,					/* Mission Number 	*/
-	0x14,0xAD,				/* Ship X,Y			*/
+	0x14,0xAD,				/* Ship X,Y		*/
 	{0x4a, 0x5a, 0x48, 0x02, 0x53, 0xb7},	/* Galaxy Seed		*/
 	1000,					/* Credits * 10		*/
 	70,					/* Fuel	* 10		*/
@@ -79,11 +79,11 @@ struct commander saved_cmdr =
 	0, 0,
 	20,					/* Cargo Capacity	*/
 	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	/* Current Cargo	*/
-	0,					/* ECM				*/
+	0,					/* ECM			*/
 	0,					/* Fuel Scoop		*/
 	0,					/* Energy Bomb		*/
 	0,					/* Energy Unit		*/
-	0,					/* Docking Computer */
+	0,					/* Docking Computer     */
 	0,					/* Galactic H'Drive	*/
 	0,					/* Escape Pod		*/
 	0,0,0,0,
@@ -93,8 +93,8 @@ struct commander saved_cmdr =
 	 0x0E, 0x00, 0x00, 0x0A, 0x00, 0x11,
 	 0x3A, 0x07, 0x09, 0x08, 0x00},
 	0,					/* Fluctuation		*/
-	0,					/* Score			*/
-	0x80					/* Saved			*/
+	0,					/* Score		*/
+	0x80					/* Saved		*/
 };
 
 struct commander cmdr;
