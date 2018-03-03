@@ -64,7 +64,7 @@ void read_cfg_line (char *str, int max_size, FILE *fp)
 	{	
 		fgets (str, max_size, fp);
 
-		for (s = str; *s; s++)					/* End of line at LF or # */
+		for (s = str; *s; s++)		/* End of line at LF or # */
 		{
 			if ((*s == '\n') || (*s == '#'))
 			{
@@ -73,7 +73,7 @@ void read_cfg_line (char *str, int max_size, FILE *fp)
 			} 		
 		}
 
-		if (s != str)							/* Trim any trailing white space */
+		if (s != str)			/* Trim any trailing white space */
 		{
 			s--;
 			while (isspace(*s))
@@ -322,7 +322,3 @@ int load_commander_file (char *path)
 
 	return 0;
 }
-
-
-
-
