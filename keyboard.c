@@ -67,6 +67,7 @@ int kbd_keyboard_startup (void)
 	return 0;
 }
 
+/* This is never used anywhere */
 int kbd_keyboard_shutdown (void)
 {
 	return 0;
@@ -163,4 +164,3 @@ void kbd_clear_key_buffer (void)
 	while (keypressed())
 		readkey();
 }
- 

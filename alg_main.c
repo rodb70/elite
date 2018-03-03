@@ -1273,6 +1273,7 @@ int main()
 	snd_sound_startup();
 
 	/* Do any setup necessary for the keyboard... */
+        /* ... Which does nothing but return a 0 */
 	kbd_keyboard_startup();
 	
 	finish = 0;
