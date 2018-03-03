@@ -48,8 +48,8 @@ extern int flight_climb;
 extern int flight_roll;
 extern int flight_speed;
 
-const struct rotation rot_127 = {-127, -127};
-const struct rotation rot_0 = {0, 0};
+const struct rotation ROT_127 = {-127, -127};
+const struct rotation ROT_0 = {0, 0};
 
 struct galaxy_seed destination_planet;
 int hyper_ready;
@@ -1204,13 +1204,13 @@ void complete_hyperspace (void)
 		p_vec.y = -p_vec.y;
 	}
 
-	add_new_ship (SHIP_PLANET, p_vec, rotmat, rot_0);
+	add_new_ship (SHIP_PLANET, p_vec, rotmat, ROT_0);
 
 
 	p_vec.z = -(((docked_planet.d & 7) | 1) << 16);
 	p_vec.x = ((docked_planet.f & 3) << 16) | ((docked_planet.f & 3) << 8);
 
-	add_new_ship (SHIP_SUN, p_vec, rotmat, rot_0);
+	add_new_ship (SHIP_SUN, p_vec, rotmat, ROT_0);
 
 	current_screen = SCR_BREAK_PATTERN;
 	snd_play_sample (SND_HYPERSPACE);
@@ -1291,8 +1291,7 @@ void launch_player (void)
 	generate_landscape(docked_planet.a * 251 + docked_planet.b);
 	set_init_matrix (rotmat);
         struct point planet_vec = {0, 0, 65536};
-//        struct rotation rot = { 0, 0};
-	add_new_ship (SHIP_PLANET, planet_vec, rotmat, rot_0);
+	add_new_ship (SHIP_PLANET, planet_vec, rotmat, ROT_0);
 
 	rotmat[2].x = -rotmat[2].x;
 	rotmat[2].y = -rotmat[2].y;

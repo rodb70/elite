@@ -113,6 +113,7 @@ enum {
     SHIP_CONSTRICTOR,
     SHIP_COUGAR,
     SHIP_DODEC,
+    /* Add new ships/objects above this line */
     NO_OF_SHIPS = SHIP_DODEC
 };
 

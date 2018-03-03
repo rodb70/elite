@@ -56,7 +56,7 @@ void initialise_intro1 (void)
 	set_init_matrix (intro_ship_matrix);
         struct point pt = {0, 0, 4500};
 //        struct rotation rot = {-127, -127};
-	add_new_ship (SHIP_COBRA3, pt, intro_ship_matrix, rot_127);
+	add_new_ship (SHIP_COBRA3, pt, intro_ship_matrix, ROT_127);
 }
 
 

@@ -203,7 +203,7 @@ void remove_ship (int un)
 		p_vec.y &= 0xFFFF;  /* Magic Number */
 		p_vec.y |= 0x60000; /* Magic Number */
 		
-		add_new_ship (SHIP_SUN, p_vec, rotmat, rot_0);
+		add_new_ship (SHIP_SUN, p_vec, rotmat, ROT_0);
 	}
 }
 
@@ -457,7 +457,7 @@ void fire_missile (void)
 	rotmat[0].x = -1.0;
 	
         struct point pt = {0, -28, 14};
-	newship = add_new_ship (SHIP_MISSILE, pt, rotmat, rot_0);
+	newship = add_new_ship (SHIP_MISSILE, pt, rotmat, ROT_0);
 
 	if (newship == -1)
 	{
@@ -983,7 +983,7 @@ int create_other_ship (int type)
 	if (rand255() > 127)
 		pt.y = -pt.y;
 
-	newship = add_new_ship (type, pt, rotmat, rot_0);
+	newship = add_new_ship (type, pt, rotmat, ROT_0);
 
 	return newship;
 }
@@ -1181,7 +1181,7 @@ void check_for_others (void)
 	for (i = 0; i <= rnd; i++)
 	{
 		type = SHIP_SIDEWINDER + (rand255() & rand255() & 7);
-		newship = add_new_ship (type, pt, rotmat, rot_0);
+		newship = add_new_ship (type, pt, rotmat, ROT_0);
 		if (newship != -1)
 		{
 			universe[newship].flags = FLG_ANGRY;

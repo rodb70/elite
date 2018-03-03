@@ -34,8 +34,8 @@ struct rotation
     int z;
 };
 
-extern const struct rotation rot_127;
-extern const struct rotation rot_0;
+extern const struct rotation ROT_127;
+extern const struct rotation ROT_0;
 
 struct univ_object
 {

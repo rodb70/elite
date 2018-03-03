@@ -200,7 +200,7 @@ void constrictor_mission_brief (void)
 	set_init_matrix (rotmat);
         struct point pt = {200, 90, 600};
        // struct rotation rot = {-127, -127};
-	add_new_ship (SHIP_CONSTRICTOR, pt, rotmat, rot_127);
+	add_new_ship (SHIP_CONSTRICTOR, pt, rotmat, ROT_127);
 	flight_roll = 0;
 	flight_climb = 0;
 	flight_speed = 0;
