@@ -29,10 +29,10 @@
 #ifdef RES_512_512
 
 #define GFX_SCALE		(2)
-#define GFX_X_OFFSET	(0)
-#define GFX_Y_OFFSET	(0)
-#define GFX_X_CENTRE	(256)
-#define GFX_Y_CENTRE	(192)
+#define GFX_X_OFFSET            (0)
+#define GFX_Y_OFFSET            (0)
+#define GFX_X_CENTRE            (256)
+#define GFX_Y_CENTRE            (192)
 
 #define GFX_VIEW_TX		1
 #define GFX_VIEW_TY		1
@@ -44,10 +44,10 @@
 #ifdef RES_800_600
 
 #define GFX_SCALE		(2)
-#define GFX_X_OFFSET	(144)
-#define GFX_Y_OFFSET	(44)
-#define GFX_X_CENTRE	(256)
-#define GFX_Y_CENTRE	(192)
+#define GFX_X_OFFSET            (144)
+#define GFX_Y_OFFSET            (44)
+#define GFX_X_CENTRE            (256)
+#define GFX_Y_CENTRE            (192)
 
 #define GFX_VIEW_TX		1
 #define GFX_VIEW_TY		1
@@ -59,10 +59,10 @@
 #ifndef GFX_SCALE
 
 #define GFX_SCALE		(1)
-#define GFX_X_OFFSET	(0)
-#define GFX_Y_OFFSET	(0)
-#define GFX_X_CENTRE	(128)
-#define GFX_Y_CENTRE	(96)
+#define GFX_X_OFFSET            (0)
+#define GFX_Y_OFFSET            (0)
+#define GFX_X_CENTRE            (128)
+#define GFX_Y_CENTRE            (96)
 
 #define GFX_VIEW_TX		1
 #define GFX_VIEW_TY		1
@@ -77,7 +77,7 @@
 #define GFX_COL_DARK_RED	28
 #define GFX_COL_WHITE		255
 #define GFX_COL_GOLD		39
-#define GFX_COL_RED			49
+#define GFX_COL_RED		49
 #define GFX_COL_CYAN		11
 
 #define GFX_COL_GREY_1		248
@@ -110,17 +110,31 @@
 #define GFX_COL_GREEN_3		86
 
 #define GFX_COL_PINK_1		183
-
+/*
 #define IMG_GREEN_DOT		1
-#define IMG_RED_DOT			2
-#define IMG_BIG_S			3
+#define IMG_RED_DOT		2
+#define IMG_BIG_S		3
 #define IMG_ELITE_TXT		4
-#define IMG_BIG_E			5
-#define IMG_DICE			6
+#define IMG_BIG_E		5
+#define IMG_DICE		6
 #define IMG_MISSILE_GREEN	7
 #define IMG_MISSILE_YELLOW	8
 #define IMG_MISSILE_RED		9
-#define IMG_BLAKE			10
+#define IMG_BLAKE		10
+*/
+
+enum {
+    IMG_GREEN_DOT =             1,
+    IMG_RED_DOT,
+    IMG_BIG_S,
+    IMG_ELITE_TXT,
+    IMG_BIG_E,
+    IMG_DICE,
+    IMG_MISSILE_GREEN,
+    IMG_MISSILE_YELLOW,
+    IMG_MISSILE_RED,
+    IMG_BLAKE,
+};
 
 
 int gfx_graphics_startup (void);
