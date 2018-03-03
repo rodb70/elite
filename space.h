@@ -95,7 +95,5 @@ void launch_player (void);
 
 void engage_docking_computer (void);
 
-int get_distance( struct vector vec );
-
 #endif
 

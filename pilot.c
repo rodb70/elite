@@ -246,8 +246,7 @@ void auto_pilot_ship (struct univ_object *ship)
 	diff.y = ship->location.y - universe[1].location.y;	
 	diff.z = ship->location.z - universe[1].location.z;	
 
-//	dist = sqrt (diff.x * diff.x + diff.y * diff.y + diff.z * diff.z);
-        dist = get_distance( diff );
+	dist = sqrt (pow (diff.x,2) + pow (diff.y, 2) + pow (diff.z, 2));
 
 	if (dist < 160)/* Magic Number */
 	{

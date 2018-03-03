@@ -63,7 +63,8 @@ int hyper_galactic;
 #define MAX_AFT_SHIELD 255
 #define MAX_ENERGY 255
 
-
+#define HYPER_COUNT_START 1
+#define HYPER_COUNT_LENGTH 5
 
 void rotate_x_first (double *a, double *b, int direction)
 {
@@ -84,25 +85,21 @@ void rotate_x_first (double *a, double *b, int direction)
 	}
 }
 
-
-void rotate_vec (struct vector *vec, double alpha, double beta)
+void rotate_x_first_whole (struct univ_object *obj, int direction)
 {
-	double x,y,z;
-	
-	x = vec->x;
-	y = vec->y;
-	z = vec->z;
-
-	y = y - alpha * x;
-	x = x + alpha * y;
-	y = y - beta * z;
-	z = z + beta * y;
-	
-	vec->x = x;
-	vec->y = y;
-	vec->z = z;
+	rotate_x_first (&obj->rotmat[2].x, &obj->rotmat[1].x, direction);
+	rotate_x_first (&obj->rotmat[2].y, &obj->rotmat[1].y, direction);	
+	rotate_x_first (&obj->rotmat[2].z, &obj->rotmat[1].z, direction);
 }
 
+/* Update the vectors directly */
+void rotate_vec (struct vector *vec, double alpha, double beta)
+{
+	vec->y = vec->y - alpha * vec->x;
+	vec->x = vec->x + alpha * vec->y;
+	vec->y = vec->y - beta * vec->z;
+	vec->z = vec->z + beta * vec->y;
+}
 
 /*
  * Update an objects location in the universe.
@@ -114,15 +111,12 @@ void move_univ_object (struct univ_object *obj)
 	double k2;
 	double alpha;
 	double beta;
-        struct rotation rot;
 	double speed;
-	
+
 	alpha = flight_roll / 256.0;
 	beta = flight_climb / 256.0;
 	
-	vec.x = obj->location.x;
-	vec.y = obj->location.y;
-	vec.z = obj->location.z;
+        vec = obj->location;
 
 	if (!(obj->flags & FLG_DEAD))
 	{ 
@@ -158,9 +152,10 @@ void move_univ_object (struct univ_object *obj)
 	obj->location.y = vec.y;
 	obj->location.z = vec.z;	
 
-//	obj->distance = sqrt (x*x + y*y + z*z);
-        obj->distance = get_distance(vec);
-	
+        /* This is not right... */
+        /* What other than vec.xyz? */
+	obj->distance = sqrt (pow (vec.x,2) + pow (vec.y,2) + pow (vec.z, 2));
+
 	if (obj->type == SHIP_PLANET)
 		beta = 0.0;
 	
@@ -172,32 +167,24 @@ void move_univ_object (struct univ_object *obj)
 		return;
 
 
-	rot.x = obj->rot.x;
-	rot.z = obj->rot.z;
-	
 	/* If necessary rotate the object around the X axis... */
 
-	if (rot.x != 0)
+	if (obj->rot.x != 0)
 	{
-		rotate_x_first (&obj->rotmat[2].x, &obj->rotmat[1].x, rot.x);
-		rotate_x_first (&obj->rotmat[2].y, &obj->rotmat[1].y, rot.x);	
-		rotate_x_first (&obj->rotmat[2].z, &obj->rotmat[1].z, rot.x);
+            rotate_x_first_whole (obj, obj->rot.x);
 
-		if ((rot.x != 127) && (rot.x != -127))
-			obj->rot.x -= (rot.x < 0) ? -1 : 1;
-	}	
-
+            if ((obj->rot.x != 127) && (obj->rot.x != -127))
+                obj->rot.x -= (obj->rot.x < 0) ? -1 : 1;
+	}
 	
 	/* If necessary rotate the object around the Z axis... */
 
-	if (rot.z != 0)
+	if (obj->rot.z != 0)
 	{	
-		rotate_x_first (&obj->rotmat[0].x, &obj->rotmat[1].x, rot.z);
-		rotate_x_first (&obj->rotmat[0].y, &obj->rotmat[1].y, rot.z);	
-		rotate_x_first (&obj->rotmat[0].z, &obj->rotmat[1].z, rot.z);	
+            rotate_x_first_whole (obj, obj->rot.z);
 
-		if ((rot.z != 127) && (rot.z != -127))
-			obj->rot.z -= (rot.z < 0) ? -1 : 1;
+	    if ((obj->rot.z != 127) && (obj->rot.z != -127))
+                obj->rot.z -= (obj->rot.z < 0) ? -1 : 1;
 	}
 
 
@@ -309,30 +296,16 @@ void update_altitude (void)
 	if (dist > 65535)
 		return;
 	
+        /* Shouldn't it just do dist = sqrt( dist - 9472)? */
 	dist -= 9472;   /* Magic Number */
 
         if( crash_altitude (dist))
                 return;
-        /*
-	if (dist < 1)
-	{
-		myship.altitude = 0;
-		do_game_over ();
-		return;
-	}
-        */
 
 	dist = sqrt (dist);
+
         if( crash_altitude (dist))
                 return;
-        /*
-	if (dist < 1)
-	{
-		myship.altitude = 0;
-		do_game_over ();
-		return;
-	}
-        */
 
 	myship.altitude = dist;	
 }
@@ -371,6 +344,9 @@ void update_cabin_temp (void)
 
 	myship.cabtemp = dist + 30;
 
+	if ((myship.cabtemp < 224) || (cmdr.fuel_scoop == 0))
+		return;
+
 	if (myship.cabtemp > 255)
 	{
 		myship.cabtemp = 255;
@@ -378,9 +354,6 @@ void update_cabin_temp (void)
 		return;
 	}
 	
-	if ((myship.cabtemp < 224) || (cmdr.fuel_scoop == 0))
-		return;
-
 	cmdr.fuel += flight_speed / 2;
 	if (cmdr.fuel > myship.max_fuel)
 		cmdr.fuel = myship.max_fuel;
@@ -1067,8 +1040,8 @@ void start_hyperspace (void)
 	name_planet (hyper_name, destination_planet);
 	capitalise_name (hyper_name);
 	
-	hyper_ready = 1;
-	hyper_countdown = 15;
+	hyper_ready = HYPER_COUNT_START;
+	hyper_countdown = HYPER_COUNT_LENGTH;
 	hyper_galactic = 0;
 
 	disengage_auto_pilot();
@@ -1337,9 +1310,4 @@ void engage_docking_computer (void)
 		dock_player();
 		current_screen = SCR_BREAK_PATTERN;
 	}
-}
-
-int get_distance( struct vector vec )
-{
-    return sqrt(pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2));
 }
