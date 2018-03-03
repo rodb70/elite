@@ -271,6 +271,17 @@ void do_game_over (void)
 	game_over = 1;
 }
 
+static int crash_altitude ( double dist )
+{
+    if (dist < 1)
+    {
+        myship.altitude = 0;
+        do_game_over ();
+        return 1;
+    }
+    return 0;
+}
+
 
 void update_altitude (void)
 {
@@ -298,21 +309,30 @@ void update_altitude (void)
 	if (dist > 65535)
 		return;
 	
-	dist -= 9472;
+	dist -= 9472;   /* Magic Number */
+
+        if( crash_altitude (dist))
+                return;
+        /*
 	if (dist < 1)
 	{
 		myship.altitude = 0;
 		do_game_over ();
 		return;
 	}
+        */
 
 	dist = sqrt (dist);
+        if( crash_altitude (dist))
+                return;
+        /*
 	if (dist < 1)
 	{
 		myship.altitude = 0;
 		do_game_over ();
 		return;
 	}
+        */
 
 	myship.altitude = dist;	
 }
