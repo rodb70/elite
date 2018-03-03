@@ -43,7 +43,8 @@ static struct point point_list[100];
  * The following routine is used to draw a wireframe represtation of a ship.
  *
  * caveat: it is a work in progress.
- * A number of features (such as not showing detail at distance) have not yet been implemented.
+ * A number of features (such as not showing detail at distance) have not
+ * yet been implemented.
  *
  */
 
@@ -640,26 +641,29 @@ void draw_planet (struct univ_object *planet)
 	int x,y;
 	int radius;
 	
+        /* Magic Numbers */
 	x = (planet->location.x * 256) / planet->location.z;
-	y = (planet->location.y * 256) / planet->location.z;
+	y = -((planet->location.y * 256) / planet->location.z);
 
-	y = -y;
+        /* All in one above */
+//	y = (planet->location.y * 256) / planet->location.z;
+//	y = -y;
 	
-	x += 128;
-	y += 96;
+	x += 128;   /* Magic Number */
+	y += 96;    /* Magic Number */
 
 	x *= GFX_SCALE;
 	y *= GFX_SCALE;
 	
-	radius = 6291456 / planet->distance;
+	radius = 6291456 / planet->distance;    /* Magic Number */
 //	radius = 6291456 / ship_vec.z;   /* Planets are BIG! */
 
 	radius *= GFX_SCALE;
 
 	if ((x + radius <  0) ||
-		(x - radius > 511) ||
-		(y + radius < 0) ||
-		(y - radius > 383))
+		(x - radius > 511) ||   /* Magic Number */
+		(y + radius < 0) ||     /* Magic Number */
+		(y - radius > 383))     /* Magic Number */
 		return; 
 
 	switch (planet_render_style)
@@ -984,8 +988,9 @@ void draw_ship (struct univ_object *ship)
 		ship->exp_delta = 18; 
 	}
 
-//	if (ship->flags & FLG_EXPLOSION)
+        /*	if (ship->flags & FLG_EXPLOSION) */
         /* SHIP_SUN and SHIP_PLANET are less than 0 */
+        /* With two's complement, they match the FLG_EXPLOSION */
 	if ((ship->flags & FLG_EXPLOSION) && ship->type != SHIP_SUN && ship->type != SHIP_PLANET )
 	{
 		draw_explosion (ship);

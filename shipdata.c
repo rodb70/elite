@@ -1,6 +1,6 @@
 #include "shipdata.h" 
 
-/* I think this is the visual data for the ships */
+/* Visual data for objects. Unfortunately, I don't know what any of this means */
 
 struct ship_point missile_point[17] =
 {

@@ -20,7 +20,7 @@
 //#define NO_OF_SHIPS		33
 
 
-
+/* Ship Point? */
 struct ship_point
 {
 	int x;
@@ -34,6 +34,7 @@ struct ship_point
 };
 
 
+/* Ship line? */
 struct ship_line
 {
 	int dist;
@@ -44,6 +45,7 @@ struct ship_line
 };
 
 
+/* Ship Face Normal? */
 struct ship_face_normal
 {
 	int dist;
