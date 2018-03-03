@@ -1278,7 +1278,8 @@ int main()
 	{
 		game_over = 0;	
 		initialise_game();
-		dock_player();
+                /* After testing, this dock_player seems unnecessary */
+//		dock_player();          /* space.c */
 
 		update_console();
 
@@ -1289,7 +1290,7 @@ int main()
 		old_cross_x = -1;
 		old_cross_y = -1;
 
-		dock_player ();
+		dock_player ();         /* space.c */
 		display_commander_status ();
 		
 		while (!game_over)
