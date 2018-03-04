@@ -23,9 +23,9 @@
 
 struct point
 {
-	int x;
-	int y;
-	int z;
+    int x;
+    int y;
+    int z;
 };
 
 struct rotation
@@ -39,28 +39,26 @@ extern const struct rotation ROT_0;
 
 struct univ_object
 {
-	int type;
-	struct vector location;
-	Matrix rotmat;
-        struct rotation rot;
-	int flags;
-	int energy;
-	int velocity;
-	int acceleration;
-	int missiles;
-	int target;
-	int bravery;
-	int exp_delta;
-	int exp_seed;
-	int distance;       /* Distance from point of origin: 3D Pythagorean theorem */
+    int type;
+    struct vector location;
+    Matrix rotmat;
+    struct rotation rot;
+    int flags;
+    int energy;
+    int velocity;
+    int acceleration;
+    int missiles;
+    int target;
+    int bravery;
+    int exp_delta;
+    int exp_seed;
+    int distance;       /* Distance from point of origin: 3D Pythagorean theorem */
 };
 
 #define MAX_UNIV_OBJECTS	20
 
 extern struct univ_object universe[MAX_UNIV_OBJECTS];
 extern int ship_count[NO_OF_SHIPS + 1];  /* many */
-
-
 
 void clear_universe (void);
 int add_new_ship (int ship_type, struct point pt, struct vector *rotmat, struct rotation rot);

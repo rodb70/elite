@@ -56,12 +56,6 @@ char *government_type[] = {	"Anarchy",
 int cross_x = 0;
 int cross_y = 0;
 
-
-
-
-
-
-
 void draw_fuel_limit_circle (int cx, int cy)
 {
 	int radius;
@@ -84,10 +78,6 @@ void draw_fuel_limit_circle (int cx, int cy)
 	gfx_draw_line (cx - cross_size, cy, cx + cross_size, cy);
 }
 
-
-
-
-
 int calc_distance_to_planet (struct galaxy_seed from_planet, struct galaxy_seed to_planet)
 {
 	int dx,dy;
@@ -105,7 +95,6 @@ int calc_distance_to_planet (struct galaxy_seed from_planet, struct galaxy_seed 
 	return light_years;
 }
 
-
 void show_distance (int ypos, struct galaxy_seed from_planet, struct galaxy_seed to_planet)
 {
 	char str[100];
@@ -120,8 +109,6 @@ void show_distance (int ypos, struct galaxy_seed from_planet, struct galaxy_seed
 
 	gfx_display_text (16, ypos, str);
 }
-
-
 
 void show_distance_to_planet (void)
 {
@@ -162,7 +149,6 @@ void show_distance_to_planet (void)
 	}
 }
 
-
 void move_cursor_to_origin (void)
 {
 	if (current_screen == SCR_GALACTIC_CHART)
@@ -178,7 +164,6 @@ void move_cursor_to_origin (void)
 
 	show_distance_to_planet();
 }
-
 
 void find_planet_by_name (char *find_name)
 {
@@ -233,8 +218,6 @@ void find_planet_by_name (char *find_name)
 		cross_y = ((hyperspace_planet.b - docked_planet.b) * (2 * GFX_SCALE)) + GFX_Y_CENTRE;
 	}
 }
-
-
 
 void display_short_range_chart (void)
 {
@@ -331,9 +314,6 @@ void display_short_range_chart (void)
 	cross_y = ((hyperspace_planet.b - docked_planet.b) * 2 * GFX_SCALE) + GFX_Y_CENTRE;
 }
 
-
-
-
 void display_galactic_chart (void)
 {
     int i;
@@ -379,10 +359,6 @@ void display_galactic_chart (void)
 	cross_x = hyperspace_planet.d * GFX_SCALE;
 	cross_y = (hyperspace_planet.b / (2 / GFX_SCALE)) + (18 * GFX_SCALE) + 1;
 }
-
-
-
-
 
 /*
  * Displays data on the currently selected Hyperspace Planet.
@@ -436,8 +412,6 @@ void display_data_on_planet (void)
 	gfx_display_pretty_text (16, 298, 400, 384, description);
 }
 
-
-
 struct rank
 {
 	int score;
@@ -460,8 +434,6 @@ struct rank rating[NO_OF_RANKS] =
 };
 
 char *laser_name[5] = {"Pulse", "Beam", "Military", "Mining", "Custom"};
-
-
 
 char *laser_type (int strength)
 {
@@ -489,7 +461,6 @@ char *laser_type (int strength)
 #define EQUIP_MAX_Y	290
 #define EQUIP_WIDTH	200
 #define Y_INC		16
-
 
 static char *condition_txt[] =
 {
@@ -696,8 +667,6 @@ void display_commander_status (void)
 	}
 }
 
-
-
 /***********************************************************************************/
 
 #define TONNES		0
@@ -706,7 +675,6 @@ void display_commander_status (void)
 
 static int hilite_item;
 static char *unit_name[] = {"t", "kg", "g"};
-
 
 void display_stock_price (int i)
 {
@@ -738,7 +706,6 @@ void display_stock_price (int i)
 
 	gfx_display_text (444, y, str);
 }
-
 
 void highlight_stock (int i)
 {
@@ -780,7 +747,6 @@ void select_next_stock (void)
 	highlight_stock (hilite_item + 1);
 }
 
-
 void buy_stock (void)
 {
 	struct stock_item *item;
@@ -808,7 +774,6 @@ void buy_stock (void)
 	highlight_stock (hilite_item);
 }
 
-
 void sell_stock (void)
 {
 	struct stock_item *item;
@@ -824,8 +789,6 @@ void sell_stock (void)
 
 	highlight_stock (hilite_item);
 }
-
-
 
 void display_market_prices (void)
 {
@@ -860,7 +823,6 @@ void display_market_prices (void)
 		highlight_stock (0);
 	}
 }
-
 
 void display_inventory (void)
 {
@@ -911,8 +873,6 @@ enum equip_types
 	EQ_MILITARY_LASER, EQ_FRONT_MILITARY, EQ_REAR_MILITARY,
 	EQ_LEFT_MILITARY, EQ_RIGHT_MILITARY
 };
-	
-		
 
 #define NO_OF_EQUIP_ITEMS	34
 
@@ -929,42 +889,41 @@ struct equip_item
 
 struct equip_item equip_stock[NO_OF_EQUIP_ITEMS] =
 {
-	{0, 0, 1, 1,     2, " Fuel",					EQ_FUEL},
-	{0, 0, 1, 1,   300, " Missile",					EQ_MISSILE},
+	{0, 0, 1, 1,     2, " Fuel",				EQ_FUEL},
+	{0, 0, 1, 1,   300, " Missile",				EQ_MISSILE},
 	{0, 0, 1, 1,  4000, " Large Cargo Bay",			EQ_CARGO_BAY},
 	{0, 0, 1, 2,  6000, " E.C.M. System",			EQ_ECM},
-	{0, 0, 1, 5,  5250, " Fuel Scoops",				EQ_FUEL_SCOOPS},
-	{0, 0, 1, 6, 10000, " Escape Pod",				EQ_ESCAPE_POD},
-	{0, 0, 1, 7,  9000, " Energy Bomb",				EQ_ENERGY_BOMB},
+	{0, 0, 1, 5,  5250, " Fuel Scoops",			EQ_FUEL_SCOOPS},
+	{0, 0, 1, 6, 10000, " Escape Pod",			EQ_ESCAPE_POD},
+	{0, 0, 1, 7,  9000, " Energy Bomb",			EQ_ENERGY_BOMB},
 	{0, 0, 1, 8, 15000, " Extra Energy Unit",		EQ_ENERGY_UNIT},
 	{0, 0, 1, 9, 15000, " Docking Computers",		EQ_DOCK_COMP},
 	{0, 0, 1,10, 50000, " Galactic Hyperdrive",		EQ_GAL_DRIVE},
-	{0, 0, 0, 3,  4000, "+Pulse Laser",				EQ_PULSE_LASER},
-	{0, 0, 1, 3,     0, "-Pulse Laser",				EQ_PULSE_LASER},
-	{0, 0, 1, 3,  4000, ">Front",					EQ_FRONT_PULSE},
-	{0, 0, 1, 3,  4000, ">Rear",					EQ_REAR_PULSE},
-	{0, 0, 1, 3,  4000, ">Left",					EQ_LEFT_PULSE},
-	{0, 0, 1, 3,  4000, ">Right",					EQ_RIGHT_PULSE},
-	{0, 0, 1, 4, 10000, "+Beam Laser",				EQ_BEAM_LASER},
-	{0, 0, 0, 4,     0, "-Beam Laser",				EQ_BEAM_LASER},
-	{0, 0, 0, 4, 10000, ">Front",					EQ_FRONT_BEAM},
-	{0, 0, 0, 4, 10000, ">Rear",					EQ_REAR_BEAM},
-	{0, 0, 0, 4, 10000, ">Left",					EQ_LEFT_BEAM},
-	{0, 0, 0, 4, 10000, ">Right",					EQ_RIGHT_BEAM},
+	{0, 0, 0, 3,  4000, "+Pulse Laser",			EQ_PULSE_LASER},
+	{0, 0, 1, 3,     0, "-Pulse Laser",			EQ_PULSE_LASER},
+	{0, 0, 1, 3,  4000, ">Front",				EQ_FRONT_PULSE},
+	{0, 0, 1, 3,  4000, ">Rear",				EQ_REAR_PULSE},
+	{0, 0, 1, 3,  4000, ">Left",				EQ_LEFT_PULSE},
+	{0, 0, 1, 3,  4000, ">Right",				EQ_RIGHT_PULSE},
+	{0, 0, 1, 4, 10000, "+Beam Laser",			EQ_BEAM_LASER},
+	{0, 0, 0, 4,     0, "-Beam Laser",			EQ_BEAM_LASER},
+	{0, 0, 0, 4, 10000, ">Front",				EQ_FRONT_BEAM},
+	{0, 0, 0, 4, 10000, ">Rear",				EQ_REAR_BEAM},
+	{0, 0, 0, 4, 10000, ">Left",				EQ_LEFT_BEAM},
+	{0, 0, 0, 4, 10000, ">Right",				EQ_RIGHT_BEAM},
 	{0, 0, 1,10,  8000, "+Mining Laser",			EQ_MINING_LASER},
 	{0, 0, 0,10,     0, "-Mining Laser",			EQ_MINING_LASER},
-	{0, 0, 0,10,  8000, ">Front",					EQ_FRONT_MINING},
-	{0, 0, 0,10,  8000, ">Rear",					EQ_REAR_MINING},
-	{0, 0, 0,10,  8000, ">Left",					EQ_LEFT_MINING},
-	{0, 0, 0,10,  8000, ">Right",					EQ_RIGHT_MINING},
+	{0, 0, 0,10,  8000, ">Front",				EQ_FRONT_MINING},
+	{0, 0, 0,10,  8000, ">Rear",				EQ_REAR_MINING},
+	{0, 0, 0,10,  8000, ">Left",				EQ_LEFT_MINING},
+	{0, 0, 0,10,  8000, ">Right",				EQ_RIGHT_MINING},
 	{0, 0, 1,10, 60000, "+Military Laser",			EQ_MILITARY_LASER},
 	{0, 0, 0,10,     0, "-Military Laser",			EQ_MILITARY_LASER},
-	{0, 0, 0,10, 60000, ">Front",					EQ_FRONT_MILITARY},
-	{0, 0, 0,10, 60000, ">Rear",					EQ_REAR_MILITARY},
-	{0, 0, 0,10, 60000, ">Left",					EQ_LEFT_MILITARY},
-	{0, 0, 0,10, 60000, ">Right",					EQ_RIGHT_MILITARY}
+	{0, 0, 0,10, 60000, ">Front",				EQ_FRONT_MILITARY},
+	{0, 0, 0,10, 60000, ">Rear",				EQ_REAR_MILITARY},
+	{0, 0, 0,10, 60000, ">Left",				EQ_LEFT_MILITARY},
+	{0, 0, 0,10, 60000, ">Right",				EQ_RIGHT_MILITARY}
 };
-
 
 int equip_present (int type)
 {
@@ -1076,7 +1035,6 @@ void display_equip_price (int i)
 	}
 }
 
-
 void highlight_equip (int i)
 {
 	int y;
@@ -1100,7 +1058,6 @@ void highlight_equip (int i)
 	sprintf (str, "Cash: %d.%d", cmdr.credits / 10, cmdr.credits % 10);
 	gfx_display_text (16, 340, str);
 }
-
 
 void select_next_equip (void)
 {
@@ -1146,7 +1103,6 @@ void select_previous_equip (void)
 		highlight_equip (prev);
 }
 
-
 void list_equip_prices (void)
 {
 	int i;
@@ -1181,7 +1137,6 @@ void list_equip_prices (void)
 	highlight_equip (i);
 }
 
-
 void collapse_equip_list (void)
 {
 	int i;
@@ -1193,7 +1148,6 @@ void collapse_equip_list (void)
 		equip_stock[i].show = ((ch == ' ') || (ch == '+'));
 	}
 }
-
 
 int laser_refund (int laser_type)
 {
@@ -1214,7 +1168,6 @@ int laser_refund (int laser_type)
 
 	return 0;
 }
-
 
 void buy_equip (void)
 {
@@ -1363,7 +1316,6 @@ void buy_equip (void)
 	cmdr.credits -= equip_stock[hilite_item].price;
 	list_equip_prices();
 }
-
 
 void equip_ship (void)
 {

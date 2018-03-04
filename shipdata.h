@@ -11,70 +11,62 @@
  *
  */
 
-
 #ifndef SHIPDATA_H
 #define SHIPDATA_H
 
 #include "vector.h"
 
-//#define NO_OF_SHIPS		33
-
-
 /* Ship Point? */
 struct ship_point
 {
-	int x;
-	int y;
-	int z;
-	int dist;
-	int face1;
-	int face2;
-	int face3;
-	int face4;
+    int x;
+    int y;
+    int z;
+    int dist;
+    int face1;
+    int face2;
+    int face3;
+    int face4;
 };
-
 
 /* Ship line? */
 struct ship_line
 {
-	int dist;
-	int face1;
-	int face2;
-	int start_point;
-	int end_point;
+    int dist;
+    int face1;
+    int face2;
+    int start_point;
+    int end_point;
 };
-
 
 /* Ship Face Normal? */
 struct ship_face_normal
 {
-	int dist;
-	int x;
-	int y;
-	int z;
+    int dist;
+    int x;
+    int y;
+    int z;
 };
-
-
 
 struct ship_data
 {
-	char name[32];
-	int num_points;
-	int num_lines;
-	int num_faces;
-	int max_loot;
-	int scoop_type;
-	double size;
-	int front_laser;
-	int bounty;
-	int vanish_point;
-	int energy;
-	int velocity;
-	int missiles;
-	int laser_strength;
-	struct ship_point *points;
-	struct ship_line *lines;
-	struct ship_face_normal *normals;
+    char name[32];
+    int num_points;
+    int num_lines;
+    int num_faces;
+    int max_loot;
+    int scoop_type;
+    double size;
+    int front_laser;
+    int bounty;
+    int vanish_point;
+    int energy;
+    int velocity;
+    int missiles;
+    int laser_strength;
+    struct ship_point *points;
+    struct ship_line *lines;
+    struct ship_face_normal *normals;
 };
 
 enum {
@@ -151,6 +143,4 @@ extern struct ship_data constrct_data;
 extern struct ship_data cougar_data;
 extern struct ship_data dodec_data;
 
-
 #endif
-
