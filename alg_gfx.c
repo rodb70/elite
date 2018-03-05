@@ -30,6 +30,18 @@ volatile int frame_count;
 DATAFILE *datafile;
 BITMAP *scanner_image;
 
+#define SCR_W       800
+#define SCR_H       600
+#define SCR_NOVIRT  0
+
+struct res_size {
+    int w;
+    int h;
+};
+
+static const struct res_size res_cur = {SCR_W, SCR_H};
+static const struct res_size res_virt = {SCR_NOVIRT, SCR_NOVIRT};
+
 #define MAX_POLYS	100
 
 /* All text_mode in old code was -1 */
@@ -65,7 +77,7 @@ int gfx_graphics_startup (void)
 	PALETTE the_palette;
 	int rv;
 
-#ifdef ALLEGRO_WINDOWS	
+/* #ifdef ALLEGRO_WINDOWS	
 
 #ifdef RES_512_512
 	rv = set_gfx_mode(GFX_DIRECTX_OVL, 512, 512, 0, 0);
@@ -83,11 +95,14 @@ int gfx_graphics_startup (void)
 	
 	if (rv != 0)
 		rv = set_gfx_mode(GFX_GDI, 800, 600, 0, 0);
-#endif
+#endif  // End RES_512_512
 
 #else
-	rv = set_gfx_mode(GFX_AUTODETECT, 800, 600, 0, 0);
-#endif
+*/
+	rv = set_gfx_mode(GFX_AUTODETECT, res_cur.w, res_cur.h, res_virt.w, res_virt.h);
+/*
+#endif  // End ALLEGO_WINDOWS
+*/
 
 	if (rv != 0)
 	{
