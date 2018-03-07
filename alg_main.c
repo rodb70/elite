@@ -73,45 +73,45 @@ char find_name[20];
 
 void initialise_game(void)
 {
-	set_rand_seed (time(NULL));
-	current_screen = SCR_INTRO_ONE;
+    set_rand_seed (time(NULL));
+    current_screen = SCR_INTRO_ONE;
 
-	restore_saved_commander();
+    restore_saved_commander();
 
-	flight_speed = 1;
-	flight_roll = 0;
-	flight_climb = 0;
-	docked = 1;
-	front_shield = 255;
-	aft_shield = 255;
-	energy = 255;
-	draw_lasers = 0;
-	mcount = 0;
-	hyper_ready = 0;
-	detonate_bomb = 0;
-	find_input = 0;
-	witchspace = 0;
-	game_paused = 0;
-	auto_pilot = 0;
-	
-	create_new_stars();
-	clear_universe();
-	
-	cross_x = -1;
-	cross_y = -1;
-	cross_timer = 0;
+    flight_speed = 1;
+    flight_roll = 0;
+    flight_climb = 0;
+    docked = 1;
+    front_shield = 255;
+    aft_shield = 255;
+    energy = 255;
+    draw_lasers = 0;
+    mcount = 0;
+    hyper_ready = 0;
+    detonate_bomb = 0;
+    find_input = 0;
+    witchspace = 0;
+    game_paused = 0;
+    auto_pilot = 0;
 
-	
-	myship.max_speed = 40;		/* 0.27 Light Mach */
-	myship.max_roll = 31;
-	myship.max_climb = 8;		/* CF 8 */
-	myship.max_fuel = 70;		/* 7.0 Light Years */
+    create_new_stars();
+    clear_universe();
+
+    cross_x = -1;
+    cross_y = -1;
+    cross_timer = 0;
+
+
+    myship.max_speed = 40;          /* 0.27 Light Mach */
+    myship.max_roll = 31;
+    myship.max_climb = 8;           /* CF 8 */
+    myship.max_fuel = 70;           /* 7.0 Light Years */
 }
 
 void finish_game (void)
 {
-	finish = 1;
-	game_over = 1;
+    finish = 1;
+    game_over = 1;
 }
 
 /*
@@ -119,32 +119,32 @@ void finish_game (void)
  */
 void move_cross (int dx, int dy)
 {
-	cross_timer = 5;
+    cross_timer = 5;
 
-	if (current_screen == SCR_SHORT_RANGE)
-	{
-		cross_x += (dx * 4);
-		cross_y += (dy * 4);
-		return;
-	}
+    if (current_screen == SCR_SHORT_RANGE)
+    {
+        cross_x += (dx * 4);
+        cross_y += (dy * 4);
+        return;
+    }
 
-	if (current_screen == SCR_GALACTIC_CHART)
-	{
-		cross_x += (dx * 2);
-		cross_y += (dy * 2);
+    if (current_screen == SCR_GALACTIC_CHART)
+    {
+        cross_x += (dx * 2);
+        cross_y += (dy * 2);
 
-		if (cross_x < 1)
-			cross_x = 1;
-			
-		if (cross_x > 510)
-			cross_x = 510;
+        if (cross_x < 1)
+            cross_x = 1;
 
-		if (cross_y < 37)
-			cross_y = 37;
-		
-		if (cross_y > 293)
-			cross_y = 293;
-	}
+        if (cross_x > 510)
+            cross_x = 510;
+
+        if (cross_y < 37)
+            cross_y = 37;
+
+        if (cross_y > 293)
+            cross_y = 293;
+    }
 }
 
 
@@ -154,951 +154,951 @@ void move_cross (int dx, int dy)
 
 void draw_cross (int cx, int cy)
 {
-	if (current_screen == SCR_SHORT_RANGE)
-	{
-		gfx_set_clip_region (1, 37, 510, 339);
-		xor_mode (TRUE);
-		gfx_draw_colour_line (cx - 16, cy, cx + 16, cy, GFX_COL_RED);
-		gfx_draw_colour_line (cx, cy - 16, cx, cy + 16, GFX_COL_RED);
-		xor_mode (FALSE);
-		gfx_set_clip_region (1, 1, 510, 383);
-		return;
-	}
-	
-	if (current_screen == SCR_GALACTIC_CHART)
-	{
-		gfx_set_clip_region (1, 37, 510, 293);
-		xor_mode (TRUE);
-		gfx_draw_colour_line (cx - 8, cy, cx + 8, cy, GFX_COL_RED);
-		gfx_draw_colour_line (cx, cy - 8, cx, cy + 8, GFX_COL_RED);
-		xor_mode (FALSE);
-		gfx_set_clip_region (1, 1, 510, 383);
-	}
+    if (current_screen == SCR_SHORT_RANGE)
+    {
+        gfx_set_clip_region (1, 37, 510, 339);
+        xor_mode (TRUE);
+        gfx_draw_colour_line (cx - 16, cy, cx + 16, cy, GFX_COL_RED);
+        gfx_draw_colour_line (cx, cy - 16, cx, cy + 16, GFX_COL_RED);
+        xor_mode (FALSE);
+        gfx_set_clip_region (1, 1, 510, 383);
+        return;
+    }
+
+    if (current_screen == SCR_GALACTIC_CHART)
+    {
+        gfx_set_clip_region (1, 37, 510, 293);
+        xor_mode (TRUE);
+        gfx_draw_colour_line (cx - 8, cy, cx + 8, cy, GFX_COL_RED);
+        gfx_draw_colour_line (cx, cy - 8, cx, cy + 8, GFX_COL_RED);
+        xor_mode (FALSE);
+        gfx_set_clip_region (1, 1, 510, 383);
+    }
 }
 
 
 
 void draw_laser_sights(void)
 {
-	int laser = 0;
-	int x1,y1,x2,y2;
-	
-	switch (current_screen)
-	{
-		case SCR_FRONT_VIEW:
-			gfx_display_centre_text (32, "Front View", 120, GFX_COL_WHITE);
-			laser = cmdr.front_laser;
-			break;
-		
-		case SCR_REAR_VIEW:
-			gfx_display_centre_text (32, "Rear View", 120, GFX_COL_WHITE);
-			laser = cmdr.rear_laser;
-			break;
+    int laser = 0;
+    int x1,y1,x2,y2;
 
-		case SCR_LEFT_VIEW:
-			gfx_display_centre_text (32, "Left View", 120, GFX_COL_WHITE);
-			laser = cmdr.left_laser;
-			break;
+    switch (current_screen)
+    {
+        case SCR_FRONT_VIEW:
+            gfx_display_centre_text (32, "Front View", 120, GFX_COL_WHITE);
+            laser = cmdr.front_laser;
+            break;
 
-		case SCR_RIGHT_VIEW:
-			gfx_display_centre_text (32, "Right View", 120, GFX_COL_WHITE);
-			laser = cmdr.right_laser;
-			break;
-	}
-	
+        case SCR_REAR_VIEW:
+            gfx_display_centre_text (32, "Rear View", 120, GFX_COL_WHITE);
+            laser = cmdr.rear_laser;
+            break;
 
-	if (laser)
-	{
-		x1 = 128 * GFX_SCALE;
-		y1 = (96-8) * GFX_SCALE;
-		y2 = (96-16) * GFX_SCALE;
-   
-		gfx_draw_colour_line (x1-1, y1, x1-1, y2, GFX_COL_GREY_1); 
-		gfx_draw_colour_line (x1, y1, x1, y2, GFX_COL_WHITE);
-		gfx_draw_colour_line (x1+1, y1, x1+1, y2, GFX_COL_GREY_1); 
+        case SCR_LEFT_VIEW:
+            gfx_display_centre_text (32, "Left View", 120, GFX_COL_WHITE);
+            laser = cmdr.left_laser;
+            break;
 
-		y1 = (96+8) * GFX_SCALE;
-		y2 = (96+16) * GFX_SCALE;
-		
-		gfx_draw_colour_line (x1-1, y1, x1-1, y2, GFX_COL_GREY_1); 
-		gfx_draw_colour_line (x1, y1, x1, y2, GFX_COL_WHITE);
-		gfx_draw_colour_line (x1+1, y1, x1+1, y2, GFX_COL_GREY_1); 
+        case SCR_RIGHT_VIEW:
+            gfx_display_centre_text (32, "Right View", 120, GFX_COL_WHITE);
+            laser = cmdr.right_laser;
+            break;
+    }
 
-		x1 = (128-8) * GFX_SCALE;
-		y1 = 96 * GFX_SCALE;
-		x2 = (128-16) * GFX_SCALE;
-		   
-		gfx_draw_colour_line (x1, y1-1, x2, y1-1, GFX_COL_GREY_1); 
-		gfx_draw_colour_line (x1, y1, x2, y1, GFX_COL_WHITE);
-		gfx_draw_colour_line (x1, y1+1, x2, y1+1, GFX_COL_GREY_1); 
 
-		x1 = (128+8) * GFX_SCALE;
-		x2 = (128+16) * GFX_SCALE;
+    if (laser)
+    {
+        x1 = 128 * GFX_SCALE;
+        y1 = (96-8) * GFX_SCALE;
+        y2 = (96-16) * GFX_SCALE;
 
-		gfx_draw_colour_line (x1, y1-1, x2, y1-1, GFX_COL_GREY_1); 
-		gfx_draw_colour_line (x1, y1, x2, y1, GFX_COL_WHITE);
-		gfx_draw_colour_line (x1, y1+1, x2, y1+1, GFX_COL_GREY_1); 
-	}
+        gfx_draw_colour_line (x1-1, y1, x1-1, y2, GFX_COL_GREY_1); 
+        gfx_draw_colour_line (x1, y1, x1, y2, GFX_COL_WHITE);
+        gfx_draw_colour_line (x1+1, y1, x1+1, y2, GFX_COL_GREY_1); 
+
+        y1 = (96+8) * GFX_SCALE;
+        y2 = (96+16) * GFX_SCALE;
+
+        gfx_draw_colour_line (x1-1, y1, x1-1, y2, GFX_COL_GREY_1); 
+        gfx_draw_colour_line (x1, y1, x1, y2, GFX_COL_WHITE);
+        gfx_draw_colour_line (x1+1, y1, x1+1, y2, GFX_COL_GREY_1); 
+
+        x1 = (128-8) * GFX_SCALE;
+        y1 = 96 * GFX_SCALE;
+        x2 = (128-16) * GFX_SCALE;
+
+        gfx_draw_colour_line (x1, y1-1, x2, y1-1, GFX_COL_GREY_1); 
+        gfx_draw_colour_line (x1, y1, x2, y1, GFX_COL_WHITE);
+        gfx_draw_colour_line (x1, y1+1, x2, y1+1, GFX_COL_GREY_1); 
+
+        x1 = (128+8) * GFX_SCALE;
+        x2 = (128+16) * GFX_SCALE;
+
+        gfx_draw_colour_line (x1, y1-1, x2, y1-1, GFX_COL_GREY_1); 
+        gfx_draw_colour_line (x1, y1, x2, y1, GFX_COL_WHITE);
+        gfx_draw_colour_line (x1, y1+1, x2, y1+1, GFX_COL_GREY_1); 
+    }
 }
 
 
 void arrow_right (void)
 {
-	switch (current_screen)
-	{
-		case SCR_MARKET_PRICES:
-			buy_stock();
-			break;
-		
-		case SCR_SETTINGS:
-			select_right_setting();
-			break;
+    switch (current_screen)
+    {
+        case SCR_MARKET_PRICES:
+            buy_stock();
+            break;
 
-		case SCR_SHORT_RANGE:
-		case SCR_GALACTIC_CHART:
-			move_cross(1, 0);
-			break;
+        case SCR_SETTINGS:
+            select_right_setting();
+            break;
 
-		case SCR_FRONT_VIEW:
-		case SCR_REAR_VIEW:
-		case SCR_RIGHT_VIEW:
-		case SCR_LEFT_VIEW:
-			if (flight_roll > 0)
-				flight_roll = 0;
-			else
-			{
-				decrease_flight_roll();
-				decrease_flight_roll();
-				rolling = 1;
-			}
-			break;
-	}
+        case SCR_SHORT_RANGE:
+        case SCR_GALACTIC_CHART:
+            move_cross(1, 0);
+            break;
+
+        case SCR_FRONT_VIEW:
+        case SCR_REAR_VIEW:
+        case SCR_RIGHT_VIEW:
+        case SCR_LEFT_VIEW:
+            if (flight_roll > 0)
+                flight_roll = 0;
+            else
+            {
+                decrease_flight_roll();
+                decrease_flight_roll();
+                rolling = 1;
+            }
+            break;
+    }
 }
 
 
 void arrow_left (void)
 {
-	switch (current_screen)
-	{
-		case SCR_MARKET_PRICES:
-			sell_stock();
-			break;
+    switch (current_screen)
+    {
+        case SCR_MARKET_PRICES:
+            sell_stock();
+            break;
 
-		case SCR_SETTINGS:
-			select_left_setting();
-			break;
-		
-		case SCR_SHORT_RANGE:
-		case SCR_GALACTIC_CHART:
-			move_cross (-1, 0);
-			break;
+        case SCR_SETTINGS:
+            select_left_setting();
+            break;
 
-		case SCR_FRONT_VIEW:
-		case SCR_REAR_VIEW:
-		case SCR_RIGHT_VIEW:
-		case SCR_LEFT_VIEW:
-			if (flight_roll < 0)
-				flight_roll = 0;
-			else
-			{
-				increase_flight_roll();
-				increase_flight_roll();
-				rolling = 1;
-			}
-			break;
-	}
+        case SCR_SHORT_RANGE:
+        case SCR_GALACTIC_CHART:
+            move_cross (-1, 0);
+            break;
+
+        case SCR_FRONT_VIEW:
+        case SCR_REAR_VIEW:
+        case SCR_RIGHT_VIEW:
+        case SCR_LEFT_VIEW:
+            if (flight_roll < 0)
+                flight_roll = 0;
+            else
+            {
+                increase_flight_roll();
+                increase_flight_roll();
+                rolling = 1;
+            }
+            break;
+    }
 }
 
 
 void arrow_up (void)
 {
-	switch (current_screen)
-	{
-		case SCR_MARKET_PRICES:
-			select_previous_stock();
-			break;
+    switch (current_screen)
+    {
+        case SCR_MARKET_PRICES:
+            select_previous_stock();
+            break;
 
-		case SCR_EQUIP_SHIP:
-			select_previous_equip();
-			break;
+        case SCR_EQUIP_SHIP:
+            select_previous_equip();
+            break;
 
-		case SCR_OPTIONS:
-			select_previous_option();
-			break;
+        case SCR_OPTIONS:
+            select_previous_option();
+            break;
 
-		case SCR_SETTINGS:
-			select_up_setting();
-			break;
-		
-		case SCR_SHORT_RANGE:
-		case SCR_GALACTIC_CHART:
-			move_cross (0, -1);
-			break;
+        case SCR_SETTINGS:
+            select_up_setting();
+            break;
 
-		case SCR_FRONT_VIEW:
-		case SCR_REAR_VIEW:
-		case SCR_RIGHT_VIEW:
-		case SCR_LEFT_VIEW:
-			if (flight_climb > 0)
-				flight_climb = 0;
-			else
-			{
-				decrease_flight_climb();
-			}
-			climbing = 1;
-			break;
-	}
+        case SCR_SHORT_RANGE:
+        case SCR_GALACTIC_CHART:
+            move_cross (0, -1);
+            break;
+
+        case SCR_FRONT_VIEW:
+        case SCR_REAR_VIEW:
+        case SCR_RIGHT_VIEW:
+        case SCR_LEFT_VIEW:
+            if (flight_climb > 0)
+                flight_climb = 0;
+            else
+            {
+                decrease_flight_climb();
+            }
+            climbing = 1;
+            break;
+    }
 }
 
 
 
 void arrow_down (void)
 {
-	switch (current_screen)
-	{
-		case SCR_MARKET_PRICES:
-			select_next_stock();
-			break;
+    switch (current_screen)
+    {
+        case SCR_MARKET_PRICES:
+            select_next_stock();
+            break;
 
-		case SCR_EQUIP_SHIP:
-			select_next_equip();
-			break;
-		
-		case SCR_OPTIONS:
-			select_next_option();
-			break;
+        case SCR_EQUIP_SHIP:
+            select_next_equip();
+            break;
 
-		case SCR_SETTINGS:
-			select_down_setting();
-			break;
-		
-		case SCR_SHORT_RANGE:
-		case SCR_GALACTIC_CHART:
-			move_cross (0, 1);
-			break;
+        case SCR_OPTIONS:
+            select_next_option();
+            break;
 
-		case SCR_FRONT_VIEW:
-		case SCR_REAR_VIEW:
-		case SCR_RIGHT_VIEW:
-		case SCR_LEFT_VIEW:
-			if (flight_climb < 0)
-				flight_climb = 0;
-			else
-			{
-				increase_flight_climb();
-			}
-			climbing = 1;
-			break;
+        case SCR_SETTINGS:
+            select_down_setting();
+            break;
 
-	}
+        case SCR_SHORT_RANGE:
+        case SCR_GALACTIC_CHART:
+            move_cross (0, 1);
+            break;
+
+        case SCR_FRONT_VIEW:
+        case SCR_REAR_VIEW:
+        case SCR_RIGHT_VIEW:
+        case SCR_LEFT_VIEW:
+            if (flight_climb < 0)
+                flight_climb = 0;
+            else
+            {
+                increase_flight_climb();
+            }
+            climbing = 1;
+            break;
+
+    }
 }
 
 
 void return_pressed (void)
 {
-	switch (current_screen)
-	{
-		case SCR_EQUIP_SHIP:
-			buy_equip();
-			break;
-		
-		case SCR_OPTIONS:
-			do_option();
-			break;
+    switch (current_screen)
+    {
+        case SCR_EQUIP_SHIP:
+            buy_equip();
+            break;
 
-		case SCR_SETTINGS:
-			toggle_setting();
-			break;
-	}	
+        case SCR_OPTIONS:
+            do_option();
+            break;
+
+        case SCR_SETTINGS:
+            toggle_setting();
+            break;
+    }       
 }
 
 
 void y_pressed (void)
 {
-	switch (current_screen)
-	{
-		case SCR_QUIT:
-			finish_game();
-			break;
-	}
+    switch (current_screen)
+    {
+        case SCR_QUIT:
+            finish_game();
+            break;
+    }
 }
 
 
 void n_pressed (void)
 {
-	switch (current_screen)
-	{
-		case SCR_QUIT:
-			if (docked)
-				display_commander_status();
-			else
-				current_screen = SCR_FRONT_VIEW;
-			break;
-	}
+    switch (current_screen)
+    {
+        case SCR_QUIT:
+            if (docked)
+                display_commander_status();
+            else
+                current_screen = SCR_FRONT_VIEW;
+            break;
+    }
 }
 
 
 void d_pressed (void)
 {
-	switch (current_screen)
-	{
-		case SCR_GALACTIC_CHART:
-		case SCR_SHORT_RANGE:
-    		show_distance_to_planet();
-			break;
-		
-		case SCR_FRONT_VIEW:
-		case SCR_REAR_VIEW:
-		case SCR_RIGHT_VIEW:
-		case SCR_LEFT_VIEW:
-			if (auto_pilot)
-				disengage_auto_pilot();
-			break;
-	}
+    switch (current_screen)
+    {
+        case SCR_GALACTIC_CHART:
+        case SCR_SHORT_RANGE:
+            show_distance_to_planet();
+            break;
+
+        case SCR_FRONT_VIEW:
+        case SCR_REAR_VIEW:
+        case SCR_RIGHT_VIEW:
+        case SCR_LEFT_VIEW:
+            if (auto_pilot)
+                disengage_auto_pilot();
+            break;
+    }
 }
 
 
 void f_pressed (void)
 {
-	if ((current_screen == SCR_GALACTIC_CHART) ||
-		(current_screen == SCR_SHORT_RANGE))
-	{
-		find_input = 1;
-		*find_name = '\0';
-		gfx_clear_text_area();
-		gfx_display_text (16, 340, "Planet Name?");
-	}
+    if ((current_screen == SCR_GALACTIC_CHART) ||
+            (current_screen == SCR_SHORT_RANGE))
+    {
+        find_input = 1;
+        *find_name = '\0';
+        gfx_clear_text_area();
+        gfx_display_text (16, 340, "Planet Name?");
+    }
 }
 
 
 void add_find_char (int letter)
 {
-	char str[40];
-	
-	if (strlen (find_name) == 16)
-		return;
-		
-	str[0] = toupper (letter);
-	str[1] = '\0';
-	strcat (find_name, str);
+    char str[40];
 
-	sprintf (str, "Planet Name? %s", find_name);		
-	gfx_clear_text_area ();
-	gfx_display_text(16, 340, str);
+    if (strlen (find_name) == 16)
+        return;
+
+    str[0] = toupper (letter);
+    str[1] = '\0';
+    strcat (find_name, str);
+
+    sprintf (str, "Planet Name? %s", find_name);            
+    gfx_clear_text_area ();
+    gfx_display_text(16, 340, str);
 }
 
 
 void delete_find_char (void)
 {
-	char str[40];
-	int len;
+    char str[40];
+    int len;
 
-	len = strlen (find_name);
-	if (len == 0)
-		return;
-		
-	find_name[len - 1] = '\0';	
-		
-	sprintf (str, "Planet Name? %s", find_name);		
-	gfx_clear_text_area();
-	gfx_display_text(16, 340, str);
+    len = strlen (find_name);
+    if (len == 0)
+        return;
+
+    find_name[len - 1] = '\0';      
+
+    sprintf (str, "Planet Name? %s", find_name);            
+    gfx_clear_text_area();
+    gfx_display_text(16, 340, str);
 }
 
 void o_pressed()
 {
-	switch (current_screen)
-	{
-		case SCR_GALACTIC_CHART:
-		case SCR_SHORT_RANGE:
-    		move_cursor_to_origin();
-			break;
-	}
+    switch (current_screen)
+    {
+        case SCR_GALACTIC_CHART:
+        case SCR_SHORT_RANGE:
+            move_cursor_to_origin();
+            break;
+    }
 }
 
 
 void auto_dock (void)
 {
-	struct univ_object ship;
+    struct univ_object ship;
 
-	ship.location.x = 0;
-	ship.location.y = 0;
-	ship.location.z = 0;
-	
-	set_init_matrix (ship.rotmat);
-	ship.rotmat[2].z = 1;
-	ship.rotmat[0].x = -1;
-	ship.type = -96;
-	ship.velocity = flight_speed;
-	ship.acceleration = 0;
-	ship.bravery = 0;
-	ship.rot.z = 0;
-	ship.rot.x = 0;
+    ship.location.x = 0;
+    ship.location.y = 0;
+    ship.location.z = 0;
 
-	auto_pilot_ship (&ship);
+    set_init_matrix (ship.rotmat);
+    ship.rotmat[2].z = 1;
+    ship.rotmat[0].x = -1;
+    ship.type = -96;
+    ship.velocity = flight_speed;
+    ship.acceleration = 0;
+    ship.bravery = 0;
+    ship.rot.z = 0;
+    ship.rot.x = 0;
 
-	if (ship.velocity > 22)
-		flight_speed = 22;
-	else
-		flight_speed = ship.velocity;
-	
-	if (ship.acceleration > 0)
-	{
-		flight_speed++;
-		if (flight_speed > 22)
-			flight_speed = 22;
-	}
+    auto_pilot_ship (&ship);
 
-	if (ship.acceleration < 0)
-	{
-		flight_speed--;
-		if (flight_speed < 1)
-			flight_speed = 1;
-	}	
+    if (ship.velocity > 22)
+        flight_speed = 22;
+    else
+        flight_speed = ship.velocity;
 
-	if (ship.rot.x == 0)
-		flight_climb = 0;
-	
-	if (ship.rot.x < 0)
-	{
-		increase_flight_climb();
+    if (ship.acceleration > 0)
+    {
+        flight_speed++;
+        if (flight_speed > 22)
+            flight_speed = 22;
+    }
 
-		if (ship.rot.x < -1)
-			increase_flight_climb();
-	}
-	
-	if (ship.rot.x > 0)
-	{
-		decrease_flight_climb();
+    if (ship.acceleration < 0)
+    {
+        flight_speed--;
+        if (flight_speed < 1)
+            flight_speed = 1;
+    }       
 
-		if (ship.rot.x > 1)
-			decrease_flight_climb();
-	}
-	
-	if (ship.rot.z == 127)
-		flight_roll = -14;
-	else
-	{
-		if (ship.rot.z == 0)
-			flight_roll = 0;
+    if (ship.rot.x == 0)
+        flight_climb = 0;
 
-		if (ship.rot.z > 0)
-		{
-			increase_flight_roll();
+    if (ship.rot.x < 0)
+    {
+        increase_flight_climb();
 
-			if (ship.rot.z > 1)
-				increase_flight_roll();
-		}
-		
-		if (ship.rot.z < 0)
-		{
-			decrease_flight_roll();
+        if (ship.rot.x < -1)
+            increase_flight_climb();
+    }
 
-			if (ship.rot.z < -1)
-				decrease_flight_roll();
-		}
-	}
+    if (ship.rot.x > 0)
+    {
+        decrease_flight_climb();
+
+        if (ship.rot.x > 1)
+            decrease_flight_climb();
+    }
+
+    if (ship.rot.z == 127)
+        flight_roll = -14;
+    else
+    {
+        if (ship.rot.z == 0)
+            flight_roll = 0;
+
+        if (ship.rot.z > 0)
+        {
+            increase_flight_roll();
+
+            if (ship.rot.z > 1)
+                increase_flight_roll();
+        }
+
+        if (ship.rot.z < 0)
+        {
+            decrease_flight_roll();
+
+            if (ship.rot.z < -1)
+                decrease_flight_roll();
+        }
+    }
 }
 
 
 void run_escape_sequence (void)
 {
-	int i;
-	int newship;
-        struct point pt = {0, 0, 200};
-	Matrix rotmat;
-	
-	current_screen = SCR_ESCAPE_POD;
-	
-	flight_speed = 1;
-	flight_roll = 0;
-	flight_climb = 0;
+    int i;
+    int newship;
+    struct point pt = {0, 0, 200};
+    Matrix rotmat;
 
-	set_init_matrix (rotmat);
-	rotmat[2].z = 1.0;
-	
-	newship = add_new_ship (SHIP_COBRA3, pt, rotmat, ROT_127);
-	universe[newship].velocity = 7;
-	snd_play_sample (SND_LAUNCH);
+    current_screen = SCR_ESCAPE_POD;
 
-	for (i = 0; i < 90; i++)
-	{
-		if (i == 40)
-		{
-			universe[newship].flags |= FLG_DEAD;
-			snd_play_sample (SND_EXPLODE);
-		}
+    flight_speed = 1;
+    flight_roll = 0;
+    flight_climb = 0;
 
-		gfx_set_clip_region (1, 1, 510, 383);
-		gfx_clear_display();
-		update_starfield();
-		update_universe();
+    set_init_matrix (rotmat);
+    rotmat[2].z = 1.0;
 
-		universe[newship].location.x = 0;
-		universe[newship].location.y = 0;
-		universe[newship].location.z += 2;
+    newship = add_new_ship (SHIP_COBRA3, pt, rotmat, ROT_127);
+    universe[newship].velocity = 7;
+    snd_play_sample (SND_LAUNCH);
 
-		gfx_display_centre_text (358, "Escape pod launched - Ship auto-destuct initiated.", 120, GFX_COL_WHITE);
-		
-		update_console();
-		gfx_update_screen();
-	}
+    for (i = 0; i < 90; i++)
+    {
+        if (i == 40)
+        {
+            universe[newship].flags |= FLG_DEAD;
+            snd_play_sample (SND_EXPLODE);
+        }
 
-	
-	while ((ship_count[SHIP_CORIOLIS] == 0) &&
-		   (ship_count[SHIP_DODEC] == 0))
-	{
-		auto_dock();
+        gfx_set_clip_region (1, 1, 510, 383);
+        gfx_clear_display();
+        update_starfield();
+        update_universe();
 
-		if ((abs(flight_roll) < 3) && (abs(flight_climb) < 3))
-		{
-			for (i = 0; i < MAX_UNIV_OBJECTS; i++)
-			{
-				if (universe[i].type != 0)
-					universe[i].location.z -= 1500;
-			}
+        universe[newship].location.x = 0;
+        universe[newship].location.y = 0;
+        universe[newship].location.z += 2;
 
-		}
+        gfx_display_centre_text (358, "Escape pod launched - Ship auto-destuct initiated.", 120, GFX_COL_WHITE);
 
-		warp_stars = 1;
-		gfx_set_clip_region (1, 1, 510, 383);
-		gfx_clear_display();
-		update_starfield();
-		update_universe();
-		update_console();
-		gfx_update_screen();
-	}
+        update_console();
+        gfx_update_screen();
+    }
 
-	abandon_ship();
+
+    while ((ship_count[SHIP_CORIOLIS] == 0) &&
+            (ship_count[SHIP_DODEC] == 0))
+    {
+        auto_dock();
+
+        if ((abs(flight_roll) < 3) && (abs(flight_climb) < 3))
+        {
+            for (i = 0; i < MAX_UNIV_OBJECTS; i++)
+            {
+                if (universe[i].type != 0)
+                    universe[i].location.z -= 1500;
+            }
+
+        }
+
+        warp_stars = 1;
+        gfx_set_clip_region (1, 1, 510, 383);
+        gfx_clear_display();
+        update_starfield();
+        update_universe();
+        update_console();
+        gfx_update_screen();
+    }
+
+    abandon_ship();
 }
 
 
 void handle_flight_keys (void)
 {
     int keyasc;
-	
-	if (docked &&
-	    ((current_screen == SCR_MARKET_PRICES) ||
-		 (current_screen == SCR_OPTIONS) ||
-		 (current_screen == SCR_SETTINGS) ||
-		 (current_screen == SCR_EQUIP_SHIP)))
-		kbd_read_key();
 
-	kbd_poll_keyboard();
+    if (docked &&
+            ((current_screen == SCR_MARKET_PRICES) ||
+             (current_screen == SCR_OPTIONS) ||
+             (current_screen == SCR_SETTINGS) ||
+             (current_screen == SCR_EQUIP_SHIP)))
+        kbd_read_key();
 
-	if (have_joystick)
-	{	
-		poll_joystick();	
+    kbd_poll_keyboard();
 
-		if (joy[0].stick[0].axis[1].d1)
-			arrow_up();
-		
-		if (joy[0].stick[0].axis[1].d2)
-			arrow_down();
+    if (have_joystick)
+    {       
+        poll_joystick();        
 
-		if (joy[0].stick[0].axis[0].d1)
-			arrow_left();
+        if (joy[0].stick[0].axis[1].d1)
+            arrow_up();
 
-		if (joy[0].stick[0].axis[0].d2)
-			arrow_right();
-		
-		if (joy[0].button[0].b)
-			kbd_fire_pressed = 1;
+        if (joy[0].stick[0].axis[1].d2)
+            arrow_down();
 
-		if (joy[0].button[1].b)
-			kbd_inc_speed_pressed = 1;
+        if (joy[0].stick[0].axis[0].d1)
+            arrow_left();
 
-		if (joy[0].button[2].b)
-			kbd_dec_speed_pressed = 1;
-	}
+        if (joy[0].stick[0].axis[0].d2)
+            arrow_right();
 
-	
-	if (game_paused)
-	{
-		if (kbd_resume_pressed)
-			game_paused = 0;
-		return;
-	}
-		
-	if (kbd_F1_pressed)
-	{
-		find_input = 0;
-		
-		if (docked)
-			launch_player();
-		else
-		{
-			if (current_screen != SCR_FRONT_VIEW)
-			{
-				current_screen = SCR_FRONT_VIEW;
-				flip_stars();
-			}
-		}
-	}
+        if (joy[0].button[0].b)
+            kbd_fire_pressed = 1;
 
-	if (kbd_F2_pressed)
-	{
-		find_input = 0;
-		
-		if (!docked)
-		{
-			if (current_screen != SCR_REAR_VIEW)
-			{
-				current_screen = SCR_REAR_VIEW;
-				flip_stars();
-			}
-		}
-	}
+        if (joy[0].button[1].b)
+            kbd_inc_speed_pressed = 1;
 
-	if (kbd_F3_pressed)
-	{
-		find_input = 0;
-		
-		if (!docked)
-		{
-			if (current_screen != SCR_LEFT_VIEW)
-			{
-				current_screen = SCR_LEFT_VIEW;
-				flip_stars();
-			}
-		}
-	}
+        if (joy[0].button[2].b)
+            kbd_dec_speed_pressed = 1;
+    }
 
-	if (kbd_F4_pressed)
-	{
-		find_input = 0;
-		
-		if (docked)
-			equip_ship();
-		else
-		{
-			if (current_screen != SCR_RIGHT_VIEW)
-			{
-				current_screen = SCR_RIGHT_VIEW;
-				flip_stars();
-			}
-		}
-	}
 
-	
-	if (kbd_F5_pressed)
-	{
-		find_input = 0;
-		old_cross_x = -1;
-		display_galactic_chart();
-	}
+    if (game_paused)
+    {
+        if (kbd_resume_pressed)
+            game_paused = 0;
+        return;
+    }
 
-	if (kbd_F6_pressed)
-	{
-		find_input = 0;
-		old_cross_x = -1;
-		display_short_range_chart();
-	}
+    if (kbd_F1_pressed)
+    {
+        find_input = 0;
 
-	if (kbd_F7_pressed)
-	{
-		find_input = 0;
-		display_data_on_planet();
-	}
+        if (docked)
+            launch_player();
+        else
+        {
+            if (current_screen != SCR_FRONT_VIEW)
+            {
+                current_screen = SCR_FRONT_VIEW;
+                flip_stars();
+            }
+        }
+    }
 
-	if (kbd_F8_pressed && (!witchspace))
-	{
-		find_input = 0;
-		display_market_prices();
-	}	
+    if (kbd_F2_pressed)
+    {
+        find_input = 0;
 
-	if (kbd_F9_pressed)
-	{
-		find_input = 0;
-		display_commander_status();
-	}
+        if (!docked)
+        {
+            if (current_screen != SCR_REAR_VIEW)
+            {
+                current_screen = SCR_REAR_VIEW;
+                flip_stars();
+            }
+        }
+    }
 
-	if (kbd_F10_pressed)
-	{
-		find_input = 0;
-		display_inventory();
-	}
-	
-	if (kbd_F11_pressed)
-	{
-		find_input = 0;
-		display_options();
-	}
+    if (kbd_F3_pressed)
+    {
+        find_input = 0;
 
-	if (find_input)
-	{
-		keyasc = kbd_read_key();
-		
-		if (kbd_enter_pressed)
-		{
-			find_input = 0;
-			find_planet_by_name (find_name);
-			return;
-		}
+        if (!docked)
+        {
+            if (current_screen != SCR_LEFT_VIEW)
+            {
+                current_screen = SCR_LEFT_VIEW;
+                flip_stars();
+            }
+        }
+    }
 
-		if (kbd_backspace_pressed)
-		{
-			delete_find_char();
-			return;
-		}
+    if (kbd_F4_pressed)
+    {
+        find_input = 0;
 
-		if (isalpha(keyasc))
-			add_find_char (keyasc);
+        if (docked)
+            equip_ship();
+        else
+        {
+            if (current_screen != SCR_RIGHT_VIEW)
+            {
+                current_screen = SCR_RIGHT_VIEW;
+                flip_stars();
+            }
+        }
+    }
 
-		return;		
-	}
-	
-	if (kbd_y_pressed)
-		y_pressed();
 
-	if (kbd_n_pressed)
-		n_pressed();
+    if (kbd_F5_pressed)
+    {
+        find_input = 0;
+        old_cross_x = -1;
+        display_galactic_chart();
+    }
 
- 
-	if (kbd_fire_pressed)
-	{
-		if ((!docked) && (draw_lasers == 0))
-			draw_lasers = fire_laser();
-	}
+    if (kbd_F6_pressed)
+    {
+        find_input = 0;
+        old_cross_x = -1;
+        display_short_range_chart();
+    }
 
-	if (kbd_dock_pressed)
-	{
-		if (!docked && cmdr.docking_computer)
-		{
-			if (instant_dock)
-				engage_docking_computer();
-			else
-				engage_auto_pilot();
-		}
-	}
+    if (kbd_F7_pressed)
+    {
+        find_input = 0;
+        display_data_on_planet();
+    }
 
-	if (kbd_d_pressed)
-		d_pressed();
-	
-	if (kbd_ecm_pressed)
-	{
-		if (!docked && cmdr.ecm)
-			activate_ecm(1);
-	}
+    if (kbd_F8_pressed && (!witchspace))
+    {
+        find_input = 0;
+        display_market_prices();
+    }       
 
-	if (kbd_find_pressed)
-		f_pressed ();
-	
-	if (kbd_hyperspace_pressed && (!docked))
-	{
-		if (kbd_ctrl_pressed)
-			start_galactic_hyperspace();
-		else
-			start_hyperspace();
-	}
+    if (kbd_F9_pressed)
+    {
+        find_input = 0;
+        display_commander_status();
+    }
 
-	if (kbd_jump_pressed && (!docked) && (!witchspace))
-	{
-		jump_warp();
-	}
-	
-	if (kbd_fire_missile_pressed)
-	{
-		if (!docked)
-			fire_missile();
-	}
+    if (kbd_F10_pressed)
+    {
+        find_input = 0;
+        display_inventory();
+    }
 
-	if (kbd_origin_pressed)
-		o_pressed();
+    if (kbd_F11_pressed)
+    {
+        find_input = 0;
+        display_options();
+    }
 
-	if (kbd_pause_pressed)
-		game_paused = 1;
-	
-	if (kbd_target_missile_pressed)
-	{
-		if (!docked)
-			arm_missile();		
-	}
+    if (find_input)
+    {
+        keyasc = kbd_read_key();
 
-	if (kbd_unarm_missile_pressed)
-	{
-		if (!docked)
-			unarm_missile();
-	}
-	
-	if (kbd_inc_speed_pressed)
-	{
-		if (!docked)
-		{
-			if (flight_speed < myship.max_speed)
-				flight_speed++;
-		}
-	}
+        if (kbd_enter_pressed)
+        {
+            find_input = 0;
+            find_planet_by_name (find_name);
+            return;
+        }
 
-	if (kbd_dec_speed_pressed)
-	{
-		if (!docked)
-		{
-			if (flight_speed > 1)
-				flight_speed--;
-		}
-	}
+        if (kbd_backspace_pressed)
+        {
+            delete_find_char();
+            return;
+        }
 
-	if (kbd_up_pressed)
-		arrow_up();
-	
-	if (kbd_down_pressed)
-		arrow_down();
+        if (isalpha(keyasc))
+            add_find_char (keyasc);
 
-	if (kbd_left_pressed)
-		arrow_left();
-		
-	if (kbd_right_pressed)
-		arrow_right();
-	
-	if (kbd_enter_pressed)
-		return_pressed();
+        return;         
+    }
 
-	if (kbd_energy_bomb_pressed)
-	{
-		if ((!docked) && (cmdr.energy_bomb))
-		{
-			detonate_bomb = 1;
-			cmdr.energy_bomb = 0;
-		}
-	}		
+    if (kbd_y_pressed)
+        y_pressed();
 
-	if (kbd_escape_pressed)
-	{
-		if ((!docked) && (cmdr.escape_pod) && (!witchspace))
-			run_escape_sequence();
-	}
+    if (kbd_n_pressed)
+        n_pressed();
+
+
+    if (kbd_fire_pressed)
+    {
+        if ((!docked) && (draw_lasers == 0))
+            draw_lasers = fire_laser();
+    }
+
+    if (kbd_dock_pressed)
+    {
+        if (!docked && cmdr.docking_computer)
+        {
+            if (instant_dock)
+                engage_docking_computer();
+            else
+                engage_auto_pilot();
+        }
+    }
+
+    if (kbd_d_pressed)
+        d_pressed();
+
+    if (kbd_ecm_pressed)
+    {
+        if (!docked && cmdr.ecm)
+            activate_ecm(1);
+    }
+
+    if (kbd_find_pressed)
+        f_pressed ();
+
+    if (kbd_hyperspace_pressed && (!docked))
+    {
+        if (kbd_ctrl_pressed)
+            start_galactic_hyperspace();
+        else
+            start_hyperspace();
+    }
+
+    if (kbd_jump_pressed && (!docked) && (!witchspace))
+    {
+        jump_warp();
+    }
+
+    if (kbd_fire_missile_pressed)
+    {
+        if (!docked)
+            fire_missile();
+    }
+
+    if (kbd_origin_pressed)
+        o_pressed();
+
+    if (kbd_pause_pressed)
+        game_paused = 1;
+
+    if (kbd_target_missile_pressed)
+    {
+        if (!docked)
+            arm_missile();          
+    }
+
+    if (kbd_unarm_missile_pressed)
+    {
+        if (!docked)
+            unarm_missile();
+    }
+
+    if (kbd_inc_speed_pressed)
+    {
+        if (!docked)
+        {
+            if (flight_speed < myship.max_speed)
+                flight_speed++;
+        }
+    }
+
+    if (kbd_dec_speed_pressed)
+    {
+        if (!docked)
+        {
+            if (flight_speed > 1)
+                flight_speed--;
+        }
+    }
+
+    if (kbd_up_pressed)
+        arrow_up();
+
+    if (kbd_down_pressed)
+        arrow_down();
+
+    if (kbd_left_pressed)
+        arrow_left();
+
+    if (kbd_right_pressed)
+        arrow_right();
+
+    if (kbd_enter_pressed)
+        return_pressed();
+
+    if (kbd_energy_bomb_pressed)
+    {
+        if ((!docked) && (cmdr.energy_bomb))
+        {
+            detonate_bomb = 1;
+            cmdr.energy_bomb = 0;
+        }
+    }               
+
+    if (kbd_escape_pressed)
+    {
+        if ((!docked) && (cmdr.escape_pod) && (!witchspace))
+            run_escape_sequence();
+    }
 }
 
 
 
 void set_commander_name (char *path)
 {
-	char *fname, *cname;
-	int i;
-	
-	fname = get_filename (path);
-	cname = cmdr.name;
+    char *fname, *cname;
+    int i;
 
-	for (i = 0; i < 31; i++)
-	{
-		if (!isalnum(*fname))
-			break;
-		
-		*cname++ = toupper(*fname++);
-	}	
+    fname = get_filename (path);
+    cname = cmdr.name;
 
-	*cname = '\0';
+    for (i = 0; i < 31; i++)
+    {
+        if (!isalnum(*fname))
+            break;
+
+        *cname++ = toupper(*fname++);
+    }       
+
+    *cname = '\0';
 }
 
 
 void save_commander_screen (void)
 {
-	char path[255];
-	int okay;
-	int rv;
-	
-	current_screen = SCR_SAVE_CMDR;
+    char path[255];
+    int okay;
+    int rv;
 
-	gfx_clear_display();
-	gfx_display_centre_text (10, "SAVE COMMANDER", 140, GFX_COL_GOLD);
-	gfx_draw_line (0, 36, 511, 36);
-	gfx_update_screen();
-	
-	strcpy (path, cmdr.name);
-	strcat (path, ".nkc");
-	
-	okay = gfx_request_file ("Save Commander", path, "nkc");
-	
-	if (!okay)
-	{
-		display_options();
-		return;
-	}
+    current_screen = SCR_SAVE_CMDR;
 
-	rv = save_commander_file (path);
+    gfx_clear_display();
+    gfx_display_centre_text (10, "SAVE COMMANDER", 140, GFX_COL_GOLD);
+    gfx_draw_line (0, 36, 511, 36);
+    gfx_update_screen();
 
-	if (rv)
-	{
-		gfx_display_centre_text (175, "Error Saving Commander!", 140, GFX_COL_GOLD);
-		return;
-	}
-	
-	gfx_display_centre_text (175, "Commander Saved.", 140, GFX_COL_GOLD);
+    strcpy (path, cmdr.name);
+    strcat (path, ".nkc");
 
-	set_commander_name (path);
-	saved_cmdr = cmdr;
-	saved_cmdr.ship_x = docked_planet.d;
-	saved_cmdr.ship_y = docked_planet.b;
+    okay = gfx_request_file ("Save Commander", path, "nkc");
+
+    if (!okay)
+    {
+        display_options();
+        return;
+    }
+
+    rv = save_commander_file (path);
+
+    if (rv)
+    {
+        gfx_display_centre_text (175, "Error Saving Commander!", 140, GFX_COL_GOLD);
+        return;
+    }
+
+    gfx_display_centre_text (175, "Commander Saved.", 140, GFX_COL_GOLD);
+
+    set_commander_name (path);
+    saved_cmdr = cmdr;
+    saved_cmdr.ship_x = docked_planet.d;
+    saved_cmdr.ship_y = docked_planet.b;
 }
 
 
 void load_commander_screen (void)
 {
-	char path[255];
-	int rv;
+    char path[255];
+    int rv;
 
-	gfx_clear_display();
-	gfx_display_centre_text (10, "LOAD COMMANDER", 140, GFX_COL_GOLD);
-	gfx_draw_line (0, 36, 511, 36);
-	gfx_update_screen();
-	
-	
-	strcpy (path, "jameson.nkc");
-	
-	rv = gfx_request_file ("Load Commander", path, "nkc");
+    gfx_clear_display();
+    gfx_display_centre_text (10, "LOAD COMMANDER", 140, GFX_COL_GOLD);
+    gfx_draw_line (0, 36, 511, 36);
+    gfx_update_screen();
 
-	if (rv == 0)
-		return;
 
-	rv = load_commander_file (path);
+    strcpy (path, "jameson.nkc");
 
-	if (rv)
-	{
-		saved_cmdr = cmdr;
-		gfx_display_centre_text (175, "Error Loading Commander!", 140, GFX_COL_GOLD);
-		gfx_display_centre_text (200, "Press any key to continue.", 140, GFX_COL_GOLD);
-		gfx_update_screen();
-		readkey();
-		return;
-	}
-	
-	restore_saved_commander();
-	set_commander_name (path);
-	saved_cmdr = cmdr;
-	update_console();
+    rv = gfx_request_file ("Load Commander", path, "nkc");
+
+    if (rv == 0)
+        return;
+
+    rv = load_commander_file (path);
+
+    if (rv)
+    {
+        saved_cmdr = cmdr;
+        gfx_display_centre_text (175, "Error Loading Commander!", 140, GFX_COL_GOLD);
+        gfx_display_centre_text (200, "Press any key to continue.", 140, GFX_COL_GOLD);
+        gfx_update_screen();
+        readkey();
+        return;
+    }
+
+    restore_saved_commander();
+    set_commander_name (path);
+    saved_cmdr = cmdr;
+    update_console();
 }
 
 
 
 void run_first_intro_screen (void)
 {
-	current_screen = SCR_INTRO_ONE;
+    current_screen = SCR_INTRO_ONE;
 
-	snd_play_midi (SND_ELITE_THEME, TRUE);
+    snd_play_midi (SND_ELITE_THEME, TRUE);
 
-	initialise_intro1();
+    initialise_intro1();
 
-	for (;;)
-	{
-		update_intro1();
+    for (;;)
+    {
+        update_intro1();
 
-		gfx_update_screen();
+        gfx_update_screen();
 
-		kbd_poll_keyboard();
+        kbd_poll_keyboard();
 
-		if (kbd_y_pressed)
-		{
-			snd_stop_midi();	
-			load_commander_screen();
-			break;
-		}
-		
-		if (kbd_n_pressed)
-		{ 
-			snd_stop_midi();	
-			break;
-		}
-	} 
+        if (kbd_y_pressed)
+        {
+            snd_stop_midi();        
+            load_commander_screen();
+            break;
+        }
+
+        if (kbd_n_pressed)
+        { 
+            snd_stop_midi();        
+            break;
+        }
+    } 
 
 }
 
@@ -1106,29 +1106,29 @@ void run_first_intro_screen (void)
 
 void run_second_intro_screen (void)
 {
-	current_screen = SCR_INTRO_TWO;
-	
-	snd_play_midi (SND_BLUE_DANUBE, TRUE);
-		
-	initialise_intro2();
+    current_screen = SCR_INTRO_TWO;
 
-	flight_speed = 3;
-	flight_roll = 0;
-	flight_climb = 0;
+    snd_play_midi (SND_BLUE_DANUBE, TRUE);
 
-	for (;;)
-	{
-		update_intro2();
+    initialise_intro2();
 
-		gfx_update_screen();
+    flight_speed = 3;
+    flight_roll = 0;
+    flight_climb = 0;
 
-		kbd_poll_keyboard();
+    for (;;)
+    {
+        update_intro2();
 
-		if (kbd_space_pressed) 
-			break;
-	} 
+        gfx_update_screen();
 
-	snd_stop_midi();
+        kbd_poll_keyboard();
+
+        if (kbd_space_pressed) 
+            break;
+    } 
+
+    snd_stop_midi();
 }
 
 
@@ -1139,48 +1139,48 @@ void run_second_intro_screen (void)
 
 void run_game_over_screen()
 {
-	int i;
-	int newship;
-        struct point pt = {0, 0, -400};
-	Matrix rotmat;
-	int type;
-	
-	current_screen = SCR_GAME_OVER;
-	gfx_set_clip_region (1, 1, 510, 383);
-	
-	flight_speed = 6;
-	flight_roll = 0;
-	flight_climb = 0;
-	clear_universe();
+    int i;
+    int newship;
+    struct point pt = {0, 0, -400};
+    Matrix rotmat;
+    int type;
 
-	set_init_matrix (rotmat);
+    current_screen = SCR_GAME_OVER;
+    gfx_set_clip_region (1, 1, 510, 383);
 
-	newship = add_new_ship (SHIP_COBRA3, pt, rotmat, ROT_0);
-	universe[newship].flags |= FLG_DEAD;
+    flight_speed = 6;
+    flight_roll = 0;
+    flight_climb = 0;
+    clear_universe();
 
-	for (i = 0; i < 5; i++)
-	{
-		type = (rand255() & 1) ? SHIP_CARGO : SHIP_ALLOY;
+    set_init_matrix (rotmat);
 
-                pt.x = (rand255() & 63) - 32;
-                pt.y = (rand255() & 63) - 32;
-                pt.z = -400;
-		newship = add_new_ship (type, pt, rotmat, ROT_0);
+    newship = add_new_ship (SHIP_COBRA3, pt, rotmat, ROT_0);
+    universe[newship].flags |= FLG_DEAD;
 
-		universe[newship].rot.z = ((rand255() * 2) & 255) - 128;
-		universe[newship].rot.x = ((rand255() * 2) & 255) - 128;
-		universe[newship].velocity = rand255() & 15;
-	}
-	
-	
-	for (i = 0; i < 100; i++)
-	{
-		gfx_clear_display();
-		update_starfield();
-		update_universe();
-		gfx_display_centre_text (190, "GAME OVER", 140, GFX_COL_GOLD);
-		gfx_update_screen();
-	}
+    for (i = 0; i < 5; i++)
+    {
+        type = (rand255() & 1) ? SHIP_CARGO : SHIP_ALLOY;
+
+        pt.x = (rand255() & 63) - 32;
+        pt.y = (rand255() & 63) - 32;
+        pt.z = -400;
+        newship = add_new_ship (type, pt, rotmat, ROT_0);
+
+        universe[newship].rot.z = ((rand255() * 2) & 255) - 128;
+        universe[newship].rot.x = ((rand255() * 2) & 255) - 128;
+        universe[newship].velocity = rand255() & 15;
+    }
+
+
+    for (i = 0; i < 100; i++)
+    {
+        gfx_clear_display();
+        update_starfield();
+        update_universe();
+        gfx_display_centre_text (190, "GAME OVER", 140, GFX_COL_GOLD);
+        gfx_update_screen();
+    }
 }
 
 
@@ -1193,252 +1193,252 @@ void run_game_over_screen()
 
 void display_break_pattern (void)
 {
-	int i;
+    int i;
 
-	gfx_set_clip_region (1, 1, 510, 383);
-	gfx_clear_display();
-	
-	for (i = 0; i < 20; i++)
-	{
-		gfx_draw_circle (256, 192, 30 + i * 15, GFX_COL_WHITE);
-		gfx_update_screen();
-	}	
+    gfx_set_clip_region (1, 1, 510, 383);
+    gfx_clear_display();
+
+    for (i = 0; i < 20; i++)
+    {
+        gfx_draw_circle (256, 192, 30 + i * 15, GFX_COL_WHITE);
+        gfx_update_screen();
+    }       
 
 
-	if (docked)
-	{
-		check_mission_brief();
-		display_commander_status();
-		update_console();
-	}
-	else
-		current_screen = SCR_FRONT_VIEW;
+    if (docked)
+    {
+        check_mission_brief();
+        display_commander_status();
+        update_console();
+    }
+    else
+        current_screen = SCR_FRONT_VIEW;
 }
 
 
 void info_message (char *message)
 {
-	strcpy (message_string, message);
-	message_count = 37;
-//	snd_play_sample (SND_BEEP);
+    strcpy (message_string, message);
+    message_count = 37;
+    //      snd_play_sample (SND_BEEP);
 }
 
 void initialise_allegro (void)
 {
-	allegro_init();
-	install_keyboard(); 
-	install_timer();
-	install_mouse();
+    allegro_init();
+    install_keyboard(); 
+    install_timer();
+    install_mouse();
 
-	have_joystick = 0;
-	
-	if (install_joystick(JOY_TYPE_AUTODETECT) == 0)
-	{
-		have_joystick = (num_joysticks > 0);
-	}
+    have_joystick = 0;
+
+    if (install_joystick(JOY_TYPE_AUTODETECT) == 0)
+    {
+        have_joystick = (num_joysticks > 0);
+    }
 }
 
 
 
 int main()
 {
-	initialise_allegro();
-	read_config_file();
+    initialise_allegro();
+    read_config_file();
 
-	if (gfx_graphics_startup() == 1)
-	{
-		return 1;
-	}
-	
-	/* Start the sound system... */
-	snd_sound_startup();
+    if (gfx_graphics_startup() == 1)
+    {
+        return 1;
+    }
 
-	/* Do any setup necessary for the keyboard... */
-        /* ... Which does nothing but return a 0 */
-	kbd_keyboard_startup();
-	
-	finish = 0;
-	auto_pilot = 0;
-	
-	while (!finish)
-	{
-		game_over = 0;                      /* elite.c */
-		initialise_game();                  /* alg_main.c */
-                /* After testing, this dock_player seems unnecessary */
-//		dock_player();          /* space.c */
+    /* Start the sound system... */
+    snd_sound_startup();
 
-		update_console();                   /* space.c */
+    /* Do any setup necessary for the keyboard... */
+    /* ... Which does nothing but return a 0 */
+    kbd_keyboard_startup();
 
-		current_screen = SCR_FRONT_VIEW;    /* elite.h */
-		run_first_intro_screen();           /* alg_main.c */
-		run_second_intro_screen();          /* alg_main.c */
+    finish = 0;
+    auto_pilot = 0;
 
-		old_cross_x = -1;                   /* Globals */
-		old_cross_y = -1;                   /* Only referenced in this file */
+    while (!finish)
+    {
+        game_over = 0;                      /* elite.c */
+        initialise_game();                  /* alg_main.c */
+        /* After testing, this dock_player seems unnecessary */
+        //              dock_player();          /* space.c */
 
-		dock_player ();                     /* space.c */
-		display_commander_status ();        /* docked.c */
-		
-		while (!game_over)
-		{
-			snd_update_sound();         /* sound.c */
-			gfx_update_screen();        /* alg_main.c */
-			gfx_set_clip_region (1, 1, 510, 383);   /* alg_main.c */
+        update_console();                   /* space.c */
 
-			rolling = 0;                /* Globals */
-			climbing = 0;               /* Only referenced in this file */
+        current_screen = SCR_FRONT_VIEW;    /* elite.h */
+        run_first_intro_screen();           /* alg_main.c */
+        run_second_intro_screen();          /* alg_main.c */
 
-			handle_flight_keys ();      /* alg_main.c */
+        old_cross_x = -1;                   /* Globals */
+        old_cross_y = -1;                   /* Only referenced in this file */
 
-			if (game_paused)            /* alg_main.c only */
-				continue;
-				
-			if (message_count > 0)      /* alg_main.c only */
-				message_count--;
+        dock_player ();                     /* space.c */
+        display_commander_status ();        /* docked.c */
 
-			if (!rolling)
-			{
-				if (flight_roll > 0)    /* elite.c */
-					decrease_flight_roll(); /* space.c */
-			
-				if (flight_roll < 0)
-					increase_flight_roll(); /* space.c */
-			}
+        while (!game_over)
+        {
+            snd_update_sound();         /* sound.c */
+            gfx_update_screen();        /* alg_main.c */
+            gfx_set_clip_region (1, 1, 510, 383);   /* alg_main.c */
 
-			if (!climbing)
-			{
-				if (flight_climb > 0)   /* elite.c */
-					decrease_flight_climb(); /* space.c */
+            rolling = 0;                /* Globals */
+            climbing = 0;               /* Only referenced in this file */
 
-				if (flight_climb < 0)
-					increase_flight_climb(); /* space.c */
-			}
+            handle_flight_keys ();      /* alg_main.c */
+
+            if (game_paused)            /* alg_main.c only */
+                continue;
+
+            if (message_count > 0)      /* alg_main.c only */
+                message_count--;
+
+            if (!rolling)
+            {
+                if (flight_roll > 0)    /* elite.c */
+                    decrease_flight_roll(); /* space.c */
+
+                if (flight_roll < 0)
+                    increase_flight_roll(); /* space.c */
+            }
+
+            if (!climbing)
+            {
+                if (flight_climb > 0)   /* elite.c */
+                    decrease_flight_climb(); /* space.c */
+
+                if (flight_climb < 0)
+                    increase_flight_climb(); /* space.c */
+            }
 
 
-			if (!docked)                /* elite.c */
-			{
-				gfx_acquire_screen(); /* alg_main.c */
-					
-				if ((current_screen == SCR_FRONT_VIEW) || (current_screen == SCR_REAR_VIEW) ||
-					(current_screen == SCR_LEFT_VIEW) || (current_screen == SCR_RIGHT_VIEW) ||
-					(current_screen == SCR_INTRO_ONE) || (current_screen == SCR_INTRO_TWO) ||
-					(current_screen == SCR_GAME_OVER))
-				{
-					gfx_clear_display();    /* alg_main.c */
-					update_starfield();     /* stars.c */
-				}
+            if (!docked)                /* elite.c */
+            {
+                gfx_acquire_screen(); /* alg_main.c */
 
-				if (auto_pilot)                 /* elite.c */
-				{
-					auto_dock();            /* pilot.c */
-					if ((mcount & 127) == 0)    /* alg_main.c */
-                                                /* alg_main */
-						info_message ("Docking Computers On");
-				}
+                if ((current_screen == SCR_FRONT_VIEW) || (current_screen == SCR_REAR_VIEW) ||
+                        (current_screen == SCR_LEFT_VIEW) || (current_screen == SCR_RIGHT_VIEW) ||
+                        (current_screen == SCR_INTRO_ONE) || (current_screen == SCR_INTRO_TWO) ||
+                        (current_screen == SCR_GAME_OVER))
+                {
+                    gfx_clear_display();    /* alg_main.c */
+                    update_starfield();     /* stars.c */
+                }
 
-				update_universe (); /* space.c */
+                if (auto_pilot)                 /* elite.c */
+                {
+                    auto_dock();            /* pilot.c */
+                    if ((mcount & 127) == 0)    /* alg_main.c */
+                        /* alg_main */
+                        info_message ("Docking Computers On");
+                }
 
-				if (docked)
-				{
-					update_console();
-					gfx_release_screen();   /* alg_main.c */
-					continue;
-				}
+                update_universe (); /* space.c */
 
-				if ((current_screen == SCR_FRONT_VIEW) || (current_screen == SCR_REAR_VIEW) ||
-					(current_screen == SCR_LEFT_VIEW) || (current_screen == SCR_RIGHT_VIEW))
-				{
-					if (draw_lasers)            /* alg_main.c */
-					{
-						draw_laser_lines(); /* swat.c */
-						draw_lasers--;
-					}
-					
-					draw_laser_sights();        /* alg_main.c */
-				}
+                if (docked)
+                {
+                    update_console();
+                    gfx_release_screen();   /* alg_main.c */
+                    continue;
+                }
 
-				if (message_count > 0)
-                                        /* alg_gfx.c */
-					gfx_display_centre_text (358, message_string, 120, GFX_COL_WHITE);
-					
-				if (hyper_ready)    /* space.c */
-				{
-					display_hyper_status(); /* space.c */
-					if ((mcount & 3) == 0)
-					{
-						countdown_hyperspace(); /* space.c */
-					}
-				}
+                if ((current_screen == SCR_FRONT_VIEW) || (current_screen == SCR_REAR_VIEW) ||
+                        (current_screen == SCR_LEFT_VIEW) || (current_screen == SCR_RIGHT_VIEW))
+                {
+                    if (draw_lasers)            /* alg_main.c */
+                    {
+                        draw_laser_lines(); /* swat.c */
+                        draw_lasers--;
+                    }
 
-				gfx_release_screen();
-			
-				mcount--;
-				if (mcount < 0)
-					mcount = 255;
+                    draw_laser_sights();        /* alg_main.c */
+                }
 
-				if ((mcount & 7) == 0)
-					regenerate_shields();   /* space.c */
+                if (message_count > 0)
+                    /* alg_gfx.c */
+                    gfx_display_centre_text (358, message_string, 120, GFX_COL_WHITE);
 
-				if ((mcount & 31) == 10)
-				{
-					if (energy < 50)
-					{
-						info_message ("ENERGY LOW");
-                                                /* sound.c */
-						snd_play_sample (SND_BEEP);
-					}
+                if (hyper_ready)    /* space.c */
+                {
+                    display_hyper_status(); /* space.c */
+                    if ((mcount & 3) == 0)
+                    {
+                        countdown_hyperspace(); /* space.c */
+                    }
+                }
 
-					update_altitude(); /* space.c */
-				}
-				
-				if ((mcount & 31) == 20)
-					update_cabin_temp(); /* space.c */
-				                        /* elite.c */	
-				if ((mcount == 0) && (!witchspace))
-					random_encounter(); /* swat.c */
-					
-				cool_laser();               /* swat.c */
-				time_ecm();                 /* swat.c */
+                gfx_release_screen();
 
-				update_console();
-			}
+                mcount--;
+                if (mcount < 0)
+                    mcount = 255;
 
-			if (current_screen == SCR_BREAK_PATTERN)
-				display_break_pattern();    /* alg_main.c */
+                if ((mcount & 7) == 0)
+                    regenerate_shields();   /* space.c */
 
-			if (cross_timer > 0)                /* alg_main.c */
-			{
-				cross_timer--;
-				if (cross_timer == 0)
-				{
-                                    show_distance_to_planet();  /* docked.c */
-				}
-			}
-                           /* docked.c*/ /* alg_main.c */
-			if ((cross_x != old_cross_x) || (cross_y != old_cross_y))
-			{
-                                /* draw_cross twice? */
-				if (old_cross_x != -1) {
-                                        /* alg_main.c */
-					draw_cross (old_cross_x, old_cross_y);
-                                }
+                if ((mcount & 31) == 10)
+                {
+                    if (energy < 50)
+                    {
+                        info_message ("ENERGY LOW");
+                        /* sound.c */
+                        snd_play_sample (SND_BEEP);
+                    }
 
-				old_cross_x = cross_x;
-				old_cross_y = cross_y;
+                    update_altitude(); /* space.c */
+                }
 
-				draw_cross (old_cross_x, old_cross_y);
-			}
-		}
+                if ((mcount & 31) == 20)
+                    update_cabin_temp(); /* space.c */
+                /* elite.c */   
+                if ((mcount == 0) && (!witchspace))
+                    random_encounter(); /* swat.c */
 
-		if (!finish)    /* elite.c */
-			run_game_over_screen();     /* alg_main.c */
-	}
+                cool_laser();               /* swat.c */
+                time_ecm();                 /* swat.c */
 
-	snd_sound_shutdown();
-	
-	gfx_graphics_shutdown ();
-	
-	return 0;
+                update_console();
+            }
+
+            if (current_screen == SCR_BREAK_PATTERN)
+                display_break_pattern();    /* alg_main.c */
+
+            if (cross_timer > 0)                /* alg_main.c */
+            {
+                cross_timer--;
+                if (cross_timer == 0)
+                {
+                    show_distance_to_planet();  /* docked.c */
+                }
+            }
+            /* docked.c*/ /* alg_main.c */
+            if ((cross_x != old_cross_x) || (cross_y != old_cross_y))
+            {
+                /* draw_cross twice? */
+                if (old_cross_x != -1) {
+                    /* alg_main.c */
+                    draw_cross (old_cross_x, old_cross_y);
+                }
+
+                old_cross_x = cross_x;
+                old_cross_y = cross_y;
+
+                draw_cross (old_cross_x, old_cross_y);
+            }
+        }
+
+        if (!finish)    /* elite.c */
+            run_game_over_screen();     /* alg_main.c */
+    }
+
+    snd_sound_shutdown();
+
+    gfx_graphics_shutdown ();
+
+    return 0;
 }
 
 END_OF_MAIN();

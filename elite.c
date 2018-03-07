@@ -64,37 +64,37 @@ int auto_pilot;
 
 struct commander saved_cmdr =
 {
-	"JAMESON",				/* Name 		*/
-	0,					/* Mission Number 	*/
-	0x14,0xAD,				/* Ship X,Y		*/
-	{0x4a, 0x5a, 0x48, 0x02, 0x53, 0xb7},	/* Galaxy Seed		*/
-	1000,					/* Credits * 10		*/
-	70,					/* Fuel	* 10		*/
-	0,
-	0,					/* Galaxy - 1		*/
-	PULSE_LASER,				/* Front Laser		*/
-	0,					/* Rear Laser		*/
-	0,					/* Left Laser		*/
-	0,					/* Right Laser		*/
-	0, 0,
-	20,					/* Cargo Capacity	*/
-	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},	/* Current Cargo	*/
-	0,					/* ECM			*/
-	0,					/* Fuel Scoop		*/
-	0,					/* Energy Bomb		*/
-	0,					/* Energy Unit		*/
-	0,					/* Docking Computer     */
-	0,					/* Galactic H'Drive	*/
-	0,					/* Escape Pod		*/
-	0,0,0,0,
-	3,					/* No. of Missiles	*/
-	0,					/* Legal Status		*/
-	{0x10, 0x0F, 0x11, 0x00, 0x03, 0x1C,	/* Station Stock	*/
-	 0x0E, 0x00, 0x00, 0x0A, 0x00, 0x11,
-	 0x3A, 0x07, 0x09, 0x08, 0x00},
-	0,					/* Fluctuation		*/
-	0,					/* Score		*/
-	0x80					/* Saved		*/
+    "JAMESON",                              /* Name                 */
+    0,                                      /* Mission Number       */
+    0x14,0xAD,                              /* Ship X,Y             */
+    {0x4a, 0x5a, 0x48, 0x02, 0x53, 0xb7},   /* Galaxy Seed          */
+    1000,                                   /* Credits * 10         */
+    70,                                     /* Fuel * 10            */
+    0,
+    0,                                      /* Galaxy - 1           */
+    PULSE_LASER,                            /* Front Laser          */
+    0,                                      /* Rear Laser           */
+    0,                                      /* Left Laser           */
+    0,                                      /* Right Laser          */
+    0, 0,
+    20,                                     /* Cargo Capacity       */
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},    /* Current Cargo        */
+    0,                                      /* ECM                  */
+    0,                                      /* Fuel Scoop           */
+    0,                                      /* Energy Bomb          */
+    0,                                      /* Energy Unit          */
+    0,                                      /* Docking Computer     */
+    0,                                      /* Galactic H'Drive     */
+    0,                                      /* Escape Pod           */
+    0,0,0,0,
+    3,                                      /* No. of Missiles      */
+    0,                                      /* Legal Status         */
+    {0x10, 0x0F, 0x11, 0x00, 0x03, 0x1C,    /* Station Stock        */
+        0x0E, 0x00, 0x00, 0x0A, 0x00, 0x11,
+        0x3A, 0x07, 0x09, 0x08, 0x00},
+    0,                                      /* Fluctuation          */
+    0,                                      /* Score                */
+    0x80                                    /* Saved                */
 };
 
 struct commander cmdr;
@@ -104,53 +104,53 @@ struct player_ship myship;
 
 struct ship_data *ship_list[NO_OF_SHIPS + 1] =
 {
-	NULL,
-	&missile_data,
-	&coriolis_data,
-	&esccaps_data,
-	&alloy_data,
-	&cargo_data,
-	&boulder_data,
-	&asteroid_data,
-	&rock_data,
-	&orbit_data,
-	&transp_data,
-	&cobra3a_data,
-	&pythona_data,
-	&boa_data,
-	&anacnda_data,
-	&hermit_data,
-	&viper_data,
-	&sidewnd_data,
-	&mamba_data,
-	&krait_data,
-	&adder_data,
-	&gecko_data,
-	&cobra1_data,
-	&worm_data,
-	&cobra3b_data,
-	&asp2_data,
-	&pythonb_data,
-	&ferdlce_data,
-	&moray_data,
-	&thargoid_data,
-	&thargon_data,
-	&constrct_data,
-	&cougar_data,
-	&dodec_data
+    NULL,
+    &missile_data,
+    &coriolis_data,
+    &esccaps_data,
+    &alloy_data,
+    &cargo_data,
+    &boulder_data,
+    &asteroid_data,
+    &rock_data,
+    &orbit_data,
+    &transp_data,
+    &cobra3a_data,
+    &pythona_data,
+    &boa_data,
+    &anacnda_data,
+    &hermit_data,
+    &viper_data,
+    &sidewnd_data,
+    &mamba_data,
+    &krait_data,
+    &adder_data,
+    &gecko_data,
+    &cobra1_data,
+    &worm_data,
+    &cobra3b_data,
+    &asp2_data,
+    &pythonb_data,
+    &ferdlce_data,
+    &moray_data,
+    &thargoid_data,
+    &thargon_data,
+    &constrct_data,
+    &cougar_data,
+    &dodec_data
 };
 
 
 
 void restore_saved_commander (void)
 {
-	cmdr = saved_cmdr;
+    cmdr = saved_cmdr;
 
-	docked_planet = find_planet (cmdr.ship_x, cmdr.ship_y);
-	hyperspace_planet = docked_planet;
+    docked_planet = find_planet (cmdr.ship_x, cmdr.ship_y);
+    hyperspace_planet = docked_planet;
 
-	generate_planet_data (&current_planet_data, docked_planet);
-	generate_stock_market ();
-	set_stock_quantities (cmdr.station_stock);
+    generate_planet_data (&current_planet_data, docked_planet);
+    generate_stock_market ();
+    set_stock_quantities (cmdr.station_stock);
 }
 
