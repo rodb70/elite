@@ -108,24 +108,15 @@ void initialise_game(void)
 	myship.max_fuel = 70;		/* 7.0 Light Years */
 }
 
-
 void finish_game (void)
 {
 	finish = 1;
 	game_over = 1;
 }
 
-
-
-
-
-
-
 /*
  * Move the planet chart cross hairs to specified position.
  */
-
-
 void move_cross (int dx, int dy)
 {
 	cross_timer = 5;
@@ -1232,11 +1223,6 @@ void info_message (char *message)
 //	snd_play_sample (SND_BEEP);
 }
 
-
-
-
-
-
 void initialise_allegro (void)
 {
 	allegro_init();
@@ -1276,109 +1262,111 @@ int main()
 	
 	while (!finish)
 	{
-		game_over = 0;	
-		initialise_game();
+		game_over = 0;                      /* elite.c */
+		initialise_game();                  /* alg_main.c */
                 /* After testing, this dock_player seems unnecessary */
 //		dock_player();          /* space.c */
 
-		update_console();
+		update_console();                   /* space.c */
 
-		current_screen = SCR_FRONT_VIEW;
-		run_first_intro_screen();
-		run_second_intro_screen();
+		current_screen = SCR_FRONT_VIEW;    /* elite.h */
+		run_first_intro_screen();           /* alg_main.c */
+		run_second_intro_screen();          /* alg_main.c */
 
-		old_cross_x = -1;
-		old_cross_y = -1;
+		old_cross_x = -1;                   /* Globals */
+		old_cross_y = -1;                   /* Only referenced in this file */
 
-		dock_player ();         /* space.c */
-		display_commander_status ();
+		dock_player ();                     /* space.c */
+		display_commander_status ();        /* docked.c */
 		
 		while (!game_over)
 		{
-			snd_update_sound();
-			gfx_update_screen();
-			gfx_set_clip_region (1, 1, 510, 383);
+			snd_update_sound();         /* sound.c */
+			gfx_update_screen();        /* alg_main.c */
+			gfx_set_clip_region (1, 1, 510, 383);   /* alg_main.c */
 
-			rolling = 0;
-			climbing = 0;
+			rolling = 0;                /* Globals */
+			climbing = 0;               /* Only referenced in this file */
 
-			handle_flight_keys ();
+			handle_flight_keys ();      /* alg_main.c */
 
-			if (game_paused)
+			if (game_paused)            /* alg_main.c only */
 				continue;
 				
-			if (message_count > 0)
+			if (message_count > 0)      /* alg_main.c only */
 				message_count--;
 
 			if (!rolling)
 			{
-				if (flight_roll > 0)
-					decrease_flight_roll();
+				if (flight_roll > 0)    /* elite.c */
+					decrease_flight_roll(); /* space.c */
 			
 				if (flight_roll < 0)
-					increase_flight_roll();
+					increase_flight_roll(); /* space.c */
 			}
 
 			if (!climbing)
 			{
-				if (flight_climb > 0)
-					decrease_flight_climb();
+				if (flight_climb > 0)   /* elite.c */
+					decrease_flight_climb(); /* space.c */
 
 				if (flight_climb < 0)
-					increase_flight_climb();
+					increase_flight_climb(); /* space.c */
 			}
 
 
-			if (!docked)
+			if (!docked)                /* elite.c */
 			{
-				gfx_acquire_screen();
+				gfx_acquire_screen(); /* alg_main.c */
 					
 				if ((current_screen == SCR_FRONT_VIEW) || (current_screen == SCR_REAR_VIEW) ||
 					(current_screen == SCR_LEFT_VIEW) || (current_screen == SCR_RIGHT_VIEW) ||
 					(current_screen == SCR_INTRO_ONE) || (current_screen == SCR_INTRO_TWO) ||
 					(current_screen == SCR_GAME_OVER))
 				{
-					gfx_clear_display();
-					update_starfield();
+					gfx_clear_display();    /* alg_main.c */
+					update_starfield();     /* stars.c */
 				}
 
-				if (auto_pilot)
+				if (auto_pilot)                 /* elite.c */
 				{
-					auto_dock();
-					if ((mcount & 127) == 0)
+					auto_dock();            /* pilot.c */
+					if ((mcount & 127) == 0)    /* alg_main.c */
+                                                /* alg_main */
 						info_message ("Docking Computers On");
 				}
 
-				update_universe ();
+				update_universe (); /* space.c */
 
 				if (docked)
 				{
 					update_console();
-					gfx_release_screen();
+					gfx_release_screen();   /* alg_main.c */
 					continue;
 				}
 
 				if ((current_screen == SCR_FRONT_VIEW) || (current_screen == SCR_REAR_VIEW) ||
 					(current_screen == SCR_LEFT_VIEW) || (current_screen == SCR_RIGHT_VIEW))
 				{
-					if (draw_lasers)
+					if (draw_lasers)            /* alg_main.c */
 					{
-						draw_laser_lines();
+						draw_laser_lines(); /* swat.c */
 						draw_lasers--;
 					}
 					
-					draw_laser_sights();
+					draw_laser_sights();        /* alg_main.c */
 				}
 
 				if (message_count > 0)
+                                        /* alg_gfx.c */
 					gfx_display_centre_text (358, message_string, 120, GFX_COL_WHITE);
 					
-				if (hyper_ready)
+				if (hyper_ready)    /* space.c */
 				{
-					display_hyper_status();
+					display_hyper_status(); /* space.c */
 					if ((mcount & 3) == 0)
 					{
-						countdown_hyperspace();
+						countdown_hyperspace(); /* space.c */
 					}
 				}
 
@@ -1389,48 +1377,51 @@ int main()
 					mcount = 255;
 
 				if ((mcount & 7) == 0)
-					regenerate_shields();
+					regenerate_shields();   /* space.c */
 
 				if ((mcount & 31) == 10)
 				{
 					if (energy < 50)
 					{
 						info_message ("ENERGY LOW");
+                                                /* sound.c */
 						snd_play_sample (SND_BEEP);
 					}
 
-					update_altitude();
+					update_altitude(); /* space.c */
 				}
 				
 				if ((mcount & 31) == 20)
-					update_cabin_temp();
-					
+					update_cabin_temp(); /* space.c */
+				                        /* elite.c */	
 				if ((mcount == 0) && (!witchspace))
-					random_encounter();
+					random_encounter(); /* swat.c */
 					
-				cool_laser();				
-				time_ecm();
+				cool_laser();               /* swat.c */
+				time_ecm();                 /* swat.c */
 
 				update_console();
 			}
 
 			if (current_screen == SCR_BREAK_PATTERN)
-				display_break_pattern();
+				display_break_pattern();    /* alg_main.c */
 
-			if (cross_timer > 0)
+			if (cross_timer > 0)                /* alg_main.c */
 			{
 				cross_timer--;
 				if (cross_timer == 0)
 				{
-    				show_distance_to_planet();
+                                    show_distance_to_planet();  /* docked.c */
 				}
 			}
-			
-			if ((cross_x != old_cross_x) ||
-				(cross_y != old_cross_y))
+                           /* docked.c*/ /* alg_main.c */
+			if ((cross_x != old_cross_x) || (cross_y != old_cross_y))
 			{
-				if (old_cross_x != -1)
+                                /* draw_cross twice? */
+				if (old_cross_x != -1) {
+                                        /* alg_main.c */
 					draw_cross (old_cross_x, old_cross_y);
+                                }
 
 				old_cross_x = cross_x;
 				old_cross_y = cross_y;
@@ -1439,8 +1430,8 @@ int main()
 			}
 		}
 
-		if (!finish)		
-			run_game_over_screen();
+		if (!finish)    /* elite.c */
+			run_game_over_screen();     /* alg_main.c */
 	}
 
 	snd_sound_shutdown();
