@@ -39,14 +39,14 @@ char *economy_type[] = {"Rich Industrial",
                         "Average Agricultural",
                         "Poor Agricultural"};
 
-char *government_type[] = {     "Anarchy",
-                                "Feudal",
-                                "Multi-Government",
-                                "Dictatorship",
-                                "Communist",
-                                "Confederacy",
-                                "Democracy",
-                                "Corporate State"};
+char *government_type[] = { "Anarchy",
+                            "Feudal",
+                            "Multi-Government",
+                            "Dictatorship",
+                            "Communist",
+                            "Confederacy",
+                            "Democracy",
+                            "Corporate State"};
 
 
 int cross_x = 0;
@@ -99,9 +99,13 @@ void show_distance (int ypos, struct galaxy_seed from_planet, struct galaxy_seed
     light_years = calc_distance_to_planet (from_planet, to_planet);
 
     if (light_years > 0)
+    {
         sprintf (str, "Distance: %2d.%d Light Years ", light_years / 10, light_years % 10);
+    }
     else
+    {
         strcpy (str,"                                                     ");
+    }
 
     gfx_display_text (16, ypos, str);
 }
@@ -237,7 +241,9 @@ void display_short_range_chart (void)
     draw_fuel_limit_circle (GFX_X_CENTRE, GFX_Y_CENTRE);
 
     for (i = 0; i < 64; i++)
+    {
         row_used[i] = 0;
+    }
 
     glx = cmdr.galaxy;
 
@@ -266,10 +272,14 @@ void display_short_range_chart (void)
         row = py / (8 * GFX_SCALE);
 
         if (row_used[row] == 1)
+        {
             row++;
+        }
 
         if (row_used[row] == 1)
+        {
             row -= 2;
+        }
 
         if (row <= 3)
         {
@@ -342,13 +352,14 @@ void display_galactic_chart (void)
         gfx_plot_pixel (px, py, GFX_COL_WHITE);
 
         if ((glx.e | 0x50) < 0x90)
+        {
             gfx_plot_pixel (px + 1, py, GFX_COL_WHITE);
+        }
 
         waggle_galaxy (&glx);
         waggle_galaxy (&glx);
         waggle_galaxy (&glx);
         waggle_galaxy (&glx);
-
     }
 
 
@@ -503,7 +514,9 @@ void display_commander_status (void)
     gfx_display_text (190, 74, str);
 
     if (docked)
+    {
         condition = 0;
+    }
     else
     {
         condition = 1;
@@ -512,8 +525,7 @@ void display_commander_status (void)
         {
             type = universe[i].type;
 
-            if ((type == SHIP_MISSILE) ||
-                    ((type > SHIP_ROCK) && (type < SHIP_DODEC)))
+            if ((type == SHIP_MISSILE) || ((type > SHIP_ROCK) && (type < SHIP_DODEC)))
             {
                 condition = 2;
                 break;
@@ -521,7 +533,9 @@ void display_commander_status (void)
         }
 
         if ((condition == 2) && (energy < 128))
+        {
             condition = 3;
+        }
     }
 
     gfx_display_colour_text (16, 90, "Condition:", GFX_COL_GREEN_1);
@@ -536,16 +550,24 @@ void display_commander_status (void)
     gfx_display_text (70, 122, str);
 
     if (cmdr.legal_status == 0)
+    {
         strcpy (str, "Clean");
+    }
     else
+    {
         strcpy (str, cmdr.legal_status > 50 ? "Fugitive" : "Offender");
+    }
 
     gfx_display_colour_text (16, 138, "Legal Status:", GFX_COL_GREEN_1);
     gfx_display_text (128, 138, str);
 
     for (i = 0; i < NO_OF_RANKS; i++)
+    {
         if (cmdr.score >= rating[i].score)
+        {
             strcpy (str, rating[i].title);
+        }
+    }
 
     gfx_display_colour_text (16, 154, "Rating:", GFX_COL_GREEN_1);
     gfx_display_text (80, 154, str);
@@ -587,8 +609,7 @@ void display_commander_status (void)
 
     if (cmdr.energy_unit)
     {
-        gfx_display_text (x, y,
-                cmdr.energy_unit == 1 ? "Extra Energy Unit" :"Naval Energy Unit");
+        gfx_display_text (x, y, cmdr.energy_unit == 1 ? "Extra Energy Unit" :"Naval Energy Unit");
         y += Y_INC;
         if (y > EQUIP_MAX_Y)
         {
@@ -687,18 +708,26 @@ void display_stock_price (int i)
     gfx_display_text (256, y, str);
 
     if (stock_market[i].current_quantity > 0)
+    {
         sprintf (str, "%d%s", stock_market[i].current_quantity,
                 unit_name[stock_market[i].units]);
+    }
     else
+    {
         strcpy (str, "-");
+    }
 
     gfx_display_text (338, y, str);
 
     if (cmdr.current_cargo[i] > 0)
+    {
         sprintf (str, "%d%s", cmdr.current_cargo[i],
                 unit_name[stock_market[i].units]);
+    }
     else
+    {
         strcpy (str, "-");
+    }
 
     gfx_display_text (444, y, str);
 }
@@ -712,13 +741,13 @@ void highlight_stock (int i)
     {
         y = hilite_item * 15 + 55;
         gfx_clear_area (2, y, 510, y + 15);
-        display_stock_price (hilite_item);              
+        display_stock_price (hilite_item);
     }
 
     y = i * 15 + 55;
 
     gfx_draw_rectangle (2, y, 510, y + 15, GFX_COL_DARK_RED);
-    display_stock_price (i);                
+    display_stock_price (i);
 
     hilite_item = i;
 
@@ -730,7 +759,9 @@ void highlight_stock (int i)
 void select_previous_stock (void)
 {
     if ((!docked) || (hilite_item == 0))
+    {
         return;
+    }
 
     highlight_stock (hilite_item - 1);
 }
@@ -738,7 +769,9 @@ void select_previous_stock (void)
 void select_next_stock (void)
 {
     if ((!docked) || (hilite_item == 16))
+    {
         return;
+    }
 
     highlight_stock (hilite_item + 1);
 }
@@ -749,19 +782,23 @@ void buy_stock (void)
     int cargo_held;
 
     if (!docked)
+    {
         return;
+    }
 
     item = &stock_market[hilite_item];
 
-    if ((item->current_quantity == 0) ||
-            (cmdr.credits < item->current_price))
+    if ((item->current_quantity == 0) || (cmdr.credits < item->current_price))
+    {
         return;
+    }
 
     cargo_held = total_cargo();
 
-    if ((item->units == TONNES) &&
-            (cargo_held == cmdr.cargo_capacity))
+    if ((item->units == TONNES) && (cargo_held == cmdr.cargo_capacity))
+    {
         return;
+    }
 
     cmdr.current_cargo[hilite_item]++;
     item->current_quantity--;
@@ -775,15 +812,17 @@ void sell_stock (void)
     struct stock_item *item;
 
     if ((!docked) || (cmdr.current_cargo[hilite_item] == 0))
+    {
         return;
+    }
 
     item = &stock_market[hilite_item];
 
     cmdr.current_cargo[hilite_item]--;
     item->current_quantity++;
-    cmdr.credits += item->current_price;    
+    cmdr.credits += item->current_price;
 
-    highlight_stock (hilite_item);
+    highlight_stock( hilite_item );
 }
 
 void display_market_prices (void)
@@ -847,12 +886,11 @@ void display_inventory (void)
         {
             gfx_display_text (16, y, stock_market[i].name);
 
-            sprintf (str, "%d%s", cmdr.current_cargo[i],
-                    unit_name[stock_market[i].units]);
+            sprintf (str, "%d%s", cmdr.current_cargo[i], unit_name[stock_market[i].units]);
 
             gfx_display_text (180, y, str);
             y += 16;
-        }               
+        }
     }
 }
 
@@ -1016,7 +1054,9 @@ void display_equip_price (int i)
 
     y = equip_stock[i].y;
     if (y == 0)
+    {
         return;
+    }
 
     col = equip_stock[i].canbuy ? GFX_COL_WHITE : GFX_COL_GREY_1;
 
@@ -1040,7 +1080,7 @@ void highlight_equip (int i)
     {
         y = equip_stock[hilite_item].y;
         gfx_clear_area (2, y+1, 510, y + 15);
-        display_equip_price (hilite_item);              
+        display_equip_price (hilite_item);
     }
 
     y = equip_stock[i].y;
@@ -1061,7 +1101,9 @@ void select_next_equip (void)
     int i;
 
     if (hilite_item == (NO_OF_EQUIP_ITEMS - 1))
+    {
         return;
+    }
 
     next = hilite_item;
     for (i = hilite_item + 1; i < NO_OF_EQUIP_ITEMS; i++)
@@ -1073,8 +1115,10 @@ void select_next_equip (void)
         }
     }
 
-    if (next != hilite_item)        
+    if (next != hilite_item)
+    {
         highlight_equip (next);
+    }
 }
 
 void select_previous_equip (void)
@@ -1083,10 +1127,12 @@ void select_previous_equip (void)
     int prev;
 
     if (hilite_item == 0)
+    {
         return;
+    }
 
     prev = hilite_item;
-    for (i = hilite_item - 1; i >= 0; i--)
+    for( i = hilite_item - 1; i >= 0; i--)
     {
         if (equip_stock[i].y != 0)
         {
@@ -1095,8 +1141,10 @@ void select_previous_equip (void)
         }
     }
 
-    if (prev != hilite_item)        
+    if (prev != hilite_item)
+    {
         highlight_equip (prev);
+    }
 }
 
 void list_equip_prices (void)
@@ -1123,14 +1171,16 @@ void list_equip_prices (void)
             y += 15;
         }
         else
+        {
             equip_stock[i].y = 0;
+        }
 
         display_equip_price (i);
     }
 
     i = hilite_item;
     hilite_item = -1;
-    highlight_equip (i);
+    highlight_equip( i );
 }
 
 void collapse_equip_list (void)
@@ -1169,20 +1219,24 @@ void buy_equip (void)
 {
     int i;
 
-    if (equip_stock[hilite_item].name[0] == '+')
+    if( equip_stock[ hilite_item ].name[ 0 ] == '+' )
     {
         collapse_equip_list();
         equip_stock[hilite_item].show = 0;
         hilite_item++;
         for (i = 0; i < 5; i++)
+        {
             equip_stock[hilite_item + i].show = 1;
+        }
 
         list_equip_prices();
         return;         
     }
 
     if (equip_stock[hilite_item].canbuy == 0)
+    {
         return;
+    }
 
     switch (equip_stock[hilite_item].type)
     {

@@ -94,7 +94,9 @@ void front_starfield (void)
             gfx_plot_pixel (sx, sy, GFX_COL_WHITE);
 
             if (zz < 0xC0)
+            {
                 gfx_plot_pixel (sx+1, sy, GFX_COL_WHITE);
+            }
 
             if (zz < 0x90)
             {
@@ -127,7 +129,9 @@ void front_starfield (void)
 
 
         if (warp_stars)
+        {
             gfx_draw_line (sx, sy, (xx + 128) * GFX_SCALE, (yy + 96) * GFX_SCALE);
+        }
 
         sx = xx;
         sy = yy;
@@ -190,7 +194,9 @@ void rear_starfield (void)
             gfx_plot_pixel (sx, sy, GFX_COL_WHITE);
 
             if (zz < 0xC0)
+            {
                 gfx_plot_pixel (sx+1, sy, GFX_COL_WHITE);
+            }
 
             if (zz < 0x90)
             {
@@ -229,7 +235,9 @@ void rear_starfield (void)
                     (sy >= GFX_VIEW_TY) && (sy <= GFX_VIEW_BY) &&
                     (ex >= GFX_VIEW_TX) && (ex <= GFX_VIEW_BX) &&
                     (ey >= GFX_VIEW_TY) && (ey <= GFX_VIEW_BY))
+            {
                 gfx_draw_line (sx, sy, (xx + 128) * GFX_SCALE, (yy + 96) * GFX_SCALE);
+            }
         }
 
         stars[i].y = yy;
@@ -301,7 +309,9 @@ void side_starfield (void)
             gfx_plot_pixel (sx, sy, GFX_COL_WHITE);
 
             if (zz < 0xC0)
+            {
                 gfx_plot_pixel (sx+1, sy, GFX_COL_WHITE);
+            }
 
             if (zz < 0x90)
             {
@@ -317,7 +327,7 @@ void side_starfield (void)
         delt8 = delta / (zz / 32);
         xx = xx + delt8;
 
-        xx += (yy * (beta / 256));              
+        xx += (yy * (beta / 256));
         yy -= (xx * (beta / 256));
 
         xx += ((yy / 256) * (alpha / 256)) * (-xx);
@@ -329,7 +339,9 @@ void side_starfield (void)
         stars[i].x = xx;
 
         if (warp_stars)
+        {
             gfx_draw_line (sx, sy, (xx + 128) * GFX_SCALE, (yy + 96) * GFX_SCALE);
+        }
 
 
         if (abs(stars[i].x) >= 116)

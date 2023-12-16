@@ -81,7 +81,9 @@ void update_intro1 (void)
     universe[0].location.z -= 100;
 
     if (universe[0].location.z < 384)
+    {
         universe[0].location.z = 384;
+    }
 
     gfx_clear_display();
 
@@ -101,12 +103,16 @@ void update_intro2 (void)
     show_time++;
 
     if ((show_time >= 140) && (direction < 0))
+    {
         direction = -direction;
+    }
 
     universe[0].location.z += direction;
 
     if (universe[0].location.z < min_dist[ship_no])
+    {
         universe[0].location.z = min_dist[ship_no];
+    }
 
     if (universe[0].location.z > 4500)
     {
@@ -116,14 +122,16 @@ void update_intro2 (void)
         {
             ship_no++;
             if (ship_no > NO_OF_SHIPS)
+            {
                 ship_no = 1;
+            }
         } while (min_dist[ship_no] == 0);
 
         show_time = 0;
         direction = -100;
 
         ship_count[universe[0].type] = 0;
-        universe[0].type = 0;           
+        universe[0].type = 0;
 
         add_new_ship (ship_no, pt, intro_ship_matrix, rot);
     }

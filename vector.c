@@ -50,21 +50,23 @@ void mult_matrix (struct vector *first, struct vector *second)
     for (i = 0; i < 3; i++)
     {
 
-        rv[i].x =       (first[0].x * second[i].x) +
-            (first[1].x * second[i].y) +
-            (first[2].x * second[i].z);
+        rv[i].x = (first[ 0 ].x * second[ i ].x) +
+                  (first[ 1 ].x * second[ i ].y) +
+                  (first[ 2 ].x * second[ i ].z);
 
-        rv[i].y =       (first[0].y * second[i].x) +
-            (first[1].y * second[i].y) +
-            (first[2].y * second[i].z);
+        rv[i].y = (first[ 0 ].y * second[ i ].x) +
+                  (first[ 1 ].y * second[ i ].y) +
+                  (first[ 2 ].y * second[ i ].z);
 
-        rv[i].z =       (first[0].z * second[i].x) +
-            (first[1].z * second[i].y) +
-            (first[2].z * second[i].z);
+        rv[i].z = (first[ 0 ].z * second[ i ].x) +
+                  (first[ 1 ].z * second[ i ].y) +
+                  (first[ 2 ].z * second[ i ].z);
     }
 
     for (i = 0; i < 3; i++)
+    {
         first[i] = rv[i];
+    }
 }
 
 
@@ -139,7 +141,9 @@ void set_init_matrix (struct vector *mat)
     int i;
 
     for (i = 0; i < 3; i++)
+    {
         mat[i] = start_matrix[i];
+    }
 }
 
 

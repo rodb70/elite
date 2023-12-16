@@ -96,10 +96,14 @@ void clear_universe (void)
     int i;
 
     for (i = 0; i < MAX_UNIV_OBJECTS; i++)
+    {
         universe[i].type = 0;
+    }
 
     for (i = 0; i <= NO_OF_SHIPS; i++)
+    {
         ship_count[i] = 0;
+    }
 
     in_battle = 0;
 }
@@ -169,7 +173,9 @@ void check_missiles (int un)
     for (i = 0; i < MAX_UNIV_OBJECTS; i++)
     {
         if ((universe[i].type == SHIP_MISSILE) && (universe[i].target == un))
+        {
             universe[i].flags |= FLG_DEAD;
+        }
     }
 }
 
@@ -184,12 +190,16 @@ void remove_ship (int un)
     type = universe[un].type;
 
     if (type == 0)
+    {
         return;
+    }
 
     if (type > 0)
+    {
         ship_count[type]--;
+    }
 
-    universe[un].type = 0;          
+    universe[un].type = 0;
 
     check_missiles (un);
 
@@ -215,7 +225,7 @@ void add_new_station (double sx, double sy, double sz, Matrix rotmat)
 
     station = (current_planet_data.techlevel >= 10) ? SHIP_DODEC : SHIP_CORIOLIS;
     universe[1].type = 0;
-    add_new_ship (station, (struct point){sx, sy, sz}, rotmat, rot);                                        
+    add_new_ship (station, (struct point){sx, sy, sz}, rotmat, rot);
 }
 
 
@@ -250,8 +260,8 @@ void launch_enemy (int un, int type, int flags, int bravery)
     if ((universe[un].type == SHIP_CORIOLIS) || (universe[un].type == SHIP_DODEC))
     {
         ns->velocity = 32;
-        ns->location.x += ns->rotmat[2].x * 2;          
-        ns->location.y += ns->rotmat[2].y * 2;          
+        ns->location.x += ns->rotmat[2].x * 2;
+        ns->location.y += ns->rotmat[2].y * 2;
         ns->location.z += ns->rotmat[2].z * 2;
     }
 
@@ -301,7 +311,9 @@ int in_target (int type, double x, double y, double z)
     double size;
 
     if (z < 0)
+    {
         return 0;
+    }
 
     size = ship_list[type]->size;
 
@@ -319,7 +331,9 @@ void make_angry (int un)
     flags = universe[un].flags;
 
     if (flags & FLG_INACTIVE)
+    {
         return;
+    }
 
     if ((type == SHIP_CORIOLIS) || (type == SHIP_DODEC))
     {
@@ -342,13 +356,17 @@ void explode_object (int un)
     cmdr.score++;
 
     if ((cmdr.score & 255) == 0)
+    {
         info_message ("Right On Commander!");
+    }
 
     snd_play_sample (SND_EXPLODE);
     universe[un].flags |= FLG_DEAD;
 
     if (universe[un].type == SHIP_CONSTRICTOR)
+    {
         cmdr.mission = 2;
+    }
 }
 
 
@@ -376,7 +394,9 @@ void check_target (int un, struct univ_object *flip)
                 if ((univ->type == SHIP_CONSTRICTOR) || (univ->type == SHIP_COUGAR))
                 {
                     if (laser == (MILITARY_LASER & 127))
+                    {
                         univ->energy -= laser / 4;
+                    }
                 }
                 else
                 {
@@ -391,7 +411,9 @@ void check_target (int un, struct univ_object *flip)
                 if (univ->type == SHIP_ASTEROID)
                 {
                     if (laser == (MINING_LASER & 127))
+                    {
                         launch_loot (un, SHIP_ROCK);
+                    }
                 }
                 else
                 {
@@ -409,7 +431,7 @@ void check_target (int un, struct univ_object *flip)
 
 void activate_ecm (int ours)
 {
-    if (ecm_active == 0)
+    if ( 0 == ecm_active )
     {
         ecm_active = 32;
         ecm_ours = ours;
@@ -424,7 +446,9 @@ void time_ecm (void)
     {
         ecm_active--;
         if (ecm_ours)
+        {
             decrease_energy (-1);
+        }
     }
 }
 
@@ -432,7 +456,9 @@ void time_ecm (void)
 void arm_missile (void)
 {
     if ((cmdr.missiles != 0) && (missile_target == MISSILE_UNARMED))
+    {
         missile_target = MISSILE_ARMED;
+    }
 }
 
 
@@ -450,7 +476,9 @@ void fire_missile (void)
     Matrix rotmat;
 
     if (missile_target < 0)
+    {
         return;
+    }
 
     set_init_matrix (rotmat);
     rotmat[2].z = 1.0;
@@ -472,7 +500,9 @@ void fire_missile (void)
     ns->target = missile_target;
 
     if (universe[missile_target].type > SHIP_ROCK)
+    {
         universe[missile_target].flags |= FLG_ANGRY;
+    }
 
     cmdr.missiles--;
     missile_target = MISSILE_UNARMED;
@@ -518,8 +548,10 @@ void track_object (struct univ_object *ship, double direction, struct vector nve
             ship->rot.z = (dir < 0) ? rat : -rat;
 
             if (ship->rot.x < 0)
+            {
                 ship->rot.z = -ship->rot.z;
-        }               
+            }
+        }
     }
 }
 
@@ -539,7 +571,7 @@ void missile_tactics (int un)
     if (ecm_active)
     {
         snd_play_sample (SND_EXPLODE);
-        missile->flags |= FLG_DEAD;             
+        missile->flags |= FLG_DEAD;
         return;
     }
 
@@ -570,9 +602,13 @@ void missile_tactics (int un)
             missile->flags |= FLG_DEAD;             
 
             if ((target->type != SHIP_CORIOLIS) && (target->type != SHIP_DODEC))
-                explode_object (missile->target);
+            {
+                explode_object( missile->target );
+            }
             else
-                snd_play_sample (SND_EXPLODE);
+            {
+                snd_play_sample( SND_EXPLODE );
+            }
 
             return;
         }
@@ -591,26 +627,28 @@ void missile_tactics (int un)
     nvec.z = -nvec.z;
     direction = -direction;
 
-    track_object (missile, direction, nvec);
+    track_object( missile, direction, nvec );
 
-    if (direction <= -0.167)
+    if( direction <= -0.167 )
     {
         missile->acceleration = -2;
         return;
     }
 
-    if (direction >= cnt2)
+    if( direction >= cnt2 )
     {
         missile->acceleration = 3;
         return;
     }
 
-    if (missile->velocity < 6)
+    if( missile->velocity < 6 )
+    {
         missile->acceleration = 3;
-    else
-        if (rand255() >= 200)
-            missile->acceleration = -2;
-    return;
+    }
+    else if( rand255() >= 200 )
+    {
+        missile->acceleration = -2;
+    }
 }
 
 
@@ -619,10 +657,12 @@ void launch_shuttle (void)
 {
     int type;
 
-    if ((ship_count[SHIP_TRANSPORTER] != 0) ||
-            (ship_count[SHIP_SHUTTLE] != 0) ||
-            (rand255() < 253) || (auto_pilot))
+    if(( ship_count[ SHIP_TRANSPORTER ] != 0 ) ||
+       ( ship_count[ SHIP_SHUTTLE ] != 0 ) ||
+       ( rand255() < 253 ) || ( auto_pilot ))
+    {
         return;
+    }
 
     type = rand255() & 1 ? SHIP_SHUTTLE : SHIP_TRANSPORTER; 
     launch_enemy (1, type, FLG_HAS_ECM | FLG_FLY_TO_PLANET, 113);
@@ -632,7 +672,7 @@ void launch_shuttle (void)
 void tactics (int un)
 {
     int type;
-    int energy;
+    int my_energy;
     int maxeng;
     int flags;
     struct univ_object *ship;
@@ -646,33 +686,47 @@ void tactics (int un)
     flags = ship->flags;
 
     if ((type == SHIP_PLANET) || (type == SHIP_SUN))
+    {
         return;
+    }
 
     if (flags & FLG_DEAD)
+    {
         return;
+    }
 
     if (flags & FLG_INACTIVE)
+    {
         return;
+    }
 
     if (type == SHIP_MISSILE)
     {
         if (flags & FLG_ANGRY)
+        {
             missile_tactics (un);
+        }
         return;
     }
 
     if (((un ^ mcount) & 7) != 0)
+    {
         return;
+    }
 
     if ((type == SHIP_CORIOLIS) || (type == SHIP_DODEC))
     {
         if (flags & FLG_ANGRY) 
         {
             if ((rand() & 255) < 240)
+            {
                 return;
+            }
 
             if (ship_count[SHIP_VIPER] >= 4)
-                return; 
+            {
+                return;
+            }
 
             launch_enemy (un, SHIP_VIPER, FLG_ANGRY | FLG_HAS_ECM, 113);
             return;
@@ -695,7 +749,9 @@ void tactics (int un)
 
 
     if (ship->energy < ship_list[type]->energy)
+    {
         ship->energy++;
+    }
 
     if ((type == SHIP_THARGLET) && (ship_count[SHIP_THARGOID] == 0))
     {
@@ -707,7 +763,9 @@ void tactics (int un)
     if (flags & FLG_SLOW)
     {
         if (rand255() > 50)
+        {
             return;
+        }
     }
 
     if (flags & FLG_POLICE)
@@ -735,7 +793,9 @@ void tactics (int un)
     if (ship_count[SHIP_CORIOLIS] || ship_count[SHIP_DODEC])
     {
         if ((flags & FLG_BOLD) == 0)
+        {
             ship->bravery = 0;
+        }
     }
 
 
@@ -754,15 +814,17 @@ void tactics (int un)
     {
         ship->rot.z = rand255() | 0x68;
         if (ship->rot.z > 127)
+        {
             ship->rot.z = -(ship->rot.z & 127);
+        }
     }
 
     maxeng = ship_list[type]->energy;
-    energy = ship->energy;
+    my_energy = ship->energy;
 
-    if (energy < (maxeng / 2))
+    if (my_energy < (maxeng / 2))
     {
-        if ((energy < (maxeng / 8)) && (rand255() > 230) && (type != SHIP_THARGOID))
+        if ((my_energy < (maxeng / 8)) && (rand255() > 230) && (type != SHIP_THARGOID))
         {
             ship->flags &= ~FLG_ANGRY;
             ship->flags |= FLG_INACTIVE;
@@ -788,11 +850,13 @@ void tactics (int un)
     nvec = unit_vector(&universe[un].location);
     direction = vector_dot_product (&nvec, &ship->rotmat[2]); 
 
-    if      ((ship->distance < 8192) && (direction <= -0.833) &&
+    if ((ship->distance < 8192) && (direction <= -0.833) &&
             (ship_list[type]->laser_strength != 0))
     {
         if (direction <= -0.917)
-            ship->flags |= FLG_FIRING | FLG_HOSTILE;                
+        {
+            ship->flags |= FLG_FIRING | FLG_HOSTILE;
+        }
 
         if (direction <= -0.972)
         {
@@ -800,10 +864,14 @@ void tactics (int un)
             ship->acceleration--;
             if (((ship->location.z >= 0.0) && (front_shield == 0)) ||
                     ((ship->location.z < 0.0) && (aft_shield == 0)))
+            {
                 snd_play_sample (SND_INCOMMING_FIRE_2);
+            }
             else
+            {
                 snd_play_sample (SND_INCOMMING_FIRE_1);
-        }                               
+            }
+        }
         else
         {
             nvec.x = -nvec.x;
@@ -813,29 +881,35 @@ void tactics (int un)
             track_object (&universe[un], direction, nvec);
         }
 
-        //              if ((fabs(ship->location.z) < 768) && (ship->bravery <= ((rand255() & 127) | 64)))
+        // if ((fabs(ship->location.z) < 768) && (ship->bravery <= ((rand255() & 127) | 64)))
         if (fabs(ship->location.z) < 768)
         {
             ship->rot.x = rand255() & 0x87;
             if (ship->rot.x > 127)
+            {
                 ship->rot.x = -(ship->rot.x & 127);
+            }
 
             ship->acceleration = 3;
             return;
         }
 
         if (ship->distance < 8192)
+        {
             ship->acceleration = -1;
+        }
         else
+        {
             ship->acceleration = 3;
+        }
         return;
     } 
 
     attacking = 0;
 
     if ((fabs(ship->location.z) >= 768) ||
-            (fabs(ship->location.x) >= 512) ||
-            (fabs(ship->location.y) >= 512))
+        (fabs(ship->location.x) >= 512) ||
+        (fabs(ship->location.y) >= 512))
     {
         if (ship->bravery > (rand255() & 127))
         {
@@ -858,10 +932,14 @@ void tactics (int un)
         }
 
         if (ship->velocity < 6)
+        {
             ship->acceleration = 3;
-        else
-            if (rand255() >= 200)
+        }
+        else if (rand255() >= 200)
+        {
                 ship->acceleration = -1;
+        }
+
         return;
     }
 
@@ -878,10 +956,13 @@ void tactics (int un)
     }
 
     if (ship->velocity < 6)
+    {
         ship->acceleration = 3;
-    else
-        if (rand255() >= 200)
-            ship->acceleration = -1;
+    }
+    else if (rand255() >= 200)
+    {
+        ship->acceleration = -1;
+    }
 }
 
 
@@ -898,7 +979,7 @@ void draw_laser_lines (void)
     {
         gfx_draw_triangle (32 * GFX_SCALE, GFX_VIEW_BY, laser_x, laser_y,  48 * GFX_SCALE, GFX_VIEW_BY, GFX_COL_RED);
         gfx_draw_triangle (208 * GFX_SCALE, GFX_VIEW_BY, laser_x, laser_y, 224 * GFX_SCALE, GFX_VIEW_BY, GFX_COL_RED);
-    }                
+    }
 }
 
 
@@ -937,7 +1018,9 @@ int fire_laser (void)
             snd_play_sample (SND_PULSE);
             laser_temp += 8;
             if (energy > 1)
+            {
                 energy--;
+            }
 
             laser_x = ((rand() & 3) + 128 - 2) * GFX_SCALE;
             laser_y = ((rand() & 3) + 96 - 2) * GFX_SCALE;
@@ -955,13 +1038,19 @@ void cool_laser (void)
     laser = 0;
 
     if (laser_temp > 0)
+    {
         laser_temp--;
+    }
 
     if (laser_counter > 0)
+    {
         laser_counter--;
+    }
 
     if (laser_counter > 0)
+    {
         laser_counter--;
+    }
 }
 
 
@@ -969,7 +1058,7 @@ int create_other_ship (int type)
 {
     Matrix rotmat;
     struct point pt;
-    //        struct rotation rot = {0, 0};
+    // struct rotation rot = {0, 0};
     int newship;
 
     set_init_matrix (rotmat);
@@ -979,9 +1068,13 @@ int create_other_ship (int type)
     pt.y = 1000 + (randint() & 8191);
 
     if (rand255() > 127)
+    {
         pt.x = -pt.x;
+    }
     if (rand255() > 127)
+    {
         pt.y = -pt.y;
+    }
 
     newship = add_new_ship (type, pt, rotmat, ROT_0);
 
@@ -1000,8 +1093,10 @@ void create_thargoid (void)
         universe[newship].bravery = 113;
 
         if (rand255() > 64)
+        {
             launch_enemy (newship, SHIP_THARGLET, FLG_ANGRY | FLG_HAS_ECM, 96);
-    }       
+        }
+    }
 }
 
 
@@ -1011,7 +1106,9 @@ void create_cougar (void)
     int newship;
 
     if (ship_count[SHIP_COUGAR] != 0)
+    {
         return;
+    }
 
     newship = create_other_ship (SHIP_COUGAR);
     if (newship != -1)
@@ -1044,7 +1141,9 @@ void create_trader (void)
         universe[newship].bravery = rnd / 2;
 
         if (rnd & 1)
+        {
             universe[newship].flags |= FLG_HAS_ECM;
+        }
 
         //              if (rnd & 2)
         //                      universe[newship].flags |= FLG_ANGRY; 
@@ -1059,8 +1158,8 @@ void create_lone_hunter (void)
     int newship;
 
     if ((cmdr.mission == 1) && (cmdr.galaxy_number == 1) &&
-            (docked_planet.d == 144) && (docked_planet.b == 33) &&
-            (ship_count[SHIP_CONSTRICTOR] == 0))
+        (docked_planet.d == 144) && (docked_planet.b == 33) &&
+        (ship_count[SHIP_CONSTRICTOR] == 0))
     {
         type = SHIP_CONSTRICTOR;
     }
@@ -1076,11 +1175,13 @@ void create_lone_hunter (void)
     {
         universe[newship].flags = FLG_ANGRY;
         if ((rand255() > 200) || (type == SHIP_CONSTRICTOR))
+        {
             universe[newship].flags |= FLG_HAS_ECM;
+        }
 
         universe[newship].bravery = ((rand255() * 2) | 64) & 127;
         in_battle = 1;  
-    }       
+    }
 }
 
 
@@ -1093,12 +1194,18 @@ void check_for_asteroids (void)
     int type;
 
     if ((rand255() >= 35) || (ship_count[SHIP_ASTEROID] >= 3))
+    {
         return;
+    }
 
     if (rand255() > 253)
+    {
         type = SHIP_HERMIT;
+    }
     else
+    {
         type = SHIP_ASTEROID;
+    }
 
     newship = create_other_ship (type);
 
@@ -1122,10 +1229,14 @@ void check_for_cops (void)
 
     offense = carrying_contraband() * 2;
     if (ship_count[SHIP_VIPER] == 0)
+    {
         offense |= cmdr.legal_status;
+    }
 
     if (rand255() >= offense)
+    {
         return;
+    }
 
     newship = create_other_ship (SHIP_VIPER);
 
@@ -1133,7 +1244,9 @@ void check_for_cops (void)
     {
         universe[newship].flags = FLG_ANGRY;
         if (rand255() > 245)
+        {
             universe[newship].flags |= FLG_HAS_ECM;
+        }
 
         universe[newship].bravery = ((rand255() * 2) | 64) & 127;  
     }
@@ -1155,7 +1268,9 @@ void check_for_others (void)
     rnd = rand255();
 
     if ((gov != 0) && ((rnd >= 90) || ((rnd & 7) < gov)))
-        return; 
+    {
+        return;
+    }
 
     if (rand255() < 100)
     {
@@ -1172,9 +1287,13 @@ void check_for_others (void)
     pt.y = 1000 + (randint() & 8191);
 
     if (rand255() > 127)
+    {
         pt.x = -pt.x;
+    }
     if (rand255() > 127)
+    {
         pt.y = -pt.y;
+    }
 
     rnd = rand255() & 3;
 
@@ -1186,30 +1305,37 @@ void check_for_others (void)
         {
             universe[newship].flags = FLG_ANGRY;
             if (rand255() > 245)
+            {
                 universe[newship].flags |= FLG_HAS_ECM;
+            }
 
             universe[newship].bravery = ((rand255() * 2) | 64) & 127;
             in_battle++;  
         }
     }
-
 }
 
 
 void random_encounter (void)
 {
     if ((ship_count[SHIP_CORIOLIS] != 0) || (ship_count[SHIP_DODEC] != 0))
+    {
         return;
+    }
 
     if (rand255() == 136)
     {
         if (((int)(universe[0].location.z) & 0x3e) != 0)
+        {
             create_thargoid ();
+        }
         else
-            create_cougar();                        
+        {
+            create_cougar();
+        }
 
         return;
-    }               
+    }
 
     if ((rand255() & 7) == 0)
     {
@@ -1219,18 +1345,24 @@ void random_encounter (void)
 
     check_for_asteroids();
 
-    check_for_cops();       
+    check_for_cops();
 
     if (ship_count[SHIP_VIPER] != 0)
+    {
         return;
+    }
 
     if (in_battle)
+    {
         return;
+    }
 
     if ((cmdr.mission == 5) && (rand255() >= 200))
+    {
         create_thargoid ();
+    }
 
-    check_for_others();     
+    check_for_others();
 }
 
 
@@ -1243,9 +1375,11 @@ void abandon_ship (void)
     cmdr.fuel = myship.max_fuel;
 
     for (i = 0; i < NO_OF_STOCK_ITEMS; i++)
+    {
         cmdr.current_cargo[i] = 0;
+    }
 
-    snd_play_sample (SND_DOCK);                                     
+    snd_play_sample (SND_DOCK);
     dock_player();
     current_screen = SCR_BREAK_PATTERN;
 }

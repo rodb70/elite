@@ -46,7 +46,7 @@ static struct option option_list[NUM_OPTIONS] =
     {"Save Commander",      1},
     {"Load Commander",      1},
     {"Game Settings",       0},
-    {"Quit",                        0}      
+    {"Quit",                0}
 };
 
 struct setting
@@ -166,7 +166,7 @@ void highlight_setting (int item)
     }
 
     gfx_draw_rectangle (x, y, x + width, y + OPTION_BAR_HEIGHT, GFX_COL_DARK_RED);
-    display_setting_item (item);            
+    display_setting_item (item);
     hilite_item = item;
 }
 
@@ -175,13 +175,17 @@ void highlight_setting (int item)
 void select_left_setting (void)
 {
     if ((hilite_item & 1) != 0)
+    {
         highlight_setting (hilite_item - 1);
+    }
 }
 
 void select_right_setting (void)
 {
     if (((hilite_item & 1) == 0) && (hilite_item < (NUM_SETTINGS - 1)))
+    {
         highlight_setting (hilite_item + 1);
+    }
 }
 
 
@@ -194,7 +198,9 @@ void select_up_setting (void)
     }
 
     if (hilite_item > 1)
+    {
         highlight_setting (hilite_item - 2);
+    }
 }
 
 
@@ -207,7 +213,9 @@ void select_down_setting (void)
     }
 
     if (hilite_item < (NUM_SETTINGS - 2))
+    {
         highlight_setting (hilite_item + 2);
+    }
 }
 
 void toggle_setting (void)
@@ -297,9 +305,8 @@ void highlight_option (int i)
     y = (384 - (30 * NUM_OPTIONS)) / 2;
     y += i * 30;
 
-    gfx_draw_rectangle (x, y, x + OPTION_BAR_WIDTH, y + OPTION_BAR_HEIGHT,
-            GFX_COL_DARK_RED);
-    display_option_item (i);                
+    gfx_draw_rectangle (x, y, x + OPTION_BAR_WIDTH, y + OPTION_BAR_HEIGHT, GFX_COL_DARK_RED);
+    display_option_item (i);
 
     hilite_item = i;
 }
@@ -307,20 +314,26 @@ void highlight_option (int i)
 void select_previous_option (void)
 {
     if (hilite_item > 0)
+    {
         highlight_option (hilite_item - 1);
+    }
 }
 
 void select_next_option (void)
 {
     if (hilite_item < (NUM_OPTIONS - 1))
+    {
         highlight_option (hilite_item + 1);
+    }
 }
 
 
 void do_option (void)
 {
     if ((!docked) && option_list[hilite_item].docked_only)
+    {
         return;
+    }
 
     switch (hilite_item)
     {

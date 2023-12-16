@@ -26,7 +26,8 @@
  * Set the graphics platform we are using...
  */
 
-#define GFX_ALLEGRO
+//#define GFX_ALLEGRO
+#define GFX_SDL
 
 /*
  * #define GFX_WIN32_GDI
@@ -48,4 +49,6 @@
  * #define RES_320_240
  */
 
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
 #endif

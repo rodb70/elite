@@ -134,10 +134,14 @@ void move_univ_object (struct univ_object *obj)
             obj->velocity += obj->acceleration;
             obj->acceleration = 0;
             if (obj->velocity > ship_list[obj->type]->velocity)
+            {
                 obj->velocity = ship_list[obj->type]->velocity;
+            }
 
             if (obj->velocity <= 0)
+            {
                 obj->velocity = 1;
+            }
         }
     }
 
@@ -150,21 +154,25 @@ void move_univ_object (struct univ_object *obj)
 
     obj->location.x = vec.x;
     obj->location.y = vec.y;
-    obj->location.z = vec.z;        
+    obj->location.z = vec.z;
 
     /* This is not right... */
     /* What other than vec.xyz? */
     obj->distance = sqrt (pow (vec.x,2) + pow (vec.y,2) + pow (vec.z, 2));
 
     if (obj->type == SHIP_PLANET)
+    {
         beta = 0.0;
+    }
 
     rotate_vec (&obj->rotmat[2], alpha, beta);
     rotate_vec (&obj->rotmat[1], alpha, beta);
     rotate_vec (&obj->rotmat[0], alpha, beta);
 
     if (obj->flags & FLG_DEAD)
+    {
         return;
+    }
 
 
     /* If necessary rotate the object around the X axis... */
@@ -174,7 +182,9 @@ void move_univ_object (struct univ_object *obj)
         rotate_x_first_whole (obj, obj->rot.x);
 
         if ((obj->rot.x != 127) && (obj->rot.x != -127))
+        {
             obj->rot.x -= (obj->rot.x < 0) ? -1 : 1;
+        }
     }
 
     /* If necessary rotate the object around the Z axis... */
@@ -184,7 +194,9 @@ void move_univ_object (struct univ_object *obj)
         rotate_x_first_whole (obj, obj->rot.z);
 
         if ((obj->rot.z != 127) && (obj->rot.z != -127))
+        {
             obj->rot.z -= (obj->rot.z < 0) ? -1 : 1;
+        }
     }
 
 
@@ -225,24 +237,34 @@ int is_docking (int sn)
     double ux;
 
     if (auto_pilot)         // Don't want it to kill anyone!
+    {
         return 1;
+    }
 
     fz = universe[sn].rotmat[2].z;
 
     if (fz > -0.90)
+    {
         return 0;
+    }
 
     vec = unit_vector (&universe[sn].location);
 
     if (vec.z < 0.927)
+    {
         return 0;
+    }
 
     ux = universe[sn].rotmat[1].x;
     if (ux < 0)
+    {
         ux = -ux;
+    }
 
     if (ux < 0.84)
+    {
         return 0;
+    }
 
     return 1;
 }
@@ -278,14 +300,18 @@ void update_altitude (void)
     myship.altitude = 255;
 
     if (witchspace)
+    {
         return;
+    }
 
     x = fabs(universe[0].location.x);
     y = fabs(universe[0].location.y);
     z = fabs(universe[0].location.z);
 
     if ((x > 65535) || (y > 65535) || (z > 65535))
+    {
         return;
+    }
 
     x /= 256;
     y /= 256;
@@ -294,18 +320,24 @@ void update_altitude (void)
     dist = (x * x) + (y * y) + (z * z);
 
     if (dist > 65535)
+    {
         return;
+    }
 
     /* Shouldn't it just do dist = sqrt( dist - 9472)? */
     dist -= 9472;   /* Magic Number */
 
     if( crash_altitude (dist))
+    {
         return;
+    }
 
     dist = sqrt (dist);
 
     if( crash_altitude (dist))
+    {
         return;
+    }
 
     myship.altitude = dist; 
 }
@@ -319,17 +351,23 @@ void update_cabin_temp (void)
     myship.cabtemp = 30;
 
     if (witchspace)
+    {
         return;
+    }
 
     if (ship_count[SHIP_CORIOLIS] || ship_count[SHIP_DODEC])
+    {
         return;
+    }
 
     x = abs((int)universe[1].location.x);
     y = abs((int)universe[1].location.y);
     z = abs((int)universe[1].location.z);
 
     if ((x > 65535) || (y > 65535) || (z > 65535))
+    {
         return;
+    }
 
     x /= 256;
     y /= 256;
@@ -338,14 +376,18 @@ void update_cabin_temp (void)
     dist = ((x * x) + (y * y) + (z * z)) / 256;
 
     if (dist > 255)
+    {
         return;
+    }
 
     dist ^=  255;
 
     myship.cabtemp = dist + 30;
 
     if ((myship.cabtemp < 224) || (cmdr.fuel_scoop == 0))
+    {
         return;
+    }
 
     if (myship.cabtemp > 255)
     {
@@ -356,7 +398,9 @@ void update_cabin_temp (void)
 
     cmdr.fuel += flight_speed / 2;
     if (cmdr.fuel > myship.max_fuel)
+    {
         cmdr.fuel = myship.max_fuel;
+    }
 
     info_message ("Fuel Scoop On"); 
 }
@@ -387,7 +431,9 @@ void regenerate_shields (void)
     energy++;
     energy += cmdr.energy_unit;
     if (energy > MAX_ENERGY)
+    {
         energy = MAX_ENERGY;
+    }
 }
 
 
@@ -396,7 +442,9 @@ void decrease_energy (int amount)
     energy += amount;
 
     if (energy <= 0)
+    {
         do_game_over();
+    }
 }
 
 
@@ -409,7 +457,9 @@ void damage_ship (int damage, int front)
     int shield;
 
     if (damage <= 0)        /* sanity check */
+    {
         return;
+    }
 
     shield = front ? front_shield : aft_shield;
 
@@ -421,9 +471,13 @@ void damage_ship (int damage, int front)
     }
 
     if (front)
+    {
         front_shield = shield;
+    }
     else
+    {
         aft_shield = shield;
+    }
 }
 
 
@@ -440,8 +494,8 @@ void make_station_appear (void)
     py = universe[0].location.y;
     pz = universe[0].location.z;
 
-    vec.x = (rand() & 32767) - 16384;       
-    vec.y = (rand() & 32767) - 16384;       
+    vec.x = (rand() & 32767) - 16384;
+    vec.y = (rand() & 32767) - 16384;
     vec.z = rand() & 32767; 
 
     vec = unit_vector (&vec);
@@ -522,19 +576,21 @@ void switch_to_view (struct univ_object *flip)
         flip->location.z = -tmp;
 
         if (flip->type < 0)
+        {
             return;
+        }
 
         tmp = flip->rotmat[0].x;
         flip->rotmat[0].x = flip->rotmat[0].z;
-        flip->rotmat[0].z = -tmp;               
+        flip->rotmat[0].z = -tmp;
 
         tmp = flip->rotmat[1].x;
         flip->rotmat[1].x = flip->rotmat[1].z;
-        flip->rotmat[1].z = -tmp;               
+        flip->rotmat[1].z = -tmp;
 
         tmp = flip->rotmat[2].x;
         flip->rotmat[2].x = flip->rotmat[2].z;
-        flip->rotmat[2].z = -tmp;               
+        flip->rotmat[2].z = -tmp;
         return;
     }
 
@@ -545,20 +601,21 @@ void switch_to_view (struct univ_object *flip)
         flip->location.z = tmp;
 
         if (flip->type < 0)
+        {
             return;
+        }
 
         tmp = flip->rotmat[0].x;
         flip->rotmat[0].x = -flip->rotmat[0].z;
-        flip->rotmat[0].z = tmp;                
+        flip->rotmat[0].z = tmp;
 
         tmp = flip->rotmat[1].x;
         flip->rotmat[1].x = -flip->rotmat[1].z;
-        flip->rotmat[1].z = tmp;                
+        flip->rotmat[1].z = tmp;
 
         tmp = flip->rotmat[2].x;
         flip->rotmat[2].x = -flip->rotmat[2].z;
-        flip->rotmat[2].z = tmp;                
-
+        flip->rotmat[2].z = tmp;
     }
 }
 
@@ -613,7 +670,7 @@ void update_universe (void)
                     (type != SHIP_CORIOLIS) && (type != SHIP_DODEC))
             {
                 snd_play_sample (SND_EXPLODE);
-                universe[i].flags |= FLG_DEAD;          
+                universe[i].flags |= FLG_DEAD;
             }
 
             if ((current_screen != SCR_INTRO_ONE) &&
@@ -637,7 +694,7 @@ void update_universe (void)
                         (universe[i].distance < DOCK_VIS_DIST)) /* was 49152 */
                 {
                     make_station_appear();
-                }                               
+                }
 
                 draw_ship (&flip);
                 continue;
@@ -654,15 +711,19 @@ void update_universe (void)
             if (universe[i].distance < CHECK_DOCKING)
             {
                 if ((type == SHIP_CORIOLIS) || (type == SHIP_DODEC))
+                {
                     check_docking (i);
+                }
                 else
+                {
                     scoop_item(i);
+                }
 
                 continue;
             }
 
 #define MAX_VIS_DIST 57344
-            if (universe[i].distance > MAX_VIS_DIST)
+            if( universe[i].distance > MAX_VIS_DIST)
             {
                 remove_ship (i);
                 continue;
@@ -677,7 +738,9 @@ void update_universe (void)
             universe[i].flags &= ~FLG_FIRING;
 
             if (universe[i].flags & FLG_DEAD)
+            {
                 continue;
+            }
 
             check_target (i, &flip);
         }
@@ -768,10 +831,14 @@ void update_compass (void)
     int un = 0;
 
     if (witchspace)
+    {
         return;
+    }
 
     if (ship_count[SHIP_CORIOLIS] || ship_count[SHIP_DODEC])
+    {
         un = 1;
+    }
 
     dest = unit_vector (&universe[un].location);
 
@@ -829,7 +896,9 @@ void display_dial_bar (int len, int x, int y)
     gfx_draw_colour_line (x, y + i + 384, x + len, y + i + 384, GFX_COL_GOLD);
 
     for (i = 2; i < 7; i++)
+    {
         gfx_draw_colour_line (x, y + i + 384, x + len, y + i + 384, GFX_COL_YELLOW_1);
+    }
 
     gfx_draw_colour_line (x, y + i + 384, x + len, y + i + 384, GFX_COL_DARK_RED);
 }
@@ -842,30 +911,40 @@ void display_dial_bar (int len, int x, int y)
 void display_shields (void)
 {
     if (front_shield > 3)
+    {
         display_dial_bar (front_shield / 4, 31, 7);
+    }
 
     if (aft_shield > 3)
+    {
         display_dial_bar (aft_shield / 4, 31, 23);
+    }
 }
 
 
 void display_altitude (void)
 {
     if (myship.altitude > 3)
+    {
         display_dial_bar (myship.altitude / 4, 31, 92);
+    }
 }
 
 void display_cabin_temp (void)
 {
     if (myship.cabtemp > 3)
+    {
         display_dial_bar (myship.cabtemp / 4, 31, 60);
+    }
 }
 
 
 void display_laser_temp (void)
 {
     if (laser_temp > 0)
+    {
         display_dial_bar (laser_temp / 4, 31, 76);
+    }
 }
 
 
@@ -883,16 +962,24 @@ void display_energy (void)
     e4 = energy - 192;      
 
     if (e4 > 0)
+    {
         display_dial_bar (e4, 416, 61);
+    }
 
     if (e3 > 0)
+    {
         display_dial_bar (e3, 416, 79);
+    }
 
     if (e2 > 0)
+    {
         display_dial_bar (e2, 416, 97);
+    }
 
     if (e1 > 0)
+    {
         display_dial_bar (e1, 416, 115);
+    }
 }
 
 
@@ -937,7 +1024,9 @@ void display_flight_climb (void)
 void display_fuel (void)
 {
     if (cmdr.fuel > 0)
+    {
         display_dial_bar ((cmdr.fuel * 64) / myship.max_fuel, 31, 44);
+    }
 }
 
 
@@ -947,7 +1036,9 @@ void display_missiles (void)
     int x,y;
 
     if (cmdr.missiles == 0)
+    {
         return;
+    }
 
     nomiss = cmdr.missiles > 4 ? 4 : cmdr.missiles;
 
@@ -987,54 +1078,72 @@ void update_console (void)
     display_missiles();
 
     if (docked)
+    {
         return;
+    }
 
     update_scanner();
     update_compass();
 
     if (ship_count[SHIP_CORIOLIS] || ship_count[SHIP_DODEC])
+    {
         gfx_draw_sprite (IMG_BIG_S, 387, 490);
+    }
 
     if (ecm_active)
+    {
         gfx_draw_sprite (IMG_BIG_E, 115, 490);
+    }
 }
 
 void increase_flight_roll (void)
 {
     if (flight_roll < myship.max_roll)
+    {
         flight_roll++;
+    }
 }
 
 
 void decrease_flight_roll (void)
 {
     if (flight_roll > -myship.max_roll)
+    {
         flight_roll--;
+    }
 }
 
 
 void increase_flight_climb (void)
 {
     if (flight_climb < myship.max_climb)
+    {
         flight_climb++;
+    }
 }
 
 void decrease_flight_climb (void)
 {
     if (flight_climb > -myship.max_climb)
+    {
         flight_climb--;
+    }
 }
 
 
 void start_hyperspace (void)
 {
     if (hyper_ready)
+    {
         return;
+    }
 
     hyper_distance = calc_distance_to_planet (docked_planet, hyperspace_planet);
 
     if ((hyper_distance == 0) || (hyper_distance > cmdr.fuel))
+    {
         return;
+    }
 
     destination_planet = hyperspace_planet;
     name_planet (hyper_name, destination_planet);
@@ -1050,10 +1159,14 @@ void start_hyperspace (void)
 void start_galactic_hyperspace (void)
 {
     if (hyper_ready)
+    {
         return;
+    }
 
     if (cmdr.galactic_hyperdrive == 0)
+    {
         return;
+    }
 
     hyper_ready = 1;
     hyper_countdown = 2;
@@ -1134,7 +1247,9 @@ void enter_witchspace (void)
     nthg = (randint() & 3) + 1;
 
     for (i = 0; i < nthg; i++)
-        create_thargoid();      
+    {
+        create_thargoid();
+    }
 
     current_screen = SCR_BREAK_PATTERN;
     snd_play_sample (SND_HYPERSPACE);
@@ -1145,7 +1260,7 @@ void complete_hyperspace (void)
 {
     Matrix rotmat;
     struct point p_vec;
-    //        struct rotation rot = {0, 0};
+    // struct rotation rot = {0, 0};
 
     hyper_ready = 0;
     witchspace = 0;
@@ -1251,17 +1366,25 @@ void jump_warp (void)
 
 
     if (universe[0].distance < universe[1].distance)
+    {
         jump = universe[0].distance - min_jump;
+    }
     else
-        jump = universe[1].distance - min_jump; 
+    {
+        jump = universe[1].distance - min_jump;
+    }
 
     if (jump > 1024)
+    {
         jump = 1024;
+    }
 
     for (i = 0; i < MAX_UNIV_OBJECTS; i++)
     {
         if (universe[i].type != 0)
+        {
             universe[i].location.z -= jump;
+        }
     }
 
     warp_stars = 1;

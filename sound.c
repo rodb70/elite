@@ -81,7 +81,9 @@ void snd_sound_shutdown (void)
     int i;
 
     if (!sound_on)
+    {
         return;
+    }
 
     for (i = 0; i < NUM_SAMPLES; i++)
     {
@@ -97,10 +99,14 @@ void snd_sound_shutdown (void)
 void snd_play_sample (int sample_no)
 {
     if (!sound_on)
+    {
         return;
+    }
 
     if (sample_list[sample_no].timeleft != 0)
+    {
         return;
+    }
 
     sample_list[sample_no].timeleft = sample_list[sample_no].runtime;
 
@@ -123,7 +129,9 @@ void snd_update_sound (void)
 void snd_play_midi (int midi_no, int repeat)
 {
     if (!sound_on)
+    {
         return;
+    }
 
     switch (midi_no)
     {
@@ -145,5 +153,7 @@ void snd_stop_midi (void)
     /* if does nothing */
     /* semi-colon terminates */
     if (sound_on)
+    {
         play_midi (NULL, TRUE);
+    }
 }

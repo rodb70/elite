@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "allegro.h"
+#include <allegro.h>
 
 int kbd_F1_pressed;
 int kbd_F2_pressed;
@@ -63,7 +63,7 @@ int kbd_space_pressed;
 
 int kbd_keyboard_startup (void)
 {
-    //      set_keyboard_rate(2000, 2000);
+    // set_keyboard_rate(2000, 2000);
     return 0;
 }
 
@@ -126,7 +126,9 @@ void kbd_poll_keyboard (void)
     kbd_space_pressed = key[KEY_SPACE];
 
     while (keypressed())
+    {
         readkey();
+    }
 }
 
 
@@ -143,7 +145,7 @@ int kbd_read_key (void)
     keycode = keynum >> 8;
     keyasc = keynum & 255;
 
-    if (keycode == KEY_ENTER)
+    if( keycode == KEY_ENTER )
     {
         kbd_enter_pressed = 1;
         return 0;
@@ -162,5 +164,7 @@ int kbd_read_key (void)
 void kbd_clear_key_buffer (void)
 {
     while (keypressed())
+    {
         readkey();
+    }
 }

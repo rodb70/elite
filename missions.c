@@ -106,7 +106,9 @@ char *mission_planet_desc (struct galaxy_seed planet)
     int pnum;
 
     if (!docked)
+    {
         return NULL;
+    }
 
     if ((planet.a != docked_planet.a) ||
             (planet.b != docked_planet.b) ||
@@ -114,7 +116,9 @@ char *mission_planet_desc (struct galaxy_seed planet)
             (planet.d != docked_planet.d) ||
             (planet.e != docked_planet.e) ||
             (planet.f != docked_planet.f))
+    {
         return NULL;
+    }
 
     pnum = find_planet_number (planet);
 
@@ -129,7 +133,7 @@ char *mission_planet_desc (struct galaxy_seed planet)
                 return mission1_pdesc[1];
 
             case 28:
-                return mission1_pdesc[2];                                                       
+                return mission1_pdesc[2];
         }
     }
 
@@ -159,18 +163,20 @@ char *mission_planet_desc (struct galaxy_seed planet)
                 return mission1_pdesc[5];
 
             case 53:
-                return mission1_pdesc[6];                                                       
+                return mission1_pdesc[6];
 
             case 118:
-                return mission1_pdesc[7];                                                       
+                return mission1_pdesc[7];
 
             case 193:
-                return mission1_pdesc[8];                                                       
+                return mission1_pdesc[8];
         }
     }
 
     if ((cmdr.galaxy_number == 2) && (pnum == 101))
-        return mission1_pdesc[9];                                                       
+    {
+        return mission1_pdesc[9];
+    }
 
     return NULL;
 }

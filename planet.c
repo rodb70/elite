@@ -172,7 +172,9 @@ void waggle_galaxy (struct galaxy_seed *glx_ptr)
 
 
     if (x > 0xFF)
+    {
         y++;
+    }
 
     x &= 0xFF;
     y &= 0xFF;
@@ -187,12 +189,18 @@ void waggle_galaxy (struct galaxy_seed *glx_ptr)
 
 
     if (x > 0xFF)
+    {
         y++;
+    }
 
     if (y > 0xFF)
+    {
         carry_flag = 1;
+    }
     else
+    {
         carry_flag = 0;
+    }
 
     x &= 0xFF;
     y &= 0xFF;
@@ -222,9 +230,13 @@ struct galaxy_seed find_planet (int cx, int cy)
         dy = abs(cy - glx.b);
 
         if (dx > dy)
+        {
             distance = (dx + dx + dy) / 2;
+        }
         else
+        {
             distance = (dx + dy + dy) / 2;
+        }
 
         if (distance < min_dist)
         {
@@ -258,7 +270,9 @@ int find_planet_number (struct galaxy_seed planet)
                 (planet.d == glx.d) &&
                 (planet.e == glx.e) &&
                 (planet.f == glx.f))
+        {
             return i;
+        }
 
         waggle_galaxy (&glx);
         waggle_galaxy (&glx);
@@ -282,9 +296,13 @@ void name_planet (char *gname, struct galaxy_seed glx)
     gp = gname;
 
     if ((glx.a & 0x40) == 0)
+    {
         size = 3;
+    }
     else
+    {
         size = 4;
+    }
 
     for (i = 0; i < size; i++)
     {
@@ -295,7 +313,9 @@ void name_planet (char *gname, struct galaxy_seed glx)
             x *= 2;
             *gp++ = digrams[x];
             if (digrams[x+1] != '?')
+            {
                 *gp++ = digrams[x+1];
+            }
         }
 
         waggle_galaxy (&glx);
@@ -337,15 +357,21 @@ void describe_inhabitants (char *str, struct galaxy_seed planet)
     {
         inhab = (planet.f / 4) & 7;
         if (inhab < 3)
+        {
             strcat (str, inhabitant_desc1[inhab]);
+        }
 
         inhab = planet.f / 32;
         if (inhab < 6)
+        {
             strcat (str, inhabitant_desc2[inhab]);
+        }
 
         inhab = (planet.d ^ planet.b) & 7;
         if (inhab < 6)
+        {
             strcat (str, inhabitant_desc3[inhab]);
+        }
 
         inhab = (inhab + (planet.f & 3)) & 7;
         strcat (str, inhabitant_desc4[inhab]);
@@ -372,7 +398,9 @@ void expand_description (char *source)
             source++;
             ptr = str;
             while (*source != '>')
+            {
                 *ptr++ = *source++;
+            }
             *ptr = '\0';
             source++;
             num = atoi(str);
@@ -385,17 +413,29 @@ void expand_description (char *source)
             {
                 rnd = gen_rnd_number();
                 option = 0;
-                if (rnd >= 0x33) option++;
-                if (rnd >= 0x66) option++;
-                if (rnd >= 0x99) option++;
-                if (rnd >= 0xCC) option++;
+                if (rnd >= 0x33)
+                {
+                    option++;
+                }
+                if (rnd >= 0x66)
+                {
+                    option++;
+                }
+                if (rnd >= 0x99)
+                {
+                    option++;
+                }
+                if (rnd >= 0xCC)
+                {
+                    option++;
+                }
             }
 
-            expand_description (desc_list[num][option]);
+            expand_description( desc_list[ num ][ option] );
             continue;
         }
 
-        if (*source == '%')
+        if( *source == '%' )
         {
             source++;
             switch (*source)
@@ -404,14 +444,17 @@ void expand_description (char *source)
                     name_planet (str, hyperspace_planet);
                     capitalise_name (str);
                     for (ptr = str; *ptr != '\0';)
+                    {
                         *desc_ptr++ = *ptr++;
+                    }
                     break;
 
                 case 'I':
                     name_planet (str, hyperspace_planet);
                     capitalise_name (str);
 
-                    for (ptr = str; *ptr != '\0';) {
+                    for (ptr = str; *ptr != '\0';)
+                    {
                         *desc_ptr++ = *ptr++;
                     }
 
@@ -429,9 +472,13 @@ void expand_description (char *source)
                     {
                         x = gen_rnd_number() & 0x3e;
                         if (i == 0)
+                        {
                             *desc_ptr++ = digrams[x];
+                        }
                         else
+                        {
                             *desc_ptr++ = tolower(digrams[x]);
+                        }
                         *desc_ptr++ = tolower(digrams[x+1]);
                     }
 
@@ -444,8 +491,6 @@ void expand_description (char *source)
         *desc_ptr++ = *source++;
     }
 
-
-
     *desc_ptr = '\0';
 }
 
@@ -455,11 +500,13 @@ char *describe_planet (struct galaxy_seed planet)
 {
     char *mission_text;
 
-    if (cmdr.mission == 1)
+    if( cmdr.mission == 1 )
     {
         mission_text = mission_planet_desc (planet);
         if (mission_text != NULL)
+        {
             return mission_text;
+        }
     }
 
     rnd_seed.a = planet.c;
@@ -467,7 +514,7 @@ char *describe_planet (struct galaxy_seed planet)
     rnd_seed.c = planet.e;
     rnd_seed.d = planet.f;
 
-    if (hoopy_casinos)
+    if( hoopy_casinos )
     {
         rnd_seed.a ^= planet.a;
         rnd_seed.b ^= planet.b;
@@ -477,14 +524,14 @@ char *describe_planet (struct galaxy_seed planet)
 
     desc_ptr = planet_description;
 
-    expand_description ("<14> is <22>.");
+    expand_description ( "<14> is <22>." );
 
     return planet_description;
 }
 
 
 
-void generate_planet_data (struct planet_data *pl, struct galaxy_seed planet_seed)
+void generate_planet_data( struct planet_data *pl, struct galaxy_seed planet_seed )
 {
 
     pl->government = (planet_seed.c / 8) & 7;
@@ -492,7 +539,9 @@ void generate_planet_data (struct planet_data *pl, struct galaxy_seed planet_see
     pl->economy = planet_seed.b & 7;
 
     if (pl->government < 2)
+    {
         pl->economy = pl->economy | 2;
+    }
 
     pl->techlevel = pl->economy ^ 7;
     pl->techlevel += planet_seed.d & 3;
@@ -511,6 +560,4 @@ void generate_planet_data (struct planet_data *pl, struct galaxy_seed planet_see
 
     pl->radius = (((planet_seed.f & 15) + 11) * 256) + planet_seed.d;
 }
-
-
 

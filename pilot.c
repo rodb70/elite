@@ -60,7 +60,9 @@ void fly_to_vector (struct univ_object *ship, struct vector vec)
     direction = vector_dot_product (&nvec, &ship->rotmat[2]); 
 
     if (direction < -0.6666)/* Magic Number */
+    {
         rat2 = 0;
+    }
 
     dir = vector_dot_product (&nvec, &ship->rotmat[1]);
 
@@ -89,8 +91,10 @@ void fly_to_vector (struct univ_object *ship, struct vector vec)
             ship->rot.z = (dir < 0) ? rat : -rat;
 
             if (ship->rot.x < 0)
+            {
                 ship->rot.z = -ship->rot.z;
-        }               
+            }
+        }
     }
 
     if (direction <= -0.167)/* Magic Number */
@@ -120,7 +124,7 @@ void fly_to_planet (struct univ_object *ship)
     vec.y = universe[0].location.y - ship->location.y;
     vec.z = universe[0].location.z - ship->location.z;
 
-    fly_to_vector (ship, vec);      
+    fly_to_vector (ship, vec);
 }
 
 
@@ -142,7 +146,7 @@ void fly_to_station_front (struct univ_object *ship)
     vec.y += universe[1].rotmat[2].y * 768;
     vec.z += universe[1].rotmat[2].z * 768;
 
-    fly_to_vector (ship, vec);      
+    fly_to_vector (ship, vec);
 }
 
 
@@ -158,7 +162,7 @@ void fly_to_station (struct univ_object *ship)
     vec.y = universe[1].location.y - ship->location.y;
     vec.z = universe[1].location.z - ship->location.z;
 
-    fly_to_vector (ship, vec);      
+    fly_to_vector (ship, vec);
 }
 
 
@@ -177,7 +181,7 @@ void fly_to_docking_bay (struct univ_object *ship)
     diff.y = ship->location.y - universe[1].location.y;
     diff.z = ship->location.z - universe[1].location.z;
 
-    vec = unit_vector (&diff);      
+    vec = unit_vector( &diff );
 
     ship->rot.x = 0;
 
@@ -198,7 +202,9 @@ void fly_to_docking_bay (struct univ_object *ship)
         }
 
         if (fabs(vec.y) > 0.002436)/* Magic Number */
+        {
             ship->rot.x = (vec.y < 0) ? -1 : 1;
+        }
 
         if (fabs(vec.y) >= 0.0625)/* Magic Number */
         {
@@ -212,7 +218,7 @@ void fly_to_docking_bay (struct univ_object *ship)
 
     dir = vector_dot_product (&ship->rotmat[0], &universe[1].rotmat[1]);
 
-    if (fabs(dir) >= 0.9166)/* Magic Number */
+    if( fabs(dir) >= 0.9166 )/* Magic Number */
     {
         ship->acceleration++;
         ship->rot.z = 127;
@@ -236,15 +242,15 @@ void auto_pilot_ship (struct univ_object *ship)
     double dir;
 
     if ((ship->flags & FLG_FLY_TO_PLANET) ||
-            ((ship_count[SHIP_CORIOLIS] == 0) && (ship_count[SHIP_DODEC] == 0)))
+       ((ship_count[SHIP_CORIOLIS] == 0) && (ship_count[SHIP_DODEC] == 0)))
     {
         fly_to_planet (ship);
         return;
     }
 
-    diff.x = ship->location.x - universe[1].location.x;     
-    diff.y = ship->location.y - universe[1].location.y;     
-    diff.z = ship->location.z - universe[1].location.z;     
+    diff.x = ship->location.x - universe[1].location.x;
+    diff.y = ship->location.y - universe[1].location.y;
+    diff.z = ship->location.z - universe[1].location.z;
 
     dist = sqrt (pow (diff.x,2) + pow (diff.y, 2) + pow (diff.z, 2));
 
@@ -278,7 +284,9 @@ void auto_pilot_ship (struct univ_object *ship)
 void engage_auto_pilot (void)
 {
     if (auto_pilot || witchspace || hyper_ready)
-        return; 
+    {
+        return;
+    }
 
     auto_pilot = 1;
     snd_play_midi (SND_BLUE_DANUBE, 1);
@@ -287,7 +295,7 @@ void engage_auto_pilot (void)
 
 void disengage_auto_pilot (void)
 {
-    if (auto_pilot)
+    if( auto_pilot )
     {
         auto_pilot = 0;
         snd_stop_midi();
