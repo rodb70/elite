@@ -73,11 +73,27 @@ END_OF_FUNCTION(frame_timer);
 
 
 
-int gfx_graphics_startup (void)
+void initialise_allegro (void)
+{
+    allegro_init();
+    install_keyboard();
+    install_timer();
+    install_mouse();
+
+    have_joystick = 0;
+
+    if (install_joystick(JOY_TYPE_AUTODETECT) == 0)
+    {
+        have_joystick = (num_joysticks > 0);
+    }
+}
+
+nt gfx_graphics_startup (void)
 {
     PALETTE the_palette;
     int rv;
 
+    initialise_allegro();
 /* #ifdef ALLEGRO_WINDOWS
 
 #ifdef RES_512_512

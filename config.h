@@ -21,6 +21,7 @@
  
 #ifndef CONFIG_H
 #define CONFIG_H
+#include <SDL2/SDL.h>
 
 /*
  * Set the graphics platform we are using...
@@ -51,4 +52,12 @@
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
+
+#ifndef TRUE
+   #define TRUE         -1
+   #define FALSE        0
+#endif
+#define xor_mode(...)
+char * get_filename(char *path);
+void joy_poll_joystick( void );
 #endif

@@ -26,8 +26,6 @@
 #include <time.h>
 #include <stdlib.h>
 
-#include <allegro.h>
-
 #include "config.h"
 #include "gfx.h"
 #include "main.h"
@@ -58,7 +56,7 @@ int cross_timer;
 int draw_lasers;
 int mcount;
 int message_count;
-char message_string[80];
+char message_string[ 80 ];
 int rolling;
 int climbing;
 int game_paused;
@@ -526,7 +524,7 @@ void delete_find_char (void)
     gfx_display_text(16, 340, str);
 }
 
-void o_pressed()
+void o_pressed(void)
 {
     switch (current_screen)
     {
@@ -727,45 +725,7 @@ void handle_flight_keys (void)
 
     kbd_poll_keyboard();
 
-    if (have_joystick)
-    {       
-        poll_joystick();
-
-        if (joy[0].stick[0].axis[1].d1)
-        {
-            arrow_up();
-        }
-
-        if (joy[0].stick[0].axis[1].d2)
-        {
-            arrow_down();
-        }
-
-        if (joy[0].stick[0].axis[0].d1)
-        {
-            arrow_left();
-        }
-
-        if (joy[0].stick[0].axis[0].d2)
-        {
-            arrow_right();
-        }
-
-        if (joy[0].button[0].b)
-        {
-            kbd_fire_pressed = 1;
-        }
-
-        if (joy[0].button[1].b)
-        {
-            kbd_inc_speed_pressed = 1;
-        }
-
-        if (joy[0].button[2].b)
-        {
-            kbd_dec_speed_pressed = 1;
-        }
-    }
+    joy_poll_joystick();
 
 
     if (game_paused)
@@ -1166,7 +1126,8 @@ void load_commander_screen (void)
         gfx_display_centre_text (175, "Error Loading Commander!", 140, GFX_COL_GOLD);
         gfx_display_centre_text (200, "Press any key to continue.", 140, GFX_COL_GOLD);
         gfx_update_screen();
-        readkey();
+        //FIXME: readkey();
+
         return;
     }
 
@@ -1246,7 +1207,7 @@ void run_second_intro_screen (void)
  * Draw the game over sequence. 
  */
 
-void run_game_over_screen()
+void run_game_over_screen(void)
 {
     int i;
     int newship;
@@ -1262,10 +1223,10 @@ void run_game_over_screen()
     flight_climb = 0;
     clear_universe();
 
-    set_init_matrix (rotmat);
+    set_init_matrix( rotmat );
 
-    newship = add_new_ship (SHIP_COBRA3, pt, rotmat, ROT_0);
-    universe[newship].flags |= FLG_DEAD;
+    newship = add_new_ship( SHIP_COBRA3, pt, rotmat, ROT_0 );
+    universe[ newship ].flags |= FLG_DEAD;
 
     for (i = 0; i < 5; i++)
     {
@@ -1333,26 +1294,10 @@ void info_message (char *message)
     //      snd_play_sample (SND_BEEP);
 }
 
-void initialise_allegro (void)
+
+
+int main(void)
 {
-    allegro_init();
-    install_keyboard(); 
-    install_timer();
-    install_mouse();
-
-    have_joystick = 0;
-
-    if (install_joystick(JOY_TYPE_AUTODETECT) == 0)
-    {
-        have_joystick = (num_joysticks > 0);
-    }
-}
-
-
-
-int main()
-{
-    initialise_allegro();
     read_config_file();
 
     if (gfx_graphics_startup() == 1)
@@ -1375,7 +1320,7 @@ int main()
         game_over = 0;                      /* elite.c */
         initialise_game();                  /* alg_main.c */
         /* After testing, this dock_player seems unnecessary */
-        //              dock_player();          /* space.c */
+        // dock_player();          /* space.c */
 
         update_console();                   /* space.c */
 
@@ -1574,5 +1519,3 @@ int main()
 
     return 0;
 }
-
-END_OF_MAIN();

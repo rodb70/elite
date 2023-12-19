@@ -42,10 +42,12 @@ endif
 CSRC += sdl-gfx.c
 CSRC += timer.c
 CSRC += keyboard.c
+CSRC += joystick.c
+CSRC += sound.c
 
 EXTRA_LIBS += -lSDL2
 
 #-----------------------------------------------------------------------------
 # If set to y then the include path is added to with this directory
 # Delete or set to 'n' if not needed in include path
-#ADD_TO_INC_PATH := y
+ADD_TO_INC_PATH := y

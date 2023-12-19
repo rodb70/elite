@@ -43,22 +43,22 @@
 
 #ifdef RES_800_600
 
-#define GFX_SCALE		(2)
-#define GFX_X_OFFSET            (144)
-#define GFX_Y_OFFSET            (44)
-#define GFX_X_CENTRE            (256)
-#define GFX_Y_CENTRE            (192)
+#define GFX_SCALE       (2)
+#define GFX_X_OFFSET    (144)
+#define GFX_Y_OFFSET    (44)
+#define GFX_X_CENTRE    (256)
+#define GFX_Y_CENTRE    (192)
 
-#define GFX_VIEW_TX		1
-#define GFX_VIEW_TY		1
-#define GFX_VIEW_BX		509
-#define GFX_VIEW_BY		381
+#define GFX_VIEW_TX     1
+#define GFX_VIEW_TY     1
+#define GFX_VIEW_BX     509
+#define GFX_VIEW_BY     381
 
 #endif
 
 #ifndef GFX_SCALE
 
-#define GFX_SCALE		(1)
+#define GFX_SCALE               (1)
 #define GFX_X_OFFSET            (0)
 #define GFX_Y_OFFSET            (0)
 #define GFX_X_CENTRE            (128)
@@ -72,7 +72,7 @@
 #endif
  
 
-
+#ifdef ORIGINAL_PALLETTE
 #define GFX_COL_BLACK		0
 #define GFX_COL_DARK_RED	28
 #define GFX_COL_WHITE		255
@@ -122,9 +122,50 @@
 #define IMG_MISSILE_RED		9
 #define IMG_BLAKE		10
 */
+#else
+#define GFX_COL_BLACK       0
+#define GFX_COL_DARK_RED    52
+#define GFX_COL_WHITE       15
+#define GFX_COL_GOLD        220
+#define GFX_COL_RED         8
+#define GFX_COL_CYAN        51
 
-enum {
-    IMG_GREEN_DOT =             1,
+#define GFX_COL_GREY_1      231
+#define GFX_COL_GREY_2      237
+#define GFX_COL_GREY_3      239
+#define GFX_COL_GREY_4      242
+
+#define GFX_COL_BLUE_1      21
+#define GFX_COL_BLUE_2      19
+#define GFX_COL_BLUE_3      20
+#define GFX_COL_BLUE_4      4
+
+#define GFX_COL_RED_3       9
+#define GFX_COL_RED_4       124
+
+#define GFX_COL_WHITE_2     232
+
+#define GFX_COL_YELLOW_1    11
+#define GFX_COL_YELLOW_2    100
+#define GFX_COL_YELLOW_3    106
+#define GFX_COL_YELLOW_4    148
+#define GFX_COL_YELLOW_5    184
+
+#define GFX_ORANGE_1        214
+#define GFX_ORANGE_2        58
+#define GFX_ORANGE_3        95
+
+#define GFX_COL_GREEN_1     2
+#define GFX_COL_GREEN_2     28
+#define GFX_COL_GREEN_3     34
+
+#define GFX_COL_PINK_1      175
+
+#endif
+
+enum
+{
+    IMG_GREEN_DOT = 1,
     IMG_RED_DOT,
     IMG_BIG_S,
     IMG_ELITE_TXT,
