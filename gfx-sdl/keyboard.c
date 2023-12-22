@@ -6,6 +6,7 @@
  */
 
 #include "keyboard.h"
+#include "elite.h"
 
 #include <SDL2/SDL.h>
 
@@ -24,7 +25,7 @@ void kbd_poll_keyboard (void)
     SDL_Event event;
     int keyPressed = 0;
 
-    while( SDL_PollEvent( &event ))
+    if( 0 != SDL_PollEvent( &event ))
     {
         switch( event.type )
         {
@@ -192,8 +193,6 @@ void kbd_poll_keyboard (void)
 
         }
     }
-
-    SDL_Delay( 10 ); /* Sleep for 5 millisecond */
 }
 
 int kbd_read_key (void)

@@ -526,7 +526,7 @@
 
 uint32_t rgb_pallette[256] =
 {
-#define rgb(_r,_g,_b) ((_r)<<16|(_g)<<8|(_b))
+#define rgb(_r,_g,_b) ((_b)<<16|(_g)<<8|(_r))
     PALLETTE256
 #undef rgb
 };

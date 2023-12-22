@@ -10,6 +10,8 @@
 #include "col-256.h"
 #include "hagl.h"
 #include "font6x9.h"
+#include "elite.h"
+#include "alg_data.h"
 
 typedef struct
 {
@@ -25,12 +27,15 @@ typedef struct
 
 typedef uint8_t  pixel_t;
 typedef pixel_t (pixels_t)[SCREEN_HEIGHT][SCREEN_WIDTH];
-pixels_t *vid_mem;
+static pixels_t *vid_mem;
+static int xor = 0;
 
-hagl_backend_t* backend;
+static hagl_backend_t* backend;
+static SDL_Surface *scanner_image;
+static SDL_Surface *data_file[ THEME + 1 ];
 
 static monitor_t monitor = { 0 };
-monitor_t *m = &monitor;
+static monitor_t *m = &monitor;
 
 int quit_filter(void *userdata, SDL_Event *event)
 {
@@ -107,6 +112,61 @@ int gfx_graphics_startup(void)
 
     vid_mem = (pixels_t*) m->surface->pixels;
 
+
+    scanner_image = SDL_LoadBMP(scanner_filename);
+
+    /* Let the user know if the file failed to load */
+    if (!scanner_image)
+    {
+        printf( "Failed to load image at %s: %s\n", scanner_filename, SDL_GetError());
+        return 1;
+    }
+
+    // data_file
+    for( int i = 0; i < THEME; i++ )
+    {
+        char *filename = NULL;
+        switch( i )
+        {
+        case BLAKE:
+            filename = "data/blake.bmp";
+            break;
+        case DANUBE:
+            continue;
+        case ECM:
+            filename = "data/ecm.bmp";
+            break;
+        case ELITE_1:
+        case ELITE_2:
+            continue;
+        case ELITETXT :
+            filename = "data/elitetx3.bmp";
+            break;
+        case FRONTV :
+            filename = "";
+            break;
+        case GRNDOT :
+            filename = "data/greendot.bmp";
+            break;
+        case MISSILE_G :
+            filename = "data/missgrn.bmp";
+            break;
+        case MISSILE_R:
+            filename = "data/missred.bmp";
+            break;
+        case MISSILE_Y:
+            filename = "data/missyell.bmp";
+            break;
+        case REDDOT:
+            filename = "data/reddot.bmp";
+            break;
+        case SAFE:
+            filename = "data/safe.bmp";
+            break;
+        }
+        data_file[ i ] = SDL_LoadBMP(filename);
+    }
+
     backend = &m->backend;
 
     backend->width = SCREEN_WIDTH;
@@ -118,13 +178,30 @@ int gfx_graphics_startup(void)
     return 0;
 }
 
+void gfx_xor_mode( int on )
+{
+    xor = on;
+}
+
 void gfx_graphics_shutdown (void)
 {
+    for( int i = 0; i < THEME; i++ )
+    {
+        if( NULL != data_file[ i ])
+        {
+            SDL_FreeSurface(data_file[ i ]);
+        }
+    }
+    /* Make sure to eventually release the surface resource */
+    SDL_FreeSurface(scanner_image);
+
 }
 
 
 void gfx_update_screen (void)
 {
+    SDL_Delay( speed_cap / 7 ); /* Sleep for 5 millisecond */
+
     SDL_Texture *texture = SDL_CreateTextureFromSurface( m->renderer, m->surface );
     SDL_RenderCopy( m->renderer, texture, NULL, NULL );
     SDL_RenderPresent( m->renderer );
@@ -147,9 +224,16 @@ void gfx_plot_pixel (int x, int y, int col)
 }
 
 
-void gfx_fast_plot_pixel (int x, int y, int col)
+void gfx_fast_plot_pixel( int x, int y, int col )
 {
-    vid_mem[ 0 ][ y + GFX_Y_OFFSET ][ x + GFX_X_OFFSET ] = col;
+    if( 0 != xor )
+    {
+        vid_mem[ 0 ][ y + GFX_Y_OFFSET ][ x + GFX_X_OFFSET ] ^= col;
+    }
+    else
+    {
+        vid_mem[ 0 ][ y + GFX_Y_OFFSET ][ x + GFX_X_OFFSET ] = col;
+    }
 }
 
 
@@ -167,54 +251,54 @@ void gfx_draw_circle (int cx, int cy, int radius, int circle_colour)
 
 void gfx_draw_line (int x1, int y1, int x2, int y2)
 {
-    hagl_draw_line(backend, x1, y1, x2, y2, WHITE);
+    hagl_draw_line( backend, x1, y1, x2, y2, WHITE);
 }
 
 
 void gfx_draw_colour_line (int x1, int y1, int x2, int y2, int line_colour)
 {
-    hagl_draw_line(backend, x1, y1, x2, y2, line_colour);
+    hagl_draw_line( backend, x1, y1, x2, y2, line_colour);
 }
 
 
 void gfx_draw_triangle (int x1, int y1, int x2, int y2, int x3, int y3, int col)
 {
-    hagl_draw_triangle(backend, x1, y1, x2, y2, x3, y3, col);
+    hagl_draw_triangle( backend, x1, y1, x2, y2, x3, y3, col);
 }
 
 
 void gfx_draw_rectangle (int tx, int ty, int bx, int by, int col)
 {
-    hagl_draw_rectangle(backend, tx, ty, bx, by, col);
+    hagl_draw_rectangle( backend, tx, ty, bx, by, col);
 }
 
 
 void gfx_display_text (int x, int y, char *txt)
 {
-    hagl_put_text(backend, GetWC( txt ), x, y, WHITE, font6x9);
+    hagl_put_text( backend, GetWC( txt ), x, y, WHITE, font6x9);
 }
 
 
-void gfx_display_colour_text (int x, int y, char *txt, int col)
+void gfx_display_colour_text( int x, int y, char *txt, int col )
 {
-    hagl_put_text(backend, GetWC( txt ), x, y, col, font6x9);
+    hagl_put_text( backend, GetWC( txt ), x, y, col, font6x9);
 }
 
 
-void gfx_display_centre_text (int y, char *str, int psize, int col)
+void gfx_display_centre_text( int y, char *str, int psize, int col )
 {
-    int x = ( strlen(str) * 6 ) / 2;
-    hagl_put_text(backend, GetWC( str ), x, y, col, font6x9);
+    int x = GFX_X_CENTRE - (( strlen( str ) * 6 ) / 2);
+    hagl_put_text( backend, GetWC( str ), x, y, col, font6x9 );
 }
 
 
-void gfx_clear_display (void)
+void gfx_clear_display( void )
 {
     hagl_fill_rectangle( backend, GFX_VIEW_TX, GFX_VIEW_TY, GFX_VIEW_BX, GFX_VIEW_BY, BLACK );
 }
 
 
-void gfx_clear_text_area (void)
+void gfx_clear_text_area( void )
 {
     hagl_fill_rectangle( backend, GFX_VIEW_TX, GFX_VIEW_TY, GFX_VIEW_BX, GFX_VIEW_BY, BLACK);
 }
@@ -238,6 +322,9 @@ void gfx_display_pretty_text (int tx, int ty, int bx, int by, char *txt)
 
 void gfx_draw_scanner (void)
 {
+    SDL_Rect dst_rect = { .x = GFX_X_OFFSET, .y = 385 + GFX_Y_OFFSET, scanner_image->w, scanner_image->h };
+    SDL_BlitSurface( scanner_image, NULL, m->surface, &dst_rect );
+
 }
 
 
@@ -268,58 +355,15 @@ void gfx_polygon (int num_points, int *poly_list, int face_colour)
 
 void gfx_draw_sprite (int sprite_no, int x, int y)
 {
-#if 0
-    BITMAP *sprite_bmp;
+    SDL_Surface *img = data_file[ sprite_no ];
 
-    switch (sprite_no)
+    if( -1 == x )
     {
-        case IMG_GREEN_DOT:
-            sprite_bmp = datafile[GRNDOT].dat;
-            break;
-
-        case IMG_RED_DOT:
-            sprite_bmp = datafile[REDDOT].dat;
-            break;
-
-        case IMG_BIG_S:
-            sprite_bmp = datafile[SAFE].dat;
-            break;
-
-        case IMG_ELITE_TXT:
-            sprite_bmp = datafile[ELITETXT].dat;
-            break;
-
-        case IMG_BIG_E:
-            sprite_bmp = datafile[ECM].dat;
-            break;
-
-        case IMG_BLAKE:
-            sprite_bmp = datafile[BLAKE].dat;
-            break;
-
-        case IMG_MISSILE_GREEN:
-            sprite_bmp = datafile[MISSILE_G].dat;
-            break;
-
-        case IMG_MISSILE_YELLOW:
-            sprite_bmp = datafile[MISSILE_Y].dat;
-            break;
-
-        case IMG_MISSILE_RED:
-            sprite_bmp = datafile[MISSILE_R].dat;
-            break;
-
-        default:
-            return;
+        x = (( 256 * GFX_SCALE) - img->w ) / 2;
     }
+    SDL_Rect dst_rect = { .x = x + GFX_X_OFFSET, .y = y + GFX_Y_OFFSET, img->w, img->h };
 
-    if (x == -1)
-    {
-        x = ((256 * GFX_SCALE) - sprite_bmp->w) / 2;
-    }
-
-    //FIXME: draw_sprite (gfx_screen, sprite_bmp, x + GFX_X_OFFSET, y + GFX_Y_OFFSET);
-#endif
+    SDL_BlitSurface( img, NULL, m->surface, &dst_rect );
 }
 
 

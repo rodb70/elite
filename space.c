@@ -629,31 +629,30 @@ void update_universe (void)
     int i;
     int type;
     int bounty;
-    char str[80];
+    char str[ 80 ];
     struct univ_object flip;
 
 
     gfx_start_render();
 
-    for (i = 0; i < MAX_UNIV_OBJECTS; i++)
+    for( i = 0; i < MAX_UNIV_OBJECTS; i++ )
     {
-        type = universe[i].type;
+        type = universe[ i ].type;
 
         /* Warning: type can be less than zero */
-        if (type != 0)
+        if( type != 0 )
         {
             /* Check for less than zero types; type used as array index */
-            if (type != SHIP_PLANET && type != SHIP_SUN &&
-                    (universe[i].flags & FLG_REMOVE))
+            if( type != SHIP_PLANET && type != SHIP_SUN && ( universe[ i ].flags & FLG_REMOVE ))
             {
-                if (type == SHIP_VIPER)
+                if( type == SHIP_VIPER )
                 {
                     cmdr.legal_status |= 64;
                 }
 
-                bounty = ship_list[type]->bounty;
+                bounty = ship_list[ type ]->bounty;
 
-                if ((bounty != 0) && (!witchspace))
+                if(( bounty != 0 ) && ( !witchspace ))
                 {
                     cmdr.credits += bounty;
                     sprintf (str, "%d.%d CR", cmdr.credits / 10, cmdr.credits % 10);
@@ -664,85 +663,84 @@ void update_universe (void)
                 continue;
             }
 
-            if ((detonate_bomb) && ((universe[i].flags & FLG_DEAD) == 0) &&
-                    (type != SHIP_PLANET) && (type != SHIP_SUN) &&
-                    (type != SHIP_CONSTRICTOR) && (type != SHIP_COUGAR) &&
-                    (type != SHIP_CORIOLIS) && (type != SHIP_DODEC))
+            if(( detonate_bomb) && (( universe[ i ].flags & FLG_DEAD ) == 0 ) &&
+               ( type != SHIP_PLANET ) && ( type != SHIP_SUN ) &&
+               ( type != SHIP_CONSTRICTOR ) && ( type != SHIP_COUGAR ) &&
+               ( type != SHIP_CORIOLIS ) && ( type != SHIP_DODEC ))
             {
-                snd_play_sample (SND_EXPLODE);
-                universe[i].flags |= FLG_DEAD;
+                snd_play_sample( SND_EXPLODE );
+                universe[ i ].flags |= FLG_DEAD;
             }
 
-            if ((current_screen != SCR_INTRO_ONE) &&
-                    (current_screen != SCR_INTRO_TWO) &&
-                    (current_screen != SCR_GAME_OVER) &&
-                    (current_screen != SCR_ESCAPE_POD))
+            if(( current_screen != SCR_INTRO_ONE ) &&
+               ( current_screen != SCR_INTRO_TWO ) &&
+               ( current_screen != SCR_GAME_OVER ) &&
+               ( current_screen != SCR_ESCAPE_POD ))
             {
-                tactics (i);
+                tactics( i );
             } 
 
-            move_univ_object (&universe[i]);
+            move_univ_object( &universe[ i ]);
 
-            flip = universe[i];
-            switch_to_view (&flip);
+            flip = universe[ i ];
+            switch_to_view( &flip );
 #define DOCK_VIS_DIST 65792
 
             if (type == SHIP_PLANET)
             {
-                if ((ship_count[SHIP_CORIOLIS] == 0) &&
-                        (ship_count[SHIP_DODEC] == 0) &&
-                        (universe[i].distance < DOCK_VIS_DIST)) /* was 49152 */
+                if(( ship_count[ SHIP_CORIOLIS ] == 0 ) &&
+                   ( ship_count[ SHIP_DODEC ] == 0 ) &&
+                   ( universe[ i ].distance < DOCK_VIS_DIST )) /* was 49152 */
                 {
                     make_station_appear();
                 }
 
-                draw_ship (&flip);
+                draw_ship( &flip );
                 continue;
             }
 
-            if (type == SHIP_SUN)
+            if( type == SHIP_SUN )
             {
-                draw_ship (&flip);
+                draw_ship( &flip );
                 continue;
             }
 
 
 #define CHECK_DOCKING 170
-            if (universe[i].distance < CHECK_DOCKING)
+            if( universe[ i ].distance < CHECK_DOCKING )
             {
-                if ((type == SHIP_CORIOLIS) || (type == SHIP_DODEC))
+                if(( type == SHIP_CORIOLIS ) || ( type == SHIP_DODEC ))
                 {
-                    check_docking (i);
+                    check_docking( i );
                 }
                 else
                 {
-                    scoop_item(i);
+                    scoop_item( i );
                 }
-
                 continue;
             }
 
 #define MAX_VIS_DIST 57344
-            if( universe[i].distance > MAX_VIS_DIST)
+            if( universe[ i ].distance > MAX_VIS_DIST )
             {
-                remove_ship (i);
+                remove_ship( i );
                 continue;
             }
 
-            draw_ship (&flip);
+            draw_ship( &flip );
 
-            universe[i].flags = flip.flags;
-            universe[i].exp_seed = flip.exp_seed;
-            universe[i].exp_delta = flip.exp_delta;
+            universe[ i ].flags = flip.flags;
+            universe[ i ].exp_seed = flip.exp_seed;
+            universe[ i ].exp_delta = flip.exp_delta;
 
-            universe[i].flags &= ~FLG_FIRING;
+            universe[ i ].flags &= ~FLG_FIRING;
 
-            if (universe[i].flags & FLG_DEAD)
+            if( universe[ i ].flags & FLG_DEAD )
             {
                 continue;
             }
 
-            check_target (i, &flip);
+            check_target( i, &flip );
         }
     }
 
@@ -764,33 +762,34 @@ void update_scanner (void)
     int x1,y1,y2;
     int colour;
 
-    for (i = 0; i < MAX_UNIV_OBJECTS; i++)
+    for( i = 0; i < MAX_UNIV_OBJECTS; i++ )
     {
-        if ((universe[i].type <= 0) ||
-                (universe[i].flags & FLG_DEAD) ||
-                (universe[i].flags & FLG_CLOAKED))
+        if (( universe[ i ].type <= 0 ) ||
+            ( universe[ i ].flags & FLG_DEAD ) ||
+            ( universe[ i ].flags & FLG_CLOAKED ))
             continue;
 
-        x = universe[i].location.x / 256;
-        y = universe[i].location.y / 256;
-        z = universe[i].location.z / 256;
+        x = universe[ i ].location.x / 256;
+        y = universe[ i ].location.y / 256;
+        z = universe[ i ].location.z / 256;
 
         x1 = x;
         y1 = -z / 4;
         y2 = y1 - y / 2;
 
         /* No idea what this means */
-        if ((y2 < -28) || (y2 > 28) ||
-                (x1 < -50) || (x1 > 50))
+        if(( y2 < -28 ) || ( y2 > 28 ) || ( x1 < -50 ) || ( x1 > 50 ))
+        {
             continue;
+        }
 
         x1 += scanner_cx;
         y1 += scanner_cy;
         y2 += scanner_cy;
 
-        colour = (universe[i].flags & FLG_HOSTILE) ? GFX_COL_YELLOW_5 : GFX_COL_WHITE;
+        colour = ( universe[ i ].flags & FLG_HOSTILE ) ? GFX_COL_YELLOW_5 : GFX_COL_WHITE;
 
-        switch (universe[i].type)
+        switch( universe[ i ].type )
         {
             case SHIP_MISSILE:
                 colour = 137;
@@ -806,15 +805,15 @@ void update_scanner (void)
                 break;
         }
 
-        gfx_draw_colour_line (x1+2, y2,   x1-3, y2, colour);
-        gfx_draw_colour_line (x1+2, y2+1, x1-3, y2+1, colour);
-        gfx_draw_colour_line (x1+2, y2+2, x1-3, y2+2, colour);
-        gfx_draw_colour_line (x1+2, y2+3, x1-3, y2+3, colour);
+        gfx_draw_colour_line( x1 + 2, y2,     x1 - 3, y2,     colour );
+        gfx_draw_colour_line( x1 + 2, y2 + 1, x1 - 3, y2 + 1, colour );
+        gfx_draw_colour_line( x1 + 2, y2 + 2, x1 - 3, y2 + 2, colour );
+        gfx_draw_colour_line( x1 + 2, y2 + 3, x1 - 3, y2 + 3, colour );
 
 
-        gfx_draw_colour_line (x1,   y1, x1,   y2, colour);
-        gfx_draw_colour_line (x1+1, y1, x1+1, y2, colour);
-        gfx_draw_colour_line (x1+2, y1, x1+2, y2, colour);
+        gfx_draw_colour_line( x1,     y1, x1,     y2, colour );
+        gfx_draw_colour_line( x1 + 1, y1, x1 + 1, y2, colour );
+        gfx_draw_colour_line( x1 + 2, y1, x1 + 2, y2, colour );
     }
 }
 

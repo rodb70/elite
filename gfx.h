@@ -25,6 +25,7 @@
 
 #ifndef GFX_H
 #define GFX_H
+#include "alg_data.h"
 
 #ifdef RES_512_512
 
@@ -64,10 +65,10 @@
 #define GFX_X_CENTRE            (128)
 #define GFX_Y_CENTRE            (96)
 
-#define GFX_VIEW_TX		1
-#define GFX_VIEW_TY		1
-#define GFX_VIEW_BX		253
-#define GFX_VIEW_BY		191
+#define GFX_VIEW_TX     (1)
+#define GFX_VIEW_TY     (1)
+#define GFX_VIEW_BX     (253)
+#define GFX_VIEW_BY     (191)
 
 #endif
  
@@ -126,7 +127,7 @@
 #define GFX_COL_BLACK       0
 #define GFX_COL_DARK_RED    52
 #define GFX_COL_WHITE       15
-#define GFX_COL_GOLD        220
+#define GFX_COL_GOLD        223
 #define GFX_COL_RED         8
 #define GFX_COL_CYAN        51
 
@@ -165,20 +166,21 @@
 
 enum
 {
-    IMG_GREEN_DOT = 1,
-    IMG_RED_DOT,
-    IMG_BIG_S,
-    IMG_ELITE_TXT,
-    IMG_BIG_E,
-    IMG_DICE,
-    IMG_MISSILE_GREEN,
-    IMG_MISSILE_YELLOW,
-    IMG_MISSILE_RED,
-    IMG_BLAKE,
+    IMG_BLAKE = BLAKE,
+    IMG_GREEN_DOT = GRNDOT,
+    IMG_RED_DOT = REDDOT,
+    IMG_BIG_S = SAFE,
+    IMG_ELITE_TXT = ELITETXT,
+    IMG_BIG_E = ECM,
+    IMG_MISSILE_GREEN = MISSILE_G,
+    IMG_MISSILE_YELLOW = MISSILE_Y,
+    IMG_MISSILE_RED = MISSILE_R,
 };
 
+#define xor_mode(_val) gfx_xor_mode( _val )
 
 int gfx_graphics_startup (void);
+void gfx_xor_mode( int on );
 void gfx_graphics_shutdown (void);
 void gfx_update_screen (void);
 void gfx_acquire_screen (void);

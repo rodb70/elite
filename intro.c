@@ -78,11 +78,11 @@ void initialise_intro2 (void)
 
 void update_intro1 (void)
 {
-    universe[0].location.z -= 100;
+    universe[ 0 ].location.z -= 100;
 
-    if (universe[0].location.z < 384)
+    if( universe[ 0 ].location.z < 384 )
     {
-        universe[0].location.z = 384;
+        universe[ 0 ].location.z = 384;
     }
 
     gfx_clear_display();
@@ -90,11 +90,11 @@ void update_intro1 (void)
     flight_roll = 1;
     update_universe();
 
-    gfx_draw_sprite(IMG_ELITE_TXT, -1, 10);
+    gfx_draw_sprite( IMG_ELITE_TXT, -1, 10 );
 
-    gfx_display_centre_text (310, "Original Game (C) I.Bell & D.Braben.", 120, GFX_COL_WHITE);
-    gfx_display_centre_text (330, "Re-engineered by C.J.Pinder.", 120, GFX_COL_WHITE);
-    gfx_display_centre_text (360, "Load New Commander (Y/N)?", 140, GFX_COL_GOLD);
+    gfx_display_centre_text( 310, "Original Game (C) I.Bell & D.Braben.", 120, GFX_COL_WHITE );
+    gfx_display_centre_text( 330, "Re-engineered by C.J.Pinder.", 120, GFX_COL_WHITE );
+    gfx_display_centre_text( 360, "Load New Commander (Y/N)?", 140, GFX_COL_GOLD );
 }
 
 
@@ -102,19 +102,19 @@ void update_intro2 (void)
 {
     show_time++;
 
-    if ((show_time >= 140) && (direction < 0))
+    if(( show_time >= 140 ) && ( direction < 0 ))
     {
         direction = -direction;
     }
 
-    universe[0].location.z += direction;
+    universe[ 0 ].location.z += direction;
 
-    if (universe[0].location.z < min_dist[ship_no])
+    if( universe[ 0 ].location.z < min_dist[ ship_no ])
     {
-        universe[0].location.z = min_dist[ship_no];
+        universe[ 0 ].location.z = min_dist[ ship_no ];
     }
 
-    if (universe[0].location.z > 4500)
+    if( universe[ 0 ].location.z > 4500 )
     {
         struct point pt = {0, 0, 4500};
         struct rotation rot = {-127, -127};
@@ -125,15 +125,15 @@ void update_intro2 (void)
             {
                 ship_no = 1;
             }
-        } while (min_dist[ship_no] == 0);
+        } while( 0 == min_dist[ ship_no ]);
 
         show_time = 0;
         direction = -100;
 
-        ship_count[universe[0].type] = 0;
-        universe[0].type = 0;
+        ship_count[ universe[ 0 ].type ] = 0;
+        universe[ 0 ].type = 0;
 
-        add_new_ship (ship_no, pt, intro_ship_matrix, rot);
+        add_new_ship( ship_no, pt, intro_ship_matrix, rot );
     }
 
 
@@ -141,7 +141,7 @@ void update_intro2 (void)
     update_starfield();
     update_universe();
 
-    gfx_draw_sprite (IMG_ELITE_TXT, -1, 10);
+    gfx_draw_sprite( IMG_ELITE_TXT, -1, 10 );
 
     gfx_display_centre_text (360, "Press Fire or Space, Commander.", 140, GFX_COL_GOLD);
     gfx_display_centre_text (330, ship_list[ship_no]->name, 120, GFX_COL_WHITE);
