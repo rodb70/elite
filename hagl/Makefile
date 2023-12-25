@@ -19,6 +19,7 @@ CFLAGS += -Wno-error=old-style-declaration
 CFLAGS += -Wno-error=unused-parameter
 CFLAGS += -Wno-error=unused-value
 CFLAGS += -Wno-error=sign-compare
+CFLAGS += -Werror=shadow
 #CFLAGS += -Wno-error=pedantic
 #-----------------------------------------------------------------------------
 # Declare C files

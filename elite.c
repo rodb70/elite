@@ -72,7 +72,7 @@ struct commander saved_cmdr =
     70,                                     /* Fuel * 10            */
     0,
     0,                                      /* Galaxy - 1           */
-    PULSE_LASER,                            /* Front Laser          */
+    MILITARY_LASER,                         /* Front Laser          */
     0,                                      /* Rear Laser           */
     0,                                      /* Left Laser           */
     0,                                      /* Right Laser          */
@@ -83,7 +83,7 @@ struct commander saved_cmdr =
     0,                                      /* Fuel Scoop           */
     0,                                      /* Energy Bomb          */
     0,                                      /* Energy Unit          */
-    0,                                      /* Docking Computer     */
+    255,                                    /* Docking Computer     */
     0,                                      /* Galactic H'Drive     */
     0,                                      /* Escape Pod           */
     0,0,0,0,

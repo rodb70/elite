@@ -44,6 +44,9 @@ CSRC += timer.c
 CSRC += keyboard.c
 CSRC += joystick.c
 CSRC += sound.c
+CSRC += bmp.c
+
+CFLAGS += -DUSING_SDL=1
 
 EXTRA_LIBS += -lSDL2
 

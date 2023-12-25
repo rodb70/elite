@@ -264,12 +264,12 @@ int find_planet_number (struct galaxy_seed planet)
     for (i = 0; i < 256; i++)
     {
 
-        if ((planet.a == glx.a) &&
-                (planet.b == glx.b) &&
-                (planet.c == glx.c) &&
-                (planet.d == glx.d) &&
-                (planet.e == glx.e) &&
-                (planet.f == glx.f))
+        if (( planet.a == glx.a ) &&
+            ( planet.b == glx.b ) &&
+            ( planet.c == glx.c ) &&
+            ( planet.d == glx.d ) &&
+            ( planet.e == glx.e ) &&
+            ( planet.f == glx.f ))
         {
             return i;
         }

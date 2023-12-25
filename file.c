@@ -208,7 +208,9 @@ int save_commander_file (char *path)
     block[22] = cmdr.cargo_capacity + 2;
 
     for (i = 0; i < NO_OF_STOCK_ITEMS; i++)
+    {
         block[23+i] = cmdr.current_cargo[i];
+    }
 
     block[40] = cmdr.ecm ? 255 : 0;
     block[41] = cmdr.fuel_scoop ? 255 : 0;

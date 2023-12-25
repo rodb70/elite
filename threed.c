@@ -34,6 +34,14 @@
 #define LAND_X_MAX      128
 #define LAND_Y_MAX      128
 
+#ifdef USING_SDL
+#undef GFX_X_OFFSET
+#undef GFX_Y_OFFSET
+
+#define GFX_X_OFFSET (0)
+#define GFX_Y_OFFSET (0)
+#endif
+
 static unsigned char landscape[LAND_X_MAX+1][LAND_Y_MAX+1];
 
 static struct point point_list[100];

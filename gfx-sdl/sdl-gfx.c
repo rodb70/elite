@@ -12,6 +12,9 @@
 #include "font6x9.h"
 #include "elite.h"
 #include "alg_data.h"
+#include "keyboard.h"
+
+#include "bmp.h"
 
 typedef struct
 {
@@ -21,7 +24,7 @@ typedef struct
     SDL_Surface *surface;
     hagl_backend_t backend;
 
-} monitor_t;
+} MONITOR;
 
 //DATAFILE *datafile;
 
@@ -31,13 +34,18 @@ static pixels_t *vid_mem;
 static int xor = 0;
 
 static hagl_backend_t* backend;
-static SDL_Surface *scanner_image;
 static SDL_Surface *data_file[ THEME + 1 ];
+#define SDL_SCANNER
+#ifdef SDL_SCANNER
+static SDL_Surface *scanner_image;
+#else
+static hagl_bitmap_t scanner_img;
+#endif
 
-static monitor_t monitor = { 0 };
-static monitor_t *m = &monitor;
+static MONITOR monitor = { 0 };
+static MONITOR *m = &monitor;
 
-int quit_filter(void *userdata, SDL_Event *event)
+int QuitFilter(void *userdata, SDL_Event *event)
 {
     (void) userdata;
 
@@ -96,7 +104,7 @@ int gfx_graphics_startup(void)
         exit( -1 );
     }
 
-    SDL_SetEventFilter( quit_filter, NULL );
+    SDL_SetEventFilter( QuitFilter, NULL );
 
     m->window = SDL_CreateWindow( "Newlife", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                   SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SDL_WINDOW_RESIZABLE );
@@ -112,15 +120,19 @@ int gfx_graphics_startup(void)
 
     vid_mem = (pixels_t*) m->surface->pixels;
 
-
+#ifdef SDL_SCANNER
     scanner_image = SDL_LoadBMP(scanner_filename);
-
     /* Let the user know if the file failed to load */
     if (!scanner_image)
     {
         printf( "Failed to load image at %s: %s\n", scanner_filename, SDL_GetError());
         return 1;
     }
+#else
+    BITMAP bmp;
+    load_bmp( scanner_filename, &bmp );
+    hagl_bitmap_init( &scanner_img, bmp.width, bmp.height, 8, bmp.data );
+#endif
 
     // data_file
     for( int i = 0; i < THEME; i++ )
@@ -143,7 +155,7 @@ int gfx_graphics_startup(void)
             filename = "data/elitetx3.bmp";
             break;
         case FRONTV :
-            filename = "";
+            continue;
             break;
         case GRNDOT :
             filename = "data/greendot.bmp";
@@ -164,7 +176,7 @@ int gfx_graphics_startup(void)
             filename = "data/safe.bmp";
             break;
         }
-        data_file[ i ] = SDL_LoadBMP(filename);
+        data_file[ i ] = SDL_LoadBMP( filename );
     }
 
     backend = &m->backend;
@@ -193,18 +205,22 @@ void gfx_graphics_shutdown (void)
         }
     }
     /* Make sure to eventually release the surface resource */
-    SDL_FreeSurface(scanner_image);
+    //SDL_FreeSurface(scanner_image);
 
 }
 
 
 void gfx_update_screen (void)
 {
-    SDL_Delay( speed_cap / 7 ); /* Sleep for 5 millisecond */
-
     SDL_Texture *texture = SDL_CreateTextureFromSurface( m->renderer, m->surface );
     SDL_RenderCopy( m->renderer, texture, NULL, NULL );
     SDL_RenderPresent( m->renderer );
+
+    for( int dly = 0; dly < speed_cap; dly+=5 )
+    {
+        kbd_poll_keyboard();
+        SDL_Delay( 5 );
+    }
 }
 
 
@@ -300,7 +316,7 @@ void gfx_clear_display( void )
 
 void gfx_clear_text_area( void )
 {
-    hagl_fill_rectangle( backend, GFX_VIEW_TX, GFX_VIEW_TY, GFX_VIEW_BX, GFX_VIEW_BY, BLACK);
+    //hagl_fill_rectangle( backend, GFX_VIEW_TX, GFX_VIEW_TY, GFX_VIEW_BX, GFX_VIEW_BY, BLACK);
 }
 
 
@@ -322,8 +338,12 @@ void gfx_display_pretty_text (int tx, int ty, int bx, int by, char *txt)
 
 void gfx_draw_scanner (void)
 {
+#ifdef SDL_SCANNER
     SDL_Rect dst_rect = { .x = GFX_X_OFFSET, .y = 385 + GFX_Y_OFFSET, scanner_image->w, scanner_image->h };
     SDL_BlitSurface( scanner_image, NULL, m->surface, &dst_rect );
+#else
+    hagl_blit_xy( backend, GFX_X_OFFSET, 385 + GFX_Y_OFFSET, &scanner_img );
+#endif
 
 }
 
@@ -334,7 +354,7 @@ void gfx_set_clip_region (int tx, int ty, int bx, int by)
 }
 
 
-void gfx_polygon (int num_points, int *poly_list, int face_colour)
+void gfx_polygon( int num_points, int *poly_list, int face_colour )
 {
     int16_t points[ num_points * 2 ];
     int i;

@@ -3,4 +3,4 @@
 	url = git@github.com:rodb70/makefiles.git
 [submodule "hagl/hagl"]
 	path = hagl/hagl
-	url = git@github.com:tuupola/hagl.git
+	url = git@github.com:rodb70/hagl.git

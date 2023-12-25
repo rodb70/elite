@@ -73,7 +73,7 @@ char *mission1_pdesc[] =
     "YOU CAN TACKLE THE VICIOUS SCOUNDREL IF YOU LIKE. HE'S AT ORARRA.",
     "THERE'S A REAL DEADLY PIRATE OUT THERE.",
     "BOY ARE YOU IN THE WRONG GALAXY!",
-    "COMING SOON: ELITE - DARKNESS FALLS.",                         
+    "COMING SOON: ELITE - DARKNESS FALLS.",
 };
 
 char *mission2_brief_a =
