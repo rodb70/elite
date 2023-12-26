@@ -45,7 +45,7 @@ LIB := qdbmp
 
 #-----------------------------------------------------------------------------
 # Declare C files
-CSRC += qdbmp/qdbmp
+CSRC += qdbmp/qdbmp.c
 
 #-----------------------------------------------------------------------------
 # If set to y then the include path is added to with this directory

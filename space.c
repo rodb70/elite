@@ -504,7 +504,7 @@ void make_station_appear (void)
     sy = py - vec.y * 65792;
     sz = pz - vec.z * 65792;
 
-    //      set_init_matrix (rotmat);
+    //set_init_matrix (rotmat);
 
     rotmat[0].x = 1.0;
     rotmat[0].y = 0.0;

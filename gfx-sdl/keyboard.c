@@ -94,6 +94,10 @@ void kbd_poll_keyboard (void)
                 kbd_d_pressed = event.key.state;
                 break;
 
+            case SDLK_e :
+                kbd_ecm_pressed = event.key.state;
+                break;
+
             case SDLK_f :
                 kbd_find_pressed = event.key.state;
                 break;
@@ -129,7 +133,15 @@ void kbd_poll_keyboard (void)
                 kbd_resume_pressed = event.key.state;
                 break;
 
+            case SDLK_t :
+                kbd_target_missile_pressed = event.key.state;
+                break;
+
             case SDLK_w :
+                break;
+
+            case SDLK_u :
+                kbd_unarm_missile_pressed = event.key.state;
                 break;
 
             case SDLK_y :
@@ -199,12 +211,12 @@ int kbd_read_key (void)
     {
         if (event.type == SDL_KEYDOWN)
         {
-            if( SDLK_RETURN == SDLK_BACKSPACE )
+            if( SDLK_RETURN == event.key.keysym.sym )
             {
                 kbd_enter_pressed = 1;
                 return 0;
             }
-            else if( SDLK_BACKSPACE == SDLK_BACKSPACE )
+            else if( SDLK_BACKSPACE == event.key.keysym.sym )
             {
                 kbd_backspace_pressed = 1;
                 return 0;

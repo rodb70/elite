@@ -87,7 +87,7 @@ struct ship_face coriolis_face[] =
     {GFX_COL_GREY_1,  0x00, 0x00, 0xA0, 4,  0,  1,  2,  3,  0,  0, 0, 0},
 
     /* Entrance */
-    {GFX_COL_BLACK,  0x00, 0x00, 0xA0, 4, 15, 12, 13, 14,  0,  0, 0, 0},
+    {GFX_COL_GREEN_3,  0x00, 0x00, 0xA0, 4, 15, 12, 13, 14,  0,  0, 0, 0},
 };
 
 

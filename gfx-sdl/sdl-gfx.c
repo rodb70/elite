@@ -13,7 +13,7 @@
 #include "elite.h"
 #include "alg_data.h"
 #include "keyboard.h"
-#include "my_bmp.h"
+#include "qdbmp.h"
 
 
 typedef struct
@@ -26,20 +26,26 @@ typedef struct
 
 } MONITOR;
 
-//DATAFILE *datafile;
-
 typedef uint8_t  pixel_t;
 typedef pixel_t (pixels_t)[SCREEN_HEIGHT][SCREEN_WIDTH];
 static pixels_t *vid_mem;
 static int xor = 0;
 
 static hagl_backend_t* backend;
-static SDL_Surface *data_file[ THEME + 1 ];
-#define SDL_SCANNER
 #ifdef SDL_SCANNER
+
 static SDL_Surface *scanner_image;
 #else
-static hagl_bitmap_t scanner_img;
+typedef struct
+{
+    hagl_bitmap_t bitmap;
+    BMP *bmp;
+} DATA_FILES;
+
+static hagl_bitmap_t scanner_image;
+static BMP *scanner_bmp;
+
+static DATA_FILES data_file[ THEME + 1 ];
 #endif
 
 static MONITOR monitor = { 0 };
@@ -66,8 +72,8 @@ int QuitFilter(void *userdata, SDL_Event *event)
 
 const wchar_t *GetWC(const char *c)
 {
-    const size_t cSize = strlen(c)+1;
-    static wchar_t wc[256];
+    const size_t cSize = strlen( c )+1;
+    static wchar_t wc[ 256 ];
     mbstowcs( wc, c, cSize );
 
     return wc;
@@ -116,7 +122,6 @@ int gfx_graphics_startup(void)
     m->surface = SDL_CreateRGBSurface( SDL_SWSURFACE, SCREEN_WIDTH, SCREEN_HEIGHT, 8, 0, 0, 0, 0 );
     assert( m->surface );
     SDL_SetPaletteColors( m->surface->format->palette, (SDL_Color*)rgb_pallette, 0, 256 );
-    //SDL_SetTextureBlendMode( m->texture, SDL_BLENDMODE_BLEND );
 
     vid_mem = (pixels_t*) m->surface->pixels;
 
@@ -129,10 +134,19 @@ int gfx_graphics_startup(void)
         return 1;
     }
 #else
-    BITMAP bmp;
-    load_bmp( scanner_filename, &bmp );
-    hagl_bitmap_init( &scanner_img, bmp.width, bmp.height, 8, bmp.data );
+    scanner_bmp = BMP_ReadFile( scanner_filename );
+    hagl_bitmap_init( &scanner_image, BMP_GetWidth(scanner_bmp), BMP_GetHeight(scanner_bmp), BMP_GetDepth(scanner_bmp), BMP_GetPixelData(scanner_bmp));
 #endif
+
+    backend = &m->backend;
+
+    backend->width = SCREEN_WIDTH;
+    backend->height = SCREEN_HEIGHT;
+    backend->depth = 8;
+    backend->put_pixel = put_pixel;
+    backend->color = color;
+    backend->clip.x1 = SCREEN_WIDTH - 1;
+    backend->clip.y1 = SCREEN_HEIGHT - 1;
 
     // data_file
     for( int i = 0; i < THEME; i++ )
@@ -176,16 +190,13 @@ int gfx_graphics_startup(void)
             filename = "data/safe.bmp";
             break;
         }
+#ifdef SDL_SCANNER
         data_file[ i ] = SDL_LoadBMP( filename );
+#else
+        data_file[ i ].bmp = BMP_ReadFile( filename );
+        hagl_bitmap_init( &data_file[ i ].bitmap, BMP_GetWidth(data_file[ i ].bmp), BMP_GetHeight(data_file[ i ].bmp), BMP_GetDepth(data_file[ i ].bmp), BMP_GetPixelData(data_file[ i ].bmp));
+#endif
     }
-
-    backend = &m->backend;
-
-    backend->width = SCREEN_WIDTH;
-    backend->height = SCREEN_HEIGHT;
-    backend->depth = 8;
-    backend->put_pixel = put_pixel;
-    backend->color = color;
 
     return 0;
 }
@@ -199,14 +210,21 @@ void gfx_graphics_shutdown (void)
 {
     for( int i = 0; i < THEME; i++ )
     {
+#ifdef SDL_SCANNER
         if( NULL != data_file[ i ])
         {
             SDL_FreeSurface(data_file[ i ]);
         }
+#else
+        BMP_Free( data_file[ i ].bmp );
+#endif
     }
     /* Make sure to eventually release the surface resource */
-    //SDL_FreeSurface(scanner_image);
-
+#ifdef SDL_SCANNER
+    SDL_FreeSurface( scanner_image );
+#else
+    BMP_Free( scanner_bmp );
+#endif
 }
 
 
@@ -343,15 +361,14 @@ void gfx_draw_scanner (void)
     SDL_Rect dst_rect = { .x = GFX_X_OFFSET, .y = 385 + GFX_Y_OFFSET, scanner_image->w, scanner_image->h };
     SDL_BlitSurface( scanner_image, NULL, m->surface, &dst_rect );
 #else
-    hagl_blit_xy( backend, GFX_X_OFFSET, 385 + GFX_Y_OFFSET, &scanner_img );
+    hagl_blit_xy( backend, 0, 385, &scanner_image );
 #endif
-
 }
 
 
 void gfx_set_clip_region (int tx, int ty, int bx, int by)
 {
-    hagl_set_clip( backend, tx, ty, bx, by );
+    hagl_set_clip( backend, tx, ty, bx-1, by-1 );
 }
 
 
@@ -376,6 +393,7 @@ void gfx_polygon( int num_points, int *poly_list, int face_colour )
 
 void gfx_draw_sprite (int sprite_no, int x, int y)
 {
+#ifdef SDL_SCANNER
     SDL_Surface *img = data_file[ sprite_no ];
 
     if( -1 == x )
@@ -385,6 +403,13 @@ void gfx_draw_sprite (int sprite_no, int x, int y)
     SDL_Rect dst_rect = { .x = x + GFX_X_OFFSET, .y = y + GFX_Y_OFFSET, img->w, img->h };
 
     SDL_BlitSurface( img, NULL, m->surface, &dst_rect );
+#else
+    if( -1 == x )
+    {
+        x = (( 256 * GFX_SCALE ) - ( BMP_GetWidth( data_file[ sprite_no ].bmp ))) / 2;
+    }
+    hagl_blit_xy( backend, x, y, &data_file[ sprite_no ].bitmap );
+#endif
 }
 
 

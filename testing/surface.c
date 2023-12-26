@@ -85,6 +85,7 @@ int main(void)
     /* read in bmp */
     static hagl_bitmap_t scanner_img;
     BMP *bmp = BMP_ReadFile( "scanner.bmp" );
+
     hagl_bitmap_init( &scanner_img, BMP_GetWidth(bmp), BMP_GetHeight(bmp), BMP_GetDepth(bmp), BMP_GetPixelData(bmp) );
     hagl_blit_xy( &backend, 0, 300, &scanner_img );
     {
@@ -92,6 +93,11 @@ int main(void)
         SDL_RenderCopy( renderer, texture, NULL, NULL );
         SDL_RenderPresent( renderer );
     }
+//    uint8_t *pallette = BMP_GetPalletteData(bmp);
+//    for( int i = 0; i < 1024; i += 4 )
+//    {
+//        printf( "rgb(%d,%d,%d), \\\n", pallette[i+2],pallette[i+1],pallette[i]);
+//    }
 
     /* main loop */
     while( true )

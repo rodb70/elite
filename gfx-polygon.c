@@ -36,7 +36,7 @@ void gfx_render_polygon (int num_points, int *point_list, int face_colour, int z
     int x;
     int nx;
 
-    if (total_polys == MAX_POLYS)
+    if( MAX_POLYS == total_polys )
     {
         return;
     }
@@ -84,14 +84,14 @@ void gfx_render_polygon (int num_points, int *point_list, int face_colour, int z
 
 void gfx_render_line (int x1, int y1, int x2, int y2, int dist, int col)
 {
-    int point_list[4];
+    int point_list[ 4 ];
 
-    point_list[0] = x1;
-    point_list[1] = y1;
-    point_list[2] = x2;
-    point_list[3] = y2;
+    point_list[ 0 ] = x1;
+    point_list[ 1 ] = y1;
+    point_list[ 2 ] = x2;
+    point_list[ 3 ] = y2;
 
-    gfx_render_polygon (2, point_list, col, dist);
+    gfx_render_polygon( 2, point_list, col, dist );
 }
 
 
@@ -102,24 +102,24 @@ void gfx_finish_render (void)
     int i;
     int col;
 
-    if (total_polys == 0)
+    if( 0 == total_polys )
     {
         return;
     }
 
-    for (i = start_poly; i != -1; i = poly_chain[i].next)
+    for( i = start_poly; i != -1; i = poly_chain[ i ].next )
     {
-        num_points = poly_chain[i].no_points;
-        pl = poly_chain[i].point_list;
-        col = poly_chain[i].face_colour;
+        num_points = poly_chain[ i ].no_points;
+        pl = poly_chain[ i ].point_list;
+        col = poly_chain[ i ].face_colour;
 
-        if (num_points == 2)
+        if( 2 == num_points )
         {
-            gfx_draw_colour_line (pl[0], pl[1], pl[2], pl[3], col);
+            gfx_draw_colour_line( pl[ 0 ], pl[ 1 ], pl[ 2 ], pl[ 3 ], col );
             continue;
         }
 
-        gfx_polygon (num_points, pl, col);
+        gfx_polygon( num_points, pl, col );
     };
 }
 

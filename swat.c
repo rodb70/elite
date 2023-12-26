@@ -221,7 +221,8 @@ void remove_ship (int un)
 void add_new_station (double sx, double sy, double sz, Matrix rotmat)
 {
     int station;
-    struct rotation rot = {0, -127};
+    //RJB stop rotation struct rotation rot = {0, -127};
+    struct rotation rot = {0, 0};
 
     station = (current_planet_data.techlevel >= 10) ? SHIP_DODEC : SHIP_CORIOLIS;
     universe[1].type = 0;

@@ -1258,11 +1258,11 @@ int main(void)
         return 1;
     }
 
-/* Start the sound system... */
+    /* Start the sound system... */
     snd_sound_startup();
 
-/* Do any setup necessary for the keyboard... */
-/* ... Which does nothing but return a 0 */
+    /* Do any setup necessary for the keyboard... */
+    /* ... Which does nothing but return a 0 */
     kbd_keyboard_startup();
 
     finish = 0;
@@ -1272,7 +1272,7 @@ int main(void)
     {
         game_over = 0;/* elite.c */
         initialise_game();/* alg_main.c */
-/* After testing, this dock_player seems unnecessary */
+        /* After testing, this dock_player seems unnecessary */
         // dock_player();          /* space.c */
         update_console();/* space.c */
 
@@ -1421,7 +1421,7 @@ int main(void)
                 {
                     update_cabin_temp();/* space.c */
                 }
-/* elite.c */
+                /* elite.c */
                 if( (mcount == 0) && (!witchspace) )
                 {
                     random_encounter();/* swat.c */
@@ -1446,13 +1446,13 @@ int main(void)
                     show_distance_to_planet();/* docked.c */
                 }
             }
-/* docked.c*//* alg_main.c */
+            /* docked.c*//* alg_main.c */
             if( (cross_x != old_cross_x) || (cross_y != old_cross_y) )
             {
-/* draw_cross twice? */
+                /* draw_cross twice? */
                 if( old_cross_x != -1 )
                 {
-/* alg_main.c */
+                    /* alg_main.c */
                     draw_cross( old_cross_x, old_cross_y );
                 }
 
