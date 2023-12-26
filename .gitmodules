@@ -4,3 +4,6 @@
 [submodule "hagl/hagl"]
 	path = hagl/hagl
 	url = git@github.com:rodb70/hagl.git
+[submodule "qdbmp/gdbmp"]
+	path = qdbmp/qdbmp
+	url = git@github.com:rodb70/qdbmp.git

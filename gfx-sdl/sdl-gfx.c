@@ -13,8 +13,8 @@
 #include "elite.h"
 #include "alg_data.h"
 #include "keyboard.h"
+#include "my_bmp.h"
 
-#include "bmp.h"
 
 typedef struct
 {
@@ -304,6 +304,7 @@ void gfx_display_colour_text( int x, int y, char *txt, int col )
 void gfx_display_centre_text( int y, char *str, int psize, int col )
 {
     int x = GFX_X_CENTRE - (( strlen( str ) * 6 ) / 2);
+    (void)psize;
     hagl_put_text( backend, GetWC( str ), x, y, col, font6x9 );
 }
 
@@ -389,6 +390,9 @@ void gfx_draw_sprite (int sprite_no, int x, int y)
 
 int gfx_request_file (char *title, char *path, char *ext)
 {
+    (void)title;
+    (void)path;
+    (void)ext;
     /* show request */
     return 0;
 }

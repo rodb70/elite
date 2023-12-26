@@ -1,11 +1,11 @@
 #-----------------------------------------------------------------------------
-# Purpose: host
+# Purpose: qdbmp
 #
 #------------------------------------------------------------------------------
 # FPATH - is the include path to this makefile fragment
 #
 #-License----------------------------------------------------------------------
-#Copyright (c) 2020, developer@teamboyce.com
+#Copyright (c) 2021, developer@teamboyce.com
 #All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -33,24 +33,21 @@
 
 #-----------------------------------------------------------------------------
 ifeq ($(INC_PART),)
+# DELETE ME from top level makefile Leave me in every dir under top level and
+# I will allow you to build from any point in the build system
 $(if $(MAKECMDGOALS),$(MAKECMDGOALS),all):
 	@$(MAKE) -C .. $@
 endif
 
 #-----------------------------------------------------------------------------
+# Declare the library compiled to
+LIB := qdbmp
+
+#-----------------------------------------------------------------------------
 # Declare C files
-CSRC += sdl-gfx.c
-CSRC += timer.c
-CSRC += keyboard.c
-CSRC += joystick.c
-CSRC += sound.c
-#CSRC += bmp.c
-
-CFLAGS += -DUSING_SDL=1
-
-EXTRA_LIBS += -lSDL2
+CSRC += qdbmp/qdbmp
 
 #-----------------------------------------------------------------------------
 # If set to y then the include path is added to with this directory
 # Delete or set to 'n' if not needed in include path
-ADD_TO_INC_PATH := y
+INC += $(FPATH)/qdbmp

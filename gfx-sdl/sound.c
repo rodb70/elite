@@ -33,6 +33,7 @@ void snd_sound_shutdown (void)
 
 void snd_play_sample (int sample_no)
 {
+    (void)sample_no;
     if (!sound_on)
     {
         return;
@@ -42,10 +43,8 @@ void snd_play_sample (int sample_no)
 
 void snd_play_midi (int midi_no, int repeat)
 {
-    if (!sound_on)
-    {
-        return;
-    }
+    (void)repeat;
+    (void)midi_no;
 
 }
 

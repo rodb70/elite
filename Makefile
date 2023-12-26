@@ -17,6 +17,7 @@ PROJ_DIRS += hagl
 ifeq ($(CPU),host)
 #PROJ_DIRS += gfx-alg
 PROJ_DIRS += gfx-sdl
+PROJ_DIRS += qdbmp
 EXTRA_LIBS += -lm
 SHORT_ENUMS := n
 endif
