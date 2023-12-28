@@ -20,6 +20,7 @@ PROJ_DIRS += gfx-sdl
 PROJ_DIRS += qdbmp
 EXTRA_LIBS += -lm
 SHORT_ENUMS := n
+CFLAGS += -O3 -funroll-loops
 endif
 
 #CSRC += alg_gfx.c

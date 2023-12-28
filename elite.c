@@ -64,7 +64,7 @@ int auto_pilot;
 
 struct commander saved_cmdr =
 {
-    "JAMESON",                              /* Name                 */
+    "jameson",                              /* Name                 */
     0,                                      /* Mission Number       */
     0x14,0xAD,                              /* Ship X,Y             */
     {0x4a, 0x5a, 0x48, 0x02, 0x53, 0xb7},   /* Galaxy Seed          */

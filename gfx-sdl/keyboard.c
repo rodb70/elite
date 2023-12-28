@@ -30,6 +30,10 @@ void kbd_poll_keyboard (void)
         {
             switch( event.key.keysym.sym )
             {
+            case SDLK_BACKSPACE :
+                kbd_backspace_pressed = event.key.state;
+                break;
+
             case SDLK_TAB :
                 kbd_energy_bomb_pressed = event.key.state;
                 break;
@@ -220,6 +224,10 @@ int kbd_read_key (void)
             {
                 kbd_backspace_pressed = 1;
                 return 0;
+            }
+            else if( 0 != ( event.key.keysym.mod & ( KMOD_SHIFT | KMOD_ALT | KMOD_CTRL )))
+            {
+                keyasc = 0;
             }
             else
             {

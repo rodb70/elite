@@ -1082,7 +1082,9 @@ void load_commander_screen(void)
     rv = gfx_request_file( "Load Commander", path, "nkc" );
 
     if( rv == 0 )
+    {
         return;
+    }
 
     rv = load_commander_file( path );
 
@@ -1246,7 +1248,7 @@ void info_message(char *message)
 {
     strcpy( message_string, message );
     message_count = 37;
-    //      snd_play_sample (SND_BEEP);
+    snd_play_sample( SND_BEEP );
 }
 
 int main(void)
@@ -1447,7 +1449,7 @@ int main(void)
                 }
             }
             /* docked.c*//* alg_main.c */
-            if( (cross_x != old_cross_x) || (cross_y != old_cross_y) )
+            if(( cross_x != old_cross_x ) || ( cross_y != old_cross_y ))
             {
                 /* draw_cross twice? */
                 if( old_cross_x != -1 )

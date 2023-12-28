@@ -51,6 +51,14 @@ static DATA_FILES data_file[ THEME + 1 ];
 static MONITOR monitor = { 0 };
 static MONITOR *m = &monitor;
 
+static void SdlUpdateScreen( void )
+{
+    SDL_Texture *texture = SDL_CreateTextureFromSurface( m->renderer, m->surface );
+    SDL_RenderCopy( m->renderer, texture, NULL, NULL );
+    SDL_RenderPresent( m->renderer );
+    SDL_DestroyTexture( texture );
+}
+
 int QuitFilter(void *userdata, SDL_Event *event)
 {
     (void) userdata;
@@ -230,11 +238,9 @@ void gfx_graphics_shutdown (void)
 
 void gfx_update_screen (void)
 {
-    SDL_Texture *texture = SDL_CreateTextureFromSurface( m->renderer, m->surface );
-    SDL_RenderCopy( m->renderer, texture, NULL, NULL );
-    SDL_RenderPresent( m->renderer );
+    SdlUpdateScreen();
 
-    for( int dly = 0; dly < speed_cap; dly+=5 )
+    for( int dly = 0; dly < speed_cap; dly += 5 )
     {
         kbd_poll_keyboard();
         SDL_Delay( 5 );
@@ -254,7 +260,10 @@ void gfx_release_screen (void)
 
 void gfx_plot_pixel (int x, int y, int col)
 {
-    gfx_fast_plot_pixel( x, y, col );
+    if(( x >= 0 ) && ( x < SCREEN_WIDTH ) && ( y >= 0 ) && ( y < SCREEN_HEIGHT ))
+    {
+        gfx_fast_plot_pixel( x, y, col );
+    }
 }
 
 
@@ -306,6 +315,10 @@ void gfx_draw_rectangle (int tx, int ty, int bx, int by, int col)
     hagl_draw_rectangle( backend, tx, ty, bx, by, col);
 }
 
+void gfx_draw_fill_rectangle (int tx, int ty, int bx, int by, int col)
+{
+    hagl_fill_rectangle( backend, tx, ty, bx, by, col);
+}
 
 void gfx_display_text (int x, int y, char *txt)
 {
@@ -415,11 +428,71 @@ void gfx_draw_sprite (int sprite_no, int x, int y)
 
 int gfx_request_file (char *title, char *path, char *ext)
 {
-    (void)title;
-    (void)path;
     (void)ext;
+    int keyasc = 0;
+
+    SDL_Delay( 250 );
+    while( 0 != kbd_read_key())
+    {
+        continue;
+    }
+    kbd_backspace_pressed = 0;
+    kbd_enter_pressed = 0;
+
     /* show request */
-    return 0;
+    gfx_draw_rectangle( 84, 95, 406,175, GFX_COL_RED_3 );
+    gfx_draw_rectangle( 85, 96, 405, 109, GFX_COL_RED_4 );
+    gfx_draw_rectangle( 85, 109, 405, 174, GFX_COL_RED_4 );
+    gfx_display_pretty_text( 88, 99, 404, 108, title );
+    gfx_draw_rectangle( 98, 129, 392, 142, GFX_COL_RED_4 );
+
+    while( 1 )
+    {
+
+        keyasc = kbd_read_key();
+        if( kbd_backspace_pressed )
+        {
+            gfx_clear_area( 100, 131, 391, 141 );
+            if( path[ 0 ] != '\0' )
+            {
+                path[ strlen( path ) - 1 ] = '\0';
+            }
+            kbd_backspace_pressed = 0;
+            keyasc = 0;
+        }
+
+        if( 0 != keyasc )
+        {
+            if((( keyasc >= (int)'0' ) && ( keyasc <= (int)'z' )) || ( '.' == keyasc ))
+            {
+                if(( keyasc >= 'A' ) && ( keyasc <= 'Z' ))
+                {
+                    keyasc |= 0x20;
+                }
+                int len = strlen( path );
+                if( len < 254 )
+                {
+                    path[ len ] = (char)keyasc;
+                    path[ len + 1 ] = '\0';
+
+                }
+            }
+        }
+
+        gfx_display_pretty_text( 100, 131, 391, 141, path );
+
+        SdlUpdateScreen();
+
+        if( kbd_enter_pressed )
+        {
+            kbd_enter_pressed = 0;
+            keyasc = 1;
+            gfx_draw_fill_rectangle( 84, 95, 406,175, GFX_COL_BLACK );
+            break;
+        }
+    }
+
+    return keyasc;
 }
 
 
