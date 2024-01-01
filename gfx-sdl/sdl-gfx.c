@@ -81,7 +81,7 @@ int QuitFilter(void *userdata, SDL_Event *event)
 const wchar_t *GetWC(const char *c)
 {
     const size_t cSize = strlen( c )+1;
-    static wchar_t wc[ 256 ];
+    static wchar_t wc[ 1024 ] = {0};
     mbstowcs( wc, c, cSize );
 
     return wc;
@@ -430,6 +430,14 @@ int gfx_request_file (char *title, char *path, char *ext)
 {
     (void)ext;
     int keyasc = 0;
+
+    for( char *pth = path; *pth != 0; pth++ )
+    {
+        if(( *pth >= 'A' ) && ( *pth <= 'Z' ))
+        {
+            *pth |= 0x20;
+        }
+    }
 
     SDL_Delay( 250 );
     while( 0 != kbd_read_key())

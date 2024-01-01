@@ -689,9 +689,10 @@ void handle_flight_keys(void)
 {
     int keyasc;
 
-    if( docked
-            && ((current_screen == SCR_MARKET_PRICES) || (current_screen == SCR_OPTIONS)
-                    || (current_screen == SCR_SETTINGS) || (current_screen == SCR_EQUIP_SHIP)) )
+    if( docked && (( current_screen == SCR_MARKET_PRICES ) ||
+                   ( current_screen == SCR_OPTIONS ) ||
+                   ( current_screen == SCR_SETTINGS ) ||
+                   ( current_screen == SCR_EQUIP_SHIP )))
     {
         kbd_read_key();
     }
@@ -1094,7 +1095,10 @@ void load_commander_screen(void)
         gfx_display_centre_text( 175, "Error Loading Commander!", 140, GFX_COL_GOLD );
         gfx_display_centre_text( 200, "Press any key to continue.", 140, GFX_COL_GOLD );
         gfx_update_screen();
-        //FIXME: readkey();
+        while( 0 != kbd_read_key())
+        {
+            continue;
+        }
 
         return;
     }

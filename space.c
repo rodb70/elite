@@ -755,7 +755,7 @@ void update_universe (void)
  * Update the scanner and draw all the lollipops.
  */
 
-void update_scanner (void)
+void update_scanner( void )
 {
     int i;
     int x,y,z;
