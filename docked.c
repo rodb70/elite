@@ -746,7 +746,7 @@ void highlight_stock (int i)
 
     y = i * 15 + 55;
 
-    gfx_draw_rectangle (2, y, 510, y + 15, GFX_COL_DARK_RED);
+    gfx_draw_rectangle (8, y, 502, y + 15, GFX_COL_DARK_RED);
     display_stock_price (i);
 
     hilite_item = i;
@@ -1085,7 +1085,7 @@ void highlight_equip (int i)
 
     y = equip_stock[i].y;
 
-    gfx_draw_rectangle (2, y+1, 510, y + 15, GFX_COL_DARK_RED);
+    gfx_draw_rectangle (8, y+1, 502, y + 15, GFX_COL_DARK_RED);
     display_equip_price (i);                
 
     hilite_item = i;
