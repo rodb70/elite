@@ -7,8 +7,149 @@
 
 #include "keyboard.h"
 #include "elite.h"
+#include "gfx.h"
 
 #include <SDL2/SDL.h>
+
+static char key_queu[ 9 ] = {'\0'};
+uint8_t k_idx = 0;
+void debug_key_log( char key )
+{
+    key_queu[ k_idx ] = key;
+    k_idx++;
+    k_idx &= 0x7;
+}
+
+void debug_keypresses( void )
+{
+    char str[80];
+    int y = 0;
+    gfx_set_clip_region( 1, 1, 750, 500 );
+    gfx_clear_area( 513, 0, 750, 500 );
+    sprintf( str, "F1_pressed %d", kbd_F1_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "F2_pressed %d", kbd_F2_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "F3_pressed %d", kbd_F3_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "F4_pressed %d", kbd_F4_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "F5_pressed %d", kbd_F5_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "F6_pressed %d", kbd_F6_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "F7_pressed %d", kbd_F7_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "F8_pressed %d", kbd_F8_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "F9_pressed %d", kbd_F9_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "F10_pressed %d", kbd_F10_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "F11_pressed %d", kbd_F11_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "F12_pressed %d", kbd_F12_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "y_pressed   %d", kbd_y_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "n_pressed   %d", kbd_n_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "fire_pressed %d", kbd_fire_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "ecm_pressed %d", kbd_ecm_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "energy_bomb_prsd %d", kbd_energy_bomb_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "hyperspace_prsd %d", kbd_hyperspace_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "ctrl_pressed %d", kbd_ctrl_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "jump_pressed %d", kbd_jump_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "escape_pressed %d", kbd_escape_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "dock_pressed %d", kbd_dock_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "d_pressed   %d", kbd_d_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "origin_pressed %d", kbd_origin_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "find_pressed %d", kbd_find_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "fire_missile_pressed %d", kbd_fire_missile_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "target_missile_pressed %d", kbd_target_missile_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "unarm_missile_pressed %d", kbd_unarm_missile_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "pause_pressed  %d", kbd_pause_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "resume_pressed %d", kbd_resume_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "inc_speed_pressed %d", kbd_inc_speed_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "dec_speed_pressed %d", kbd_dec_speed_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "up_pressed  %d", kbd_up_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "down_pressed %d", kbd_down_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "left_pressed %d", kbd_left_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "right_pressed %d", kbd_right_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "enter_pressed %d", kbd_enter_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "backspace_pressed %d", kbd_backspace_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "space_pressed  %d", kbd_space_pressed);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    extern int find_input;
+    sprintf( str, "find_input  %d", find_input);
+    gfx_display_text( 514, y, str);
+    y+= 10;
+    sprintf( str, "key_queu %d %s", k_idx, key_queu);
+    gfx_display_text( 514, y, str);
+}
 
 int kbd_keyboard_startup (void)
 {

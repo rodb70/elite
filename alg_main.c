@@ -47,6 +47,13 @@
 #include "file.h"
 #include "keyboard.h"
 
+enum
+{
+    VS_MIN_X = 1,
+    VS_MIN_Y = 1,
+    VS_MAX_X = 510,
+    VS_MAX_Y = 383
+};
 int old_cross_x, old_cross_y;
 int cross_timer;
 
@@ -162,7 +169,7 @@ void draw_cross(int cx, int cy)
         gfx_draw_colour_line( cx - 16, cy, cx + 16, cy, GFX_COL_RED );
         gfx_draw_colour_line( cx, cy - 16, cx, cy + 16, GFX_COL_RED );
         xor_mode( FALSE );
-        gfx_set_clip_region( 1, 1, 510, 383 );
+        gfx_set_clip_region( VS_MIN_X, VS_MIN_Y, VS_MAX_X, VS_MAX_Y );
         return;
     }
 
@@ -173,7 +180,7 @@ void draw_cross(int cx, int cy)
         gfx_draw_colour_line( cx - 8, cy, cx + 8, cy, GFX_COL_RED );
         gfx_draw_colour_line( cx, cy - 8, cx, cy + 8, GFX_COL_RED );
         xor_mode (FALSE);
-        gfx_set_clip_region( 1, 1, 510, 383 );
+        gfx_set_clip_region( VS_MIN_X, VS_MIN_Y, VS_MAX_X, VS_MAX_Y );
     }
 }
 
@@ -390,7 +397,6 @@ void arrow_down(void)
         }
         climbing = 1;
         break;
-
     }
 }
 
@@ -458,12 +464,12 @@ void d_pressed(void)
 
 void f_pressed(void)
 {
-    if( (current_screen == SCR_GALACTIC_CHART) || (current_screen == SCR_SHORT_RANGE) )
+    if(( current_screen == SCR_GALACTIC_CHART ) || ( current_screen == SCR_SHORT_RANGE ))
     {
         find_input = 1;
         *find_name = '\0';
         gfx_clear_text_area();
-        gfx_display_text( 16, 340, "Planet Name?" );
+        gfx_display_text( 16, 340, "Planet Name? " );
     }
 }
 
@@ -480,7 +486,7 @@ void add_find_char(int letter)
     str[1] = '\0';
     strcat( find_name, str );
 
-    sprintf( str, "Planet Name? %s", find_name );
+    sprintf( str, "Planet Name? %s ", find_name );
     gfx_clear_text_area();
     gfx_display_text( 16, 340, str );
 }
@@ -491,14 +497,14 @@ void delete_find_char(void)
     int len;
 
     len = strlen( find_name );
-    if( len == 0 )
+    if( 0 == len )
     {
         return;
     }
 
     find_name[len - 1] = '\0';
 
-    sprintf( str, "Planet Name? %s", find_name );
+    sprintf( str, "Planet Name? %s ", find_name );
     gfx_clear_text_area();
     gfx_display_text( 16, 340, str );
 }
@@ -643,7 +649,7 @@ void run_escape_sequence(void)
             snd_play_sample( SND_EXPLODE );
         }
 
-        gfx_set_clip_region( 1, 1, 510, 383 );
+        gfx_set_clip_region( VS_MIN_X, VS_MIN_Y, VS_MAX_X, VS_MAX_Y );
         gfx_clear_display();
         update_starfield();
         update_universe();
@@ -674,7 +680,7 @@ void run_escape_sequence(void)
         }
 
         warp_stars = 1;
-        gfx_set_clip_region( 1, 1, 510, 383 );
+        gfx_set_clip_region( VS_MIN_X, VS_MIN_Y, VS_MAX_X, VS_MAX_Y );
         gfx_clear_display();
         update_starfield();
         update_universe();
@@ -687,17 +693,20 @@ void run_escape_sequence(void)
 
 void handle_flight_keys(void)
 {
-    int keyasc;
+//    int keyasc;
 
-    if( docked && (( current_screen == SCR_MARKET_PRICES ) ||
-                   ( current_screen == SCR_OPTIONS ) ||
-                   ( current_screen == SCR_SETTINGS ) ||
-                   ( current_screen == SCR_EQUIP_SHIP )))
+//    if( docked && (( current_screen == SCR_MARKET_PRICES ) ||
+//                   ( current_screen == SCR_OPTIONS ) ||
+//                   ( current_screen == SCR_SETTINGS ) ||
+//                   ( current_screen == SCR_EQUIP_SHIP )))
+//    {
+//        kbd_read_key();
+//    }
+
+    if( !find_input )
     {
-        kbd_read_key();
+        kbd_poll_keyboard();
     }
-
-    kbd_poll_keyboard();
 
     joy_poll_joystick();
 
@@ -821,7 +830,12 @@ void handle_flight_keys(void)
 
     if( find_input )
     {
-        keyasc = kbd_read_key();
+        int keyasc = kbd_read_key();
+
+        if( keyasc != 0 )
+        {
+            debug_key_log( keyasc );
+        }
 
         if( kbd_enter_pressed )
         {
@@ -829,15 +843,16 @@ void handle_flight_keys(void)
             find_planet_by_name( find_name );
             return;
         }
-
-        if( kbd_backspace_pressed )
+        else if( kbd_backspace_pressed )
         {
+            kbd_backspace_pressed = 0;
             delete_find_char();
             return;
         }
-
-        if( isalpha( keyasc ) )
+        else if( isalpha( keyasc ) )
+        {
             add_find_char( keyasc );
+        }
 
         return;
     }
@@ -1182,7 +1197,7 @@ void run_game_over_screen(void)
     int type;
 
     current_screen = SCR_GAME_OVER;
-    gfx_set_clip_region( 1, 1, 510, 383 );
+    gfx_set_clip_region( VS_MIN_X, VS_MIN_Y, VS_MAX_X, VS_MAX_Y );
 
     flight_speed = 6;
     flight_roll = 0;
@@ -1227,12 +1242,12 @@ void display_break_pattern(void)
 {
     int i;
 
-    gfx_set_clip_region( 1, 1, 510, 383 );
+    gfx_set_clip_region( VS_MIN_X, VS_MIN_Y, VS_MAX_X, VS_MAX_Y );
     gfx_clear_display();
 
     for( i = 0; i < 20; i++ )
     {
-        gfx_draw_circle( 256, 192, 30 + i * 15, GFX_COL_WHITE );
+        gfx_draw_circle( 256, 192, 30 + i * 15, GFX_COL_WHITE - i );
         gfx_update_screen();
     }
 
@@ -1296,7 +1311,8 @@ int main(void)
         {
             snd_update_sound();/* sound.c */
             gfx_update_screen();/* alg_main.c */
-            gfx_set_clip_region( 1, 1, 510, 383 );/* alg_main.c */
+            debug_keypresses();
+            gfx_set_clip_region( VS_MIN_X, VS_MIN_Y, VS_MAX_X, VS_MAX_Y );/* alg_main.c */
 
             rolling = 0;/* Globals */
             climbing = 0;/* Only referenced in this file */
@@ -1439,7 +1455,7 @@ int main(void)
                 update_console();
             }
 
-            if( current_screen == SCR_BREAK_PATTERN )
+            if( SCR_BREAK_PATTERN == current_screen )
             {
                 display_break_pattern();/* alg_main.c */
             }
@@ -1447,7 +1463,7 @@ int main(void)
             if( cross_timer > 0 )/* alg_main.c */
             {
                 cross_timer--;
-                if( cross_timer == 0 )
+                if( 0 == cross_timer )
                 {
                     show_distance_to_planet();/* docked.c */
                 }

@@ -498,7 +498,7 @@ void make_station_appear (void)
     vec.y = (rand() & 32767) - 16384;
     vec.z = rand() & 32767; 
 
-    vec = unit_vector (&vec);
+    vec = unit_vector( &vec );
 
     sx = px - vec.x * 65792;
     sy = py - vec.y * 65792;
@@ -506,19 +506,19 @@ void make_station_appear (void)
 
     //set_init_matrix (rotmat);
 
-    rotmat[0].x = 1.0;
-    rotmat[0].y = 0.0;
-    rotmat[0].z = 0.0;
+    rotmat[ 0 ].x = 1.0;
+    rotmat[ 0 ].y = 0.0;
+    rotmat[ 0 ].z = 0.0;
 
-    rotmat[1].x = vec.x;
-    rotmat[1].y = vec.z;
-    rotmat[1].z = -vec.y;
+    rotmat[ 1 ].x = vec.x;
+    rotmat[ 1 ].y = vec.z;
+    rotmat[ 1 ].z = -vec.y;
 
-    rotmat[2].x = vec.x;
-    rotmat[2].y = vec.y;
-    rotmat[2].z = vec.z;
+    rotmat[ 2 ].x = vec.x;
+    rotmat[ 2 ].y = vec.y;
+    rotmat[ 2 ].z = vec.z;
 
-    tidy_matrix (rotmat);
+    tidy_matrix( rotmat );
 
     add_new_station (sx, sy, sz, rotmat);
 }
@@ -527,23 +527,23 @@ void make_station_appear (void)
 
 void check_docking (int i)
 {
-    if (is_docking(i))
+    if( is_docking( i ))
     {
-        snd_play_sample (SND_DOCK);                                     
+        snd_play_sample( SND_DOCK );
         dock_player();
         current_screen = SCR_BREAK_PATTERN;
         return;
     }
 
-    if (flight_speed >= 5)
+    if( flight_speed >= 5 )
     {
         do_game_over();
         return;
     }
 
     flight_speed = 1;
-    damage_ship (5, universe[i].location.z > 0);
-    snd_play_sample (SND_CRASH);
+    damage_ship( 5, universe[i].location.z > 0 );
+    snd_play_sample( SND_CRASH );
 }
 
 
@@ -551,8 +551,8 @@ void switch_to_view (struct univ_object *flip)
 {
     double tmp;
 
-    if ((current_screen == SCR_REAR_VIEW) ||
-            (current_screen == SCR_GAME_OVER))
+    if(( current_screen == SCR_REAR_VIEW ) ||
+       ( current_screen == SCR_GAME_OVER ))
     {
         flip->location.x = -flip->location.x;
         flip->location.z = -flip->location.z;
@@ -569,32 +569,32 @@ void switch_to_view (struct univ_object *flip)
     }
 
 
-    if (current_screen == SCR_LEFT_VIEW)
+    if( current_screen == SCR_LEFT_VIEW )
     {
         tmp = flip->location.x;
         flip->location.x = flip->location.z;
         flip->location.z = -tmp;
 
-        if (flip->type < 0)
+        if( flip->type < 0 )
         {
             return;
         }
 
-        tmp = flip->rotmat[0].x;
-        flip->rotmat[0].x = flip->rotmat[0].z;
-        flip->rotmat[0].z = -tmp;
+        tmp = flip->rotmat[ 0 ].x;
+        flip->rotmat[ 0 ].x = flip->rotmat[ 0 ].z;
+        flip->rotmat[ 0 ].z = -tmp;
 
-        tmp = flip->rotmat[1].x;
-        flip->rotmat[1].x = flip->rotmat[1].z;
-        flip->rotmat[1].z = -tmp;
+        tmp = flip->rotmat[ 1 ].x;
+        flip->rotmat[ 1 ].x = flip->rotmat[ 1 ].z;
+        flip->rotmat[ 1 ].z = -tmp;
 
-        tmp = flip->rotmat[2].x;
-        flip->rotmat[2].x = flip->rotmat[2].z;
-        flip->rotmat[2].z = -tmp;
+        tmp = flip->rotmat[ 2 ].x;
+        flip->rotmat[ 2 ].x = flip->rotmat[ 2 ].z;
+        flip->rotmat[ 2 ].z = -tmp;
         return;
     }
 
-    if (current_screen == SCR_RIGHT_VIEW)
+    if( current_screen == SCR_RIGHT_VIEW )
     {
         tmp = flip->location.x;
         flip->location.x = -flip->location.z;

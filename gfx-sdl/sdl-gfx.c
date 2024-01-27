@@ -32,10 +32,6 @@ static pixels_t *vid_mem;
 static int xor = 0;
 
 static hagl_backend_t* backend;
-#ifdef SDL_SCANNER
-
-static SDL_Surface *scanner_image;
-#else
 typedef struct
 {
     hagl_bitmap_t bitmap;
@@ -46,7 +42,6 @@ static hagl_bitmap_t scanner_image;
 static BMP *scanner_bmp;
 
 static DATA_FILES data_file[ THEME + 1 ];
-#endif
 
 static MONITOR monitor = { 0 };
 static MONITOR *m = &monitor;
@@ -133,18 +128,8 @@ int gfx_graphics_startup(void)
 
     vid_mem = (pixels_t*) m->surface->pixels;
 
-#ifdef SDL_SCANNER
-    scanner_image = SDL_LoadBMP(scanner_filename);
-    /* Let the user know if the file failed to load */
-    if (!scanner_image)
-    {
-        printf( "Failed to load image at %s: %s\n", scanner_filename, SDL_GetError());
-        return 1;
-    }
-#else
     scanner_bmp = BMP_ReadFile( scanner_filename );
     hagl_bitmap_init( &scanner_image, BMP_GetWidth(scanner_bmp), BMP_GetHeight(scanner_bmp), BMP_GetDepth(scanner_bmp), BMP_GetPixelData(scanner_bmp));
-#endif
 
     backend = &m->backend;
 
@@ -198,12 +183,8 @@ int gfx_graphics_startup(void)
             filename = "data/safe.bmp";
             break;
         }
-#ifdef SDL_SCANNER
-        data_file[ i ] = SDL_LoadBMP( filename );
-#else
         data_file[ i ].bmp = BMP_ReadFile( filename );
         hagl_bitmap_init( &data_file[ i ].bitmap, BMP_GetWidth(data_file[ i ].bmp), BMP_GetHeight(data_file[ i ].bmp), BMP_GetDepth(data_file[ i ].bmp), BMP_GetPixelData(data_file[ i ].bmp));
-#endif
     }
 
     return 0;
@@ -218,21 +199,10 @@ void gfx_graphics_shutdown (void)
 {
     for( int i = 0; i < THEME; i++ )
     {
-#ifdef SDL_SCANNER
-        if( NULL != data_file[ i ])
-        {
-            SDL_FreeSurface(data_file[ i ]);
-        }
-#else
         BMP_Free( data_file[ i ].bmp );
-#endif
     }
     /* Make sure to eventually release the surface resource */
-#ifdef SDL_SCANNER
-    SDL_FreeSurface( scanner_image );
-#else
     BMP_Free( scanner_bmp );
-#endif
 }
 
 
@@ -260,10 +230,7 @@ void gfx_release_screen (void)
 
 void gfx_plot_pixel (int x, int y, int col)
 {
-    if(( x >= 0 ) && ( x < SCREEN_WIDTH ) && ( y >= 0 ) && ( y < SCREEN_HEIGHT ))
-    {
-        gfx_fast_plot_pixel( x, y, col );
-    }
+    hagl_put_pixel( backend, x, y, col );
 }
 
 
@@ -370,12 +337,7 @@ void gfx_display_pretty_text (int tx, int ty, int bx, int by, char *txt)
 
 void gfx_draw_scanner (void)
 {
-#ifdef SDL_SCANNER
-    SDL_Rect dst_rect = { .x = GFX_X_OFFSET, .y = 385 + GFX_Y_OFFSET, scanner_image->w, scanner_image->h };
-    SDL_BlitSurface( scanner_image, NULL, m->surface, &dst_rect );
-#else
     hagl_blit_xy( backend, 0, 385, &scanner_image );
-#endif
 }
 
 
@@ -401,28 +363,17 @@ void gfx_polygon( int num_points, int *poly_list, int face_colour )
         y += 2;
     }
 
-    hagl_draw_polygon( backend, num_points, points, face_colour );
+    //hagl_draw_polygon( backend, num_points, points, face_colour );
+    hagl_fill_polygon( backend, num_points, points, face_colour );
 }
 
 void gfx_draw_sprite (int sprite_no, int x, int y)
 {
-#ifdef SDL_SCANNER
-    SDL_Surface *img = data_file[ sprite_no ];
-
-    if( -1 == x )
-    {
-        x = (( 256 * GFX_SCALE) - img->w ) / 2;
-    }
-    SDL_Rect dst_rect = { .x = x + GFX_X_OFFSET, .y = y + GFX_Y_OFFSET, img->w, img->h };
-
-    SDL_BlitSurface( img, NULL, m->surface, &dst_rect );
-#else
     if( -1 == x )
     {
         x = (( 256 * GFX_SCALE ) - ( BMP_GetWidth( data_file[ sprite_no ].bmp ))) / 2;
     }
     hagl_blit_xy( backend, x, y, &data_file[ sprite_no ].bitmap );
-#endif
 }
 
 

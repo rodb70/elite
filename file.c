@@ -209,7 +209,7 @@ int save_commander_file (char *path)
 
     for (i = 0; i < NO_OF_STOCK_ITEMS; i++)
     {
-        block[23+i] = cmdr.current_cargo[i];
+        block[23+i] = cmdr.current_cargo[ i ] < 256 ? cmdr.current_cargo[ i ] : 255;
     }
 
     block[40] = cmdr.ecm ? 255 : 0;

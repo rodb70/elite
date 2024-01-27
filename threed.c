@@ -72,56 +72,56 @@ void draw_wireframe_ship (struct univ_object *univ)
     struct ship_data *ship;
     int lasv;
 
-    ship = ship_list[univ->type];
+    ship = ship_list[ univ->type ];
 
     for (i = 0; i < 3; i++)
     {
-        trans_mat[i] = univ->rotmat[i];
+        trans_mat[ i ] = univ->rotmat[ i ];
     }
 
     camera_vec = univ->location;
-    mult_vector (&camera_vec, trans_mat);
-    camera_vec = unit_vector (&camera_vec);
+    mult_vector( &camera_vec, trans_mat );
+    camera_vec = unit_vector( &camera_vec );
 
     num_faces = ship->num_faces;
 
-    for (i = 0; i < num_faces; i++)
+    for( i = 0; i < num_faces; i++ )
     {
         ship_norm = ship->normals;
 
-        vec.x = ship_norm[i].x;
-        vec.y = ship_norm[i].y;
-        vec.z = ship_norm[i].z;
+        vec.x = ship_norm[ i ].x;
+        vec.y = ship_norm[ i ].y;
+        vec.z = ship_norm[ i ].z;
 
-        if ((vec.x == 0) && (vec.y == 0) && (vec.z == 0))
+        if(( vec.x == 0 ) && ( vec.y == 0 ) && ( vec.z == 0 ))
         {
-            visible[i] = 1;
+            visible[ i ] = 1;
         }
         else
         {
-            vec = unit_vector (&vec);
-            cos_angle = vector_dot_product (&vec, &camera_vec);
-            visible[i] = (cos_angle < -0.2);
+            vec = unit_vector( &vec );
+            cos_angle = vector_dot_product( &vec, &camera_vec );
+            visible[ i ] = ( cos_angle < -0.2 );
         }
     }
 
-    tmp = trans_mat[0].y;
-    trans_mat[0].y = trans_mat[1].x;
-    trans_mat[1].x = tmp;
+    tmp = trans_mat[ 0 ].y;
+    trans_mat[ 0 ].y = trans_mat[ 1 ].x;
+    trans_mat[ 1 ].x = tmp;
 
-    tmp = trans_mat[0].z;
-    trans_mat[0].z = trans_mat[2].x;
-    trans_mat[2].x = tmp;
+    tmp = trans_mat[ 0 ].z;
+    trans_mat[ 0 ].z = trans_mat[ 2 ].x;
+    trans_mat[ 2 ].x = tmp;
 
     tmp = trans_mat[1].z;
-    trans_mat[1].z = trans_mat[2].y;
-    trans_mat[2].y = tmp;
+    trans_mat[ 1 ].z = trans_mat[ 2 ].y;
+    trans_mat[ 2 ].y = tmp;
 
     for (i = 0; i < ship->num_points; i++)
     {
-        vec.x = ship->points[i].x;
-        vec.y = ship->points[i].y;
-        vec.z = ship->points[i].z;
+        vec.x = ship->points[ i ].x;
+        vec.y = ship->points[ i ].y;
+        vec.z = ship->points[ i ].z;
 
         mult_vector (&vec, trans_mat);
 
@@ -140,22 +140,22 @@ void draw_wireframe_ship (struct univ_object *univ)
         sx *= GFX_SCALE;
         sy *= GFX_SCALE;
 
-        point_list[i].x = sx;
-        point_list[i].y = sy;
+        point_list[ i ].x = sx;
+        point_list[ i ].y = sy;
 
     }
 
-    for (i = 0; i < ship->num_lines; i++)
+    for( i = 0; i < ship->num_lines; i++ )
     {
-        if (visible[ship->lines[i].face1] || visible[ship->lines[i].face2])
+        if( visible[ ship->lines[ i ].face1 ] || visible[ ship->lines[ i ].face2 ])
         {
-            sx = point_list[ship->lines[i].start_point].x;
-            sy = point_list[ship->lines[i].start_point].y;
+            sx = point_list[ ship->lines[ i ].start_point ].x;
+            sy = point_list[ ship->lines[ i ].start_point ].y;
 
-            ex = point_list[ship->lines[i].end_point].x;
-            ey = point_list[ship->lines[i].end_point].y;
+            ex = point_list[ ship->lines[ i ].end_point ].x;
+            ey = point_list[ ship->lines[ i ].end_point ].y;
 
-            gfx_draw_line (sx, sy, ex, ey);
+            gfx_draw_line( sx, sy, ex, ey );
         }
     }
 
@@ -393,10 +393,10 @@ void generate_snes_landscape (void)
 
     for (y = 0; y <= LAND_Y_MAX; y++)
     {
-        colour = snes_planet_colour[y * (sizeof(snes_planet_colour)/sizeof(int)) / LAND_Y_MAX];  
-        for (x = 0; x <= LAND_X_MAX; x++)
+        colour = snes_planet_colour[y * (sizeof(snes_planet_colour) / sizeof(int)) / LAND_Y_MAX ];
+        for( x = 0; x <= LAND_X_MAX; x++)
         {
-            landscape[x][y] = colour;               
+            landscape[ x ][ y ] = colour;
         }
     }       
 }
@@ -468,21 +468,21 @@ void midpoint_square (int tx, int ty, int w)
     bx = tx + w;
     by = ty + w;
 
-    landscape[mx][ty] = calc_midpoint(tx,ty,bx,ty);
-    landscape[mx][by] = calc_midpoint(tx,by,bx,by);
-    landscape[tx][my] = calc_midpoint(tx,ty,tx,by);
-    landscape[bx][my] = calc_midpoint(bx,ty,bx,by);
-    landscape[mx][my] = calc_midpoint(tx,my,bx,my); 
+    landscape[ mx ][ ty ] = calc_midpoint(tx,ty,bx,ty);
+    landscape[ mx ][ by ] = calc_midpoint(tx,by,bx,by);
+    landscape[ tx ][ my ] = calc_midpoint(tx,ty,tx,by);
+    landscape[ bx ][ my ] = calc_midpoint(bx,ty,bx,by);
+    landscape[ mx ][ my ] = calc_midpoint(tx,my,bx,my);
 
-    if (d == 1)
+    if ( d == 1)
     {
         return;
     }
 
-    midpoint_square (tx,ty,d);
-    midpoint_square (mx,ty,d);
-    midpoint_square (tx,my,d);
-    midpoint_square (mx,my,d);
+    midpoint_square( tx,ty,d );
+    midpoint_square( mx,ty,d );
+    midpoint_square( tx,my,d );
+    midpoint_square( mx,my,d );
 }
 
 
@@ -491,7 +491,7 @@ void midpoint_square (int tx, int ty, int w)
  * Uses midpoint displacement method.
  */
 
-void generate_fractal_landscape (int rnd_seed)
+void generate_fractal_landscape( int rnd_seed )
 {
     int x,y,d,h;
     double dist;
@@ -503,11 +503,11 @@ void generate_fractal_landscape (int rnd_seed)
 
     d = LAND_X_MAX / 8;
 
-    for (y = 0; y <= LAND_Y_MAX; y += d)
+    for( y = 0; y <= LAND_Y_MAX; y += d )
     {
-        for (x = 0; x <= LAND_X_MAX; x += d)
+        for( x = 0; x <= LAND_X_MAX; x += d )
         {
-            landscape[x][y] = randint() & 255;
+            landscape[ x ][ y ] = randint() & 255;
         }
     }
 
@@ -515,13 +515,13 @@ void generate_fractal_landscape (int rnd_seed)
     {
         for (x = 0; x < LAND_X_MAX; x += d)
         {
-            midpoint_square (x,y,d);
+            midpoint_square (x,y,d );
         }
     }
 
     for (y = 0; y <= LAND_Y_MAX; y++)
     {
-        for (x = 0; x <= LAND_X_MAX; x++)
+        for( x = 0; x <= LAND_X_MAX; x++ )
         {
             dist = x*x + y*y;
             dark = dist > 10000;
@@ -543,7 +543,7 @@ void generate_fractal_landscape (int rnd_seed)
 
 void generate_landscape (int rnd_seed)
 {
-    switch (planet_render_style)
+    switch( planet_render_style )
     {
         case 0: /* Wireframe... do nothing for now... */
             break;
@@ -569,7 +569,7 @@ void generate_landscape (int rnd_seed)
  */
 
 
-void render_planet_line (int xo, int yo, int x, int y, int radius, int vx, int vy)
+void render_planet_line( int xo, int yo, int x, int y, int radius, int vx, int vy )
 {
     int lx, ly;
     int rx, ry;
@@ -580,7 +580,7 @@ void render_planet_line (int xo, int yo, int x, int y, int radius, int vx, int v
 
     sy = y + yo;
 
-    if ((sy < GFX_VIEW_TY + GFX_Y_OFFSET) || (sy > GFX_VIEW_BY + GFX_Y_OFFSET))
+    if(( sy < GFX_VIEW_TY + GFX_Y_OFFSET ) || ( sy > GFX_VIEW_BY + GFX_Y_OFFSET ))
     {
         return;
     }
@@ -595,15 +595,15 @@ void render_planet_line (int xo, int yo, int x, int y, int radius, int vx, int v
     div = radius << 10; /* radius * 2 * LAND_X_MAX >> 16 */
 
 
-    for (; sx <= ex; sx++)
+    for(; sx <= ex; sx++ )
     {
-        if ((sx >= (GFX_VIEW_TX + GFX_X_OFFSET)) && (sx <= (GFX_VIEW_BX + GFX_X_OFFSET)))
+        if ((sx >= ( GFX_VIEW_TX + GFX_X_OFFSET )) && ( sx <= ( GFX_VIEW_BX + GFX_X_OFFSET )))
         {
             lx = rx / div;
             ly = ry / div;
-            colour = landscape[lx][ly];
+            colour = landscape[ lx ][ ly ];
 
-            gfx_fast_plot_pixel (sx, sy, colour);
+            gfx_fast_plot_pixel( sx, sy, colour );
         }
         rx += vx;
         ry += vy;
@@ -615,7 +615,7 @@ void render_planet_line (int xo, int yo, int x, int y, int radius, int vx, int v
  * Draw a solid planet.  Based on Doros circle drawing alogorithm.
  */
 
-void render_planet (int xo, int yo, int radius, struct vector *vec)
+void render_planet( int xo, int yo, int radius, struct vector *vec )
 {
     int x,y;
     int s;
@@ -624,24 +624,24 @@ void render_planet (int xo, int yo, int radius, struct vector *vec)
     xo += GFX_X_OFFSET;
     yo += GFX_Y_OFFSET;
 
-    vx = vec[1].x * 65536;
-    vy = vec[1].y * 65536;  
+    vx = vec[ 1 ].x * 65536;
+    vy = vec[ 1 ].y * 65536;
 
     s = radius;
     x = radius;
     y = 0;
 
     s -= x + x;
-    while (y <= x)
+    while( y <= x )
     {
-        render_planet_line (xo, yo, x, y, radius, vx, vy);
-        render_planet_line (xo, yo, x,-y, radius, vx, vy);
-        render_planet_line (xo, yo, y, x, radius, vx, vy);
-        render_planet_line (xo, yo, y,-x, radius, vx, vy);
+        render_planet_line( xo, yo, x, y, radius, vx, vy );
+        render_planet_line( xo, yo, x,-y, radius, vx, vy );
+        render_planet_line( xo, yo, y, x, radius, vx, vy );
+        render_planet_line( xo, yo, y,-x, radius, vx, vy );
 
         s += y + y + 1;
         y++;
-        if (s >= 0)
+        if( s >= 0 )
         {
             s -= x + x + 2;
             x--;
@@ -656,10 +656,10 @@ void render_planet (int xo, int yo, int radius, struct vector *vec)
  * Need to add in the two arcs that the original Elite had.
  */
 
-void draw_wireframe_planet (int xo, int yo, int radius, struct vector *vec)
+void draw_wireframe_planet( int xo, int yo, int radius, struct vector *vec )
 {
     (void)vec;
-    gfx_draw_circle (xo, yo, radius, GFX_COL_WHITE);
+    gfx_draw_circle( xo, yo, radius, GFX_COL_WHITE );
 }
 
 
@@ -677,8 +677,8 @@ void draw_planet (struct univ_object *planet)
     int radius;
 
     /* Magic Numbers */
-    x = (planet->location.x * 256) / planet->location.z;
-    y = -((planet->location.y * 256) / planet->location.z);
+    x = (( planet->location.x * 256 ) / planet->location.z );
+    y = -(( planet->location.y * 256 ) / planet->location.z );
 
     /* All in one above */
     // y = (planet->location.y * 256) / planet->location.z;
@@ -691,29 +691,31 @@ void draw_planet (struct univ_object *planet)
     y *= GFX_SCALE;
 
     radius = 6291456 / planet->distance;    /* Magic Number */
-    //      radius = 6291456 / ship_vec.z;   /* Planets are BIG! */
+    // radius = 6291456 / ship_vec.z;   /* Planets are BIG! */
 
     radius *= GFX_SCALE;
 
-    if ((x + radius <  0) ||
-            (x - radius > 511) ||   /* Magic Number */
-            (y + radius < 0) ||     /* Magic Number */
-            (y - radius > 383))     /* Magic Number */
-        return; 
+    if(( x + radius <  0 ) ||
+       ( x - radius > 511 ) ||   /* Magic Number */
+       ( y + radius < 0 ) ||     /* Magic Number */
+       ( y - radius > 383 ))     /* Magic Number */
+    {
+        return;
+    }
 
-    switch (planet_render_style)
+    switch( planet_render_style )
     {
         case 0:
-            draw_wireframe_planet (x, y, radius, planet->rotmat);
+            draw_wireframe_planet( x, y, radius, planet->rotmat );
             break;
 
         case 1:
-            gfx_draw_filled_circle (x, y, radius, GFX_COL_GREEN_1);
+            gfx_draw_filled_circle( x, y, radius, GFX_COL_GREEN_1 );
             break;
 
         case 2:
         case 3:
-            render_planet (x, y, radius, planet->rotmat);
+            render_planet( x, y, radius, planet->rotmat );
             break;
     }
 }
@@ -730,27 +732,29 @@ void render_sun_line (int xo, int yo, int x, int y, int radius)
     int inner2;
     int mix;
 
-    if ((sy < GFX_VIEW_TY + GFX_Y_OFFSET) ||
-            (sy > GFX_VIEW_BY + GFX_Y_OFFSET))
+    if(( sy < GFX_VIEW_TY + GFX_Y_OFFSET ) ||
+       ( sy > GFX_VIEW_BY + GFX_Y_OFFSET ))
+    {
         return;
+    }
 
     sx = xo - x;
     ex = xo + x;
 
-    sx -= (radius * (2 + (randint() & 7))) >> 8;
-    ex += (radius * (2 + (randint() & 7))) >> 8;
+    sx -= ( radius * ( 2 + ( randint() & 7 ))) >> 8;
+    ex += ( radius * ( 2 + ( randint() & 7 ))) >> 8;
 
-    if ((sx > GFX_VIEW_BX + GFX_X_OFFSET) || (ex < GFX_VIEW_TX + GFX_X_OFFSET))
+    if(( sx > GFX_VIEW_BX + GFX_X_OFFSET ) || ( ex < GFX_VIEW_TX + GFX_X_OFFSET ))
     {
         return;
     }
 
-    if (sx < GFX_VIEW_TX + GFX_X_OFFSET)
+    if( sx < GFX_VIEW_TX + GFX_X_OFFSET )
     {
         sx = GFX_VIEW_TX + GFX_X_OFFSET;
     }
 
-    if (ex > GFX_VIEW_BX + GFX_X_OFFSET)
+    if( ex > GFX_VIEW_BX + GFX_X_OFFSET )
     {
         ex = GFX_VIEW_BX + GFX_X_OFFSET;
     }
@@ -758,10 +762,10 @@ void render_sun_line (int xo, int yo, int x, int y, int radius)
     inner = (radius * (200 + (randint() & 7))) >> 8;
     inner *= inner;
 
-    inner2 = (radius * (220 + (randint() & 7))) >> 8;
+    inner2 = ( radius * ( 220 + ( randint() & 7 ))) >> 8;
     inner2 *= inner2;
 
-    outer = (radius * (239 + (randint() & 7))) >> 8;
+    outer = ( radius * ( 239 + ( randint() & 7 ))) >> 8;
     outer *= outer; 
 
     dy = y * y;
@@ -769,18 +773,18 @@ void render_sun_line (int xo, int yo, int x, int y, int radius)
 
     for (; sx <= ex; sx++,dx++)
     {
-        mix = (sx ^ y) & 1;
+        mix = ( sx ^ y ) & 1;
         distance = dx * dx + dy;
 
-        if (distance < inner)
+        if( distance < inner )
         {
             colour = GFX_COL_WHITE;
         }
-        else if (distance < inner2)
+        else if( distance < inner2 )
         {
             colour = GFX_COL_YELLOW_4;
         }
-        else if (distance < outer)
+        else if( distance < outer )
         {
             colour = GFX_ORANGE_3;
         }
@@ -789,12 +793,12 @@ void render_sun_line (int xo, int yo, int x, int y, int radius)
             colour = mix ? GFX_ORANGE_1 : GFX_ORANGE_2;
         }
 
-        gfx_fast_plot_pixel (sx, sy, colour);
+        gfx_fast_plot_pixel( sx, sy, colour );
     }       
 }
 
 
-void render_sun (int xo, int yo, int radius)
+void render_sun( int xo, int yo, int radius )
 {
     int x,y;
     int s;
@@ -807,16 +811,16 @@ void render_sun (int xo, int yo, int radius)
     y = 0;
 
     // s -= x + x;
-    while (y <= x)
+    while( y <= x )
     {
-        render_sun_line (xo, yo, x, y, radius);
-        render_sun_line (xo, yo, x,-y, radius);
-        render_sun_line (xo, yo, y, x, radius);
-        render_sun_line (xo, yo, y,-x, radius);
+        render_sun_line( xo, yo, x, y, radius );
+        render_sun_line( xo, yo, x,-y, radius );
+        render_sun_line( xo, yo, y, x, radius );
+        render_sun_line( xo, yo, y,-x, radius );
 
         s += y + y + 1;
         y++;
-        if (s >= 0)
+        if( s >= 0 )
         {
             s -= x + x + 2;
             x--;
@@ -831,8 +835,8 @@ void draw_sun (struct univ_object *planet)
     int x,y;
     int radius;
 
-    x = (planet->location.x * 256) / planet->location.z;
-    y = (planet->location.y * 256) / planet->location.z;
+    x = ( planet->location.x * 256 ) / planet->location.z;
+    y = ( planet->location.y * 256 ) / planet->location.z;
 
     y = -y;
 
@@ -846,19 +850,19 @@ void draw_sun (struct univ_object *planet)
 
     radius *= GFX_SCALE;
 
-    if ((x + radius <  0) ||
-        (x - radius > 511) ||
-        (y + radius < 0) ||
-        (y - radius > 383))
+    if(( x + radius <  0 ) ||
+       ( x - radius > 511 ) ||
+       ( y + radius < 0 ) ||
+       ( y - radius > 383 ))
     {
         return;
     }
 
-    render_sun (x, y, radius);
+    render_sun( x, y, radius );
 }
 
 
-void draw_explosion (struct univ_object *univ)
+void draw_explosion( struct univ_object *univ )
 {
     int i;
     int z;
@@ -882,7 +886,7 @@ void draw_explosion (struct univ_object *univ)
     int old_seed;
 
 
-    if (univ->exp_delta > 251)
+    if(univ->exp_delta > 251 )
     {
         univ->flags |= FLG_REMOVE;
         return;
@@ -890,73 +894,73 @@ void draw_explosion (struct univ_object *univ)
 
     univ->exp_delta += 4;
 
-    if (univ->location.z <= 0)
+    if( univ->location.z <= 0 )
     {
         return;
     }
 
-    ship = ship_list[univ->type];
+    ship = ship_list[ univ->type ];
 
-    for (i = 0; i < 3; i++)
+    for( i = 0; i < 3; i++ )
     {
-        trans_mat[i] = univ->rotmat[i];
+        trans_mat[ i ] = univ->rotmat[ i ];
     }
 
     camera_vec = univ->location;
-    mult_vector (&camera_vec, trans_mat);
+    mult_vector( &camera_vec, trans_mat );
 
     /* TODO: figure out why it crashes here */
     /* Valgrind shows crash below: exploding sun */
     /* If type < 0, it will crash */
-    camera_vec = unit_vector (&camera_vec);
+    camera_vec = unit_vector( &camera_vec );
 
     ship_norm = ship->normals;
 
-    for (i = 0; i < ship->num_faces; i++)
+    for( i = 0; i < ship->num_faces; i++ )
     {
-        vec.x = ship_norm[i].x;
-        vec.y = ship_norm[i].y;
-        vec.z = ship_norm[i].z;
+        vec.x = ship_norm[ i ].x;
+        vec.y = ship_norm[ i ].y;
+        vec.z = ship_norm[ i ].z;
 
-        vec = unit_vector (&vec);
-        cos_angle = vector_dot_product (&vec, &camera_vec);
+        vec = unit_vector( &vec );
+        cos_angle = vector_dot_product( &vec, &camera_vec );
 
-        visible[i] = (cos_angle < -0.13);
+        visible[ i ] = ( cos_angle < -0.13 );
     }
 
-    tmp = trans_mat[0].y;
-    trans_mat[0].y = trans_mat[1].x;
-    trans_mat[1].x = tmp;
+    tmp = trans_mat[ 0 ].y;
+    trans_mat[ 0 ].y = trans_mat[ 1 ].x;
+    trans_mat[ 1 ].x = tmp;
 
-    tmp = trans_mat[0].z;
-    trans_mat[0].z = trans_mat[2].x;
-    trans_mat[2].x = tmp;
+    tmp = trans_mat[ 0 ].z;
+    trans_mat[ 0].z = trans_mat[ 2 ].x;
+    trans_mat[ 2].x = tmp;
 
-    tmp = trans_mat[1].z;
-    trans_mat[1].z = trans_mat[2].y;
-    trans_mat[2].y = tmp;
+    tmp = trans_mat[ 1 ].z;
+    trans_mat[ 1 ].z = trans_mat[ 2 ].y;
+    trans_mat[ 2 ].y = tmp;
 
     sp = ship->points;
     np = 0;
 
-    for (i = 0; i < ship->num_points; i++)
+    for( i = 0; i < ship->num_points; i++ )
     {
         /* Valgrind: Conditional jump or move depends on unintialised values */
-        if (visible[sp[i].face1] || visible[sp[i].face2] ||
-            visible[sp[i].face3] || visible[sp[i].face4])
+        if( visible[ sp[ i ].face1 ] || visible[ sp[ i ].face2 ] ||
+            visible[ sp[ i ].face3 ] || visible[ sp[ i ].face4 ])
         {
-            vec.x = sp[i].x;
-            vec.y = sp[i].y;
-            vec.z = sp[i].z;
+            vec.x = sp[ i ].x;
+            vec.y = sp[ i ].y;
+            vec.z = sp[ i ].z;
 
-            mult_vector (&vec, trans_mat);
+            mult_vector( &vec, trans_mat );
 
             rx = vec.x + univ->location.x;
             ry = vec.y + univ->location.y;
             rz = vec.z + univ->location.z;
 
-            sx = (rx * 256) / rz;
-            sy = (ry * 256) / rz;
+            sx = ( rx * 256 ) / rz;
+            sy = ( ry * 256 ) / rz;
 
             sy = -sy;
 
@@ -966,8 +970,8 @@ void draw_explosion (struct univ_object *univ)
             sx *= GFX_SCALE;
             sy *= GFX_SCALE;
 
-            point_list[np].x = sx;
-            point_list[np].y = sy;
+            point_list[ np ].x = sx;
+            point_list[ np ].y = sy;
             np++;
         }
     }
@@ -975,16 +979,16 @@ void draw_explosion (struct univ_object *univ)
 
     z = (int)univ->location.z;
 
-    if (z >= 0x2000)
+    if( z >= 0x2000 )
     {
         q = 254;
     }
     else
     {
-        q = (z / 32) | 1;
+        q = ( z / 32 ) | 1;
     }
 
-    pr = (univ->exp_delta * 256) / q;
+    pr = ( univ->exp_delta * 256 ) / q;
 
     //      if (pr > 0x1C00)
     //              q = 254;
@@ -993,38 +997,38 @@ void draw_explosion (struct univ_object *univ)
     q = pr / 32;    
 
     old_seed = get_rand_seed();
-    set_rand_seed (univ->exp_seed);
+    set_rand_seed ( univ->exp_seed );
 
-    for (cnt = 0; cnt < np; cnt++)
+    for( cnt = 0; cnt < np; cnt++ )
     {
-        sx = point_list[cnt].x;
-        sy = point_list[cnt].y;
+        sx = point_list[ cnt ].x;
+        sy = point_list[ cnt ].y;
 
-        for (i = 0; i < 16; i++)
+        for( i = 0; i < 16; i++ )
         {
             px = rand255() - 128;
             py = rand255() - 128;
 
-            px = (px * q) / 256;
-            py = (py * q) / 256;
+            px = ( px * q ) / 256;
+            py = ( py * q ) / 256;
 
             px = px + px + sx;
             py = py + py + sy;
 
-            sizex = (randint() & 1) + 1;
-            sizey = (randint() & 1) + 1;
+            sizex = ( randint() & 1 ) + 1;
+            sizey = ( randint() & 1 ) + 1;
 
-            for (psy = 0; psy < sizey; psy++)
+            for( psy = 0; psy < sizey; psy++ )
             {
-                for (psx = 0; psx < sizex; psx++)
+                for( psx = 0; psx < sizex; psx++ )
                 {
-                    gfx_plot_pixel (px+psx, py+psy, GFX_COL_WHITE);
+                    gfx_plot_pixel( px + psx, py + psy, GFX_COL_WHITE );
                 }
             }
         }
     }
 
-    set_rand_seed (old_seed);
+    set_rand_seed( old_seed );
 }
 
 
@@ -1034,63 +1038,64 @@ void draw_explosion (struct univ_object *univ)
  * (Ship, Planet, Sun etc).
  */
 
-void draw_ship (struct univ_object *ship)
+void draw_ship( struct univ_object *ship )
 {
 
-    if ((current_screen != SCR_FRONT_VIEW) && (current_screen != SCR_REAR_VIEW) && 
-        (current_screen != SCR_LEFT_VIEW) && (current_screen != SCR_RIGHT_VIEW) &&
-        (current_screen != SCR_INTRO_ONE) && (current_screen != SCR_INTRO_TWO) &&
-        (current_screen != SCR_GAME_OVER) && (current_screen != SCR_ESCAPE_POD))
+    if(( current_screen != SCR_FRONT_VIEW ) && ( current_screen != SCR_REAR_VIEW ) &&
+       ( current_screen != SCR_LEFT_VIEW ) && ( current_screen != SCR_RIGHT_VIEW ) &&
+       ( current_screen != SCR_INTRO_ONE ) && ( current_screen != SCR_INTRO_TWO ) &&
+       ( current_screen != SCR_GAME_OVER ) && ( current_screen != SCR_ESCAPE_POD ))
     {
         return;
     }
 
-    if ((ship->flags & FLG_DEAD) && !(ship->flags & FLG_EXPLOSION))
+    if(( ship->flags & FLG_DEAD ) && !( ship->flags & FLG_EXPLOSION ))
     {
         ship->flags |= FLG_EXPLOSION;
         ship->exp_seed = randint();
         ship->exp_delta = 18; 
     }
 
-    /*      if (ship->flags & FLG_EXPLOSION) */
+    /* if (ship->flags & FLG_EXPLOSION) */
     /* SHIP_SUN and SHIP_PLANET are less than 0 */
     /* With two's complement, they match the FLG_EXPLOSION */
-    if ((ship->flags & FLG_EXPLOSION) && ship->type != SHIP_SUN && ship->type != SHIP_PLANET )
+    if(( ship->flags & FLG_EXPLOSION ) && ship->type != SHIP_SUN && ship->type != SHIP_PLANET )
     {
-        draw_explosion (ship);
+        draw_explosion( ship );
         return;
     }
 
-    if (ship->location.z <= 0)      /* Only display ships in front of us. */
+    if( ship->location.z <= 0 )      /* Only display ships in front of us. */
     {
         return;
     }
 
-    if (ship->type == SHIP_PLANET)
+    if( ship->type == SHIP_PLANET )
     {
-        draw_planet (ship);
+        draw_planet( ship );
         return;
     }
 
-    if (ship->type == SHIP_SUN)
+    if( ship->type == SHIP_SUN )
     {
-        draw_sun (ship);
+        draw_sun( ship );
         return;
     }
 
-    if ((fabs(ship->location.x) > ship->location.z) ||      /* Check for field of vision. */
-            (fabs(ship->location.y) > ship->location.z))
+    /* Check for field of vision. */
+    if(( fabs( ship->location.x ) > ship->location.z) ||
+       ( fabs( ship->location.y ) > ship->location.z ))
     {
        return;
     }
 
-    if (wireframe)
+    if( wireframe )
     {
-        draw_wireframe_ship (ship);
+        draw_wireframe_ship( ship );
     }
     else
     {
-        draw_solid_ship (ship);
+        draw_solid_ship( ship );
     }
 }
 

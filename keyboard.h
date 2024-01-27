@@ -65,5 +65,7 @@ void kbd_poll_keyboard (void);
 int kbd_read_key (void);
 void kbd_clear_key_buffer (void);
 
+void debug_key_log( char key );
+void debug_keypresses( void );
 #endif
  

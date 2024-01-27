@@ -105,17 +105,17 @@ char *mission_planet_desc (struct galaxy_seed planet)
 {
     int pnum;
 
-    if (!docked)
+    if( !docked )
     {
         return NULL;
     }
 
     if ((planet.a != docked_planet.a) ||
-            (planet.b != docked_planet.b) ||
-            (planet.c != docked_planet.c) ||
-            (planet.d != docked_planet.d) ||
-            (planet.e != docked_planet.e) ||
-            (planet.f != docked_planet.f))
+        (planet.b != docked_planet.b) ||
+        (planet.c != docked_planet.c) ||
+        (planet.d != docked_planet.d) ||
+        (planet.e != docked_planet.e) ||
+        (planet.f != docked_planet.f))
     {
         return NULL;
     }
