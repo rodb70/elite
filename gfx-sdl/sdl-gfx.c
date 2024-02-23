@@ -116,7 +116,7 @@ int gfx_graphics_startup(void)
     SDL_SetEventFilter( QuitFilter, NULL );
 
     m->window = SDL_CreateWindow( "Newlife", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                                  SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SDL_WINDOW_RESIZABLE );
+                                  SCREEN_WIDTH * 4, SCREEN_HEIGHT * 4, SDL_WINDOW_RESIZABLE );
     assert( m->window );
 
     m->renderer = SDL_CreateRenderer( m->window, -1, SDL_RENDERER_SOFTWARE );
@@ -327,11 +327,29 @@ void gfx_clear_area (int tx, int ty, int bx, int by)
 
 void gfx_display_pretty_text (int tx, int ty, int bx, int by, char *txt)
 {
+    char *ttxt = strdup( txt );
+    char *tstr = ttxt;
+    const int y_chars = ( bx - tx ) / 6;
     hagl_surface_t surface;
     surface = *(hagl_surface_t*)backend;
 
     hagl_set_clip( &surface, tx, ty, bx, by );
-    hagl_put_text( &surface, GetWC( txt ), tx, ty, WHITE, font6x9 );
+    for( int pos = y_chars; pos < (int)strlen( tstr ) && y_chars < (int)strlen( tstr ); pos = y_chars )
+    {
+        while( pos > 0 && ' ' != tstr[ pos ])
+        {
+            pos--;
+        }
+
+        tstr[ pos ] = '\0';
+        hagl_put_text( &surface, GetWC( tstr ), tx, ty, WHITE, font6x9 );
+
+        tstr = tstr + pos + 1;
+        ty += 9;
+    }
+    hagl_put_text( &surface, GetWC( tstr ), tx, ty, WHITE, font6x9 );
+
+    free( ttxt );
 }
 
 
@@ -404,10 +422,11 @@ int gfx_request_file (char *title, char *path, char *ext)
     gfx_draw_rectangle( 85, 109, 405, 174, GFX_COL_RED_4 );
     gfx_display_pretty_text( 88, 99, 404, 108, title );
     gfx_draw_rectangle( 98, 129, 392, 142, GFX_COL_RED_4 );
+    gfx_display_pretty_text( 100, 131, 391, 141, path );
+    SdlUpdateScreen();
 
     while( 1 )
     {
-
         keyasc = kbd_read_key();
         if( kbd_backspace_pressed )
         {
@@ -420,21 +439,18 @@ int gfx_request_file (char *title, char *path, char *ext)
             keyasc = 0;
         }
 
-        if( 0 != keyasc )
+        if((( keyasc >= (int)'0' ) && ( keyasc <= (int)'z' )) || ( '.' == keyasc ))
         {
-            if((( keyasc >= (int)'0' ) && ( keyasc <= (int)'z' )) || ( '.' == keyasc ))
+            if(( keyasc >= 'A' ) && ( keyasc <= 'Z' ))
             {
-                if(( keyasc >= 'A' ) && ( keyasc <= 'Z' ))
-                {
-                    keyasc |= 0x20;
-                }
-                int len = strlen( path );
-                if( len < 254 )
-                {
-                    path[ len ] = (char)keyasc;
-                    path[ len + 1 ] = '\0';
+                keyasc |= 0x20;
+            }
+            int len = strlen( path );
+            if( len < 254 )
+            {
+                path[ len ] = (char)keyasc;
+                path[ len + 1 ] = '\0';
 
-                }
             }
         }
 

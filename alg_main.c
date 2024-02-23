@@ -693,16 +693,6 @@ void run_escape_sequence(void)
 
 void handle_flight_keys(void)
 {
-//    int keyasc;
-
-//    if( docked && (( current_screen == SCR_MARKET_PRICES ) ||
-//                   ( current_screen == SCR_OPTIONS ) ||
-//                   ( current_screen == SCR_SETTINGS ) ||
-//                   ( current_screen == SCR_EQUIP_SHIP )))
-//    {
-//        kbd_read_key();
-//    }
-
     if( !find_input )
     {
         kbd_poll_keyboard();
@@ -830,7 +820,11 @@ void handle_flight_keys(void)
 
     if( find_input )
     {
-        int keyasc = kbd_read_key();
+        int keyasc = 0;
+        while( 0 == keyasc )
+        {
+            keyasc = kbd_read_key();
+        }
 
         if( keyasc != 0 )
         {
@@ -841,6 +835,7 @@ void handle_flight_keys(void)
         {
             find_input = 0;
             find_planet_by_name( find_name );
+            kbd_keyboard_startup();
             return;
         }
         else if( kbd_backspace_pressed )

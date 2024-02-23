@@ -8,16 +8,21 @@
 #include "keyboard.h"
 #include "elite.h"
 #include "gfx.h"
+#include <unistd.h>
 
 #include <SDL2/SDL.h>
 
 static char key_queu[ 9 ] = {'\0'};
-uint8_t k_idx = 0;
+static uint8_t k_idx = 0;
 void debug_key_log( char key )
 {
-    key_queu[ k_idx ] = key;
-    k_idx++;
-    k_idx &= 0x7;
+
+    if( key > ' ' )
+    {
+        key_queu[ k_idx ] = key;
+        k_idx++;
+        k_idx &= 0x7;
+    }
 }
 
 void debug_keypresses( void )
@@ -153,6 +158,48 @@ void debug_keypresses( void )
 
 int kbd_keyboard_startup (void)
 {
+    kbd_F1_pressed = 0;
+    kbd_F2_pressed = 0;
+    kbd_F3_pressed = 0;
+    kbd_F4_pressed = 0;
+    kbd_F5_pressed = 0;
+    kbd_F6_pressed = 0;
+    kbd_F7_pressed = 0;
+    kbd_F8_pressed = 0;
+    kbd_F9_pressed = 0;
+    kbd_F10_pressed = 0;
+    kbd_F11_pressed = 0;
+    kbd_F12_pressed = 0;
+    kbd_y_pressed = 0;
+    kbd_n_pressed = 0;
+    kbd_fire_pressed = 0;
+    kbd_ecm_pressed = 0;
+    kbd_energy_bomb_pressed = 0;
+    kbd_hyperspace_pressed = 0;
+    kbd_ctrl_pressed = 0;
+    kbd_jump_pressed = 0;
+    kbd_escape_pressed = 0;
+    kbd_dock_pressed = 0;
+    kbd_d_pressed = 0;
+    kbd_origin_pressed = 0;
+    kbd_find_pressed = 0;
+    kbd_fire_missile_pressed = 0;
+    kbd_target_missile_pressed = 0;
+    kbd_unarm_missile_pressed = 0;
+    kbd_pause_pressed = 0;
+    kbd_resume_pressed = 0;
+    kbd_inc_speed_pressed = 0;
+    kbd_dec_speed_pressed = 0;
+    kbd_up_pressed = 0;
+    kbd_down_pressed = 0;
+    kbd_left_pressed = 0;
+    kbd_right_pressed = 0;
+    kbd_enter_pressed = 0;
+    kbd_backspace_pressed = 0;
+    kbd_space_pressed = 0;
+
+    kbd_clear_key_buffer();
+
     return 0;
 }
 
@@ -352,19 +399,22 @@ int kbd_read_key (void)
     SDL_Event event;
     int keyasc = 0;
 
-    if( 0 != SDL_PollEvent( &event ))
+    kbd_enter_pressed = 0;
+    kbd_backspace_pressed = 0;
+
+    while( 0 != SDL_PollEvent( &event ) && 0 == keyasc )
     {
         if (event.type == SDL_KEYDOWN)
         {
             if( SDLK_RETURN == event.key.keysym.sym )
             {
                 kbd_enter_pressed = 1;
-                return 0;
+                return 13;
             }
             else if( SDLK_BACKSPACE == event.key.keysym.sym )
             {
                 kbd_backspace_pressed = 1;
-                return 0;
+                return 8;
             }
             else if( 0 != ( event.key.keysym.mod & ( KMOD_SHIFT | KMOD_ALT | KMOD_CTRL )))
             {
@@ -374,6 +424,33 @@ int kbd_read_key (void)
             {
                 const char *key = SDL_GetKeyName( event.key.keysym.sym );
                 keyasc = (int)(*key);
+                if( 0 == strcmp( "SPACE", key ))
+                {
+                    keyasc = 32;
+                }
+                else if(( 0 == strcmp( "Up", key )) ||
+                        ( 0 == strcmp( "Down", key )) ||
+                        ( 0 == strcmp( "Tab", key )) ||
+                        ( 0 == strcmp( "Escape", key )) ||
+                        ( 0 == strcmp( "CapsLock", key )) ||
+                        ( 0 == strcmp( "F1", key )) ||
+                        ( 0 == strcmp( "F2", key )) ||
+                        ( 0 == strcmp( "F3", key )) ||
+                        ( 0 == strcmp( "F4", key )) ||
+                        ( 0 == strcmp( "F5", key )) ||
+                        ( 0 == strcmp( "F6", key )) ||
+                        ( 0 == strcmp( "F7", key )) ||
+                        ( 0 == strcmp( "F8", key )) ||
+                        ( 0 == strcmp( "F9", key )) ||
+                        ( 0 == strcmp( "F10", key )) ||
+                        ( 0 == strcmp( "F11", key )) ||
+                        ( 0 == strcmp( "F12", key )) ||
+                        ( 0 == strcmp( "Delete", key )) ||
+                        ( 0 == strcmp( "Left", key )) ||
+                        ( 0 == strcmp( "Right", key )))
+                {
+                    keyasc = 0;
+                }
             }
         }
     }
